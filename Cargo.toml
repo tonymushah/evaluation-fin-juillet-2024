@@ -1,6 +1,62 @@
+[workspace]
+members = ["crates/diesel-schemas"]
+
+[workspace.dependencies]
+tonic = { version = "0.11" }
+prost = { version = "0.12" }
+diesel = { version = "2", features = [
+    "postgres",
+    "r2d2",
+    "uuid",
+    "time",
+    "numeric",
+] }
+csv = "1"
+tokio = { version = "1" }
+bigdecimal = { version = "0.4" }
+uuid = { version = "1", features = ["v4"] }
+time = { version = "0.3", features = [
+    "serde",
+    "macros",
+    "serde-human-readable",
+] }
+thiserror = "1"
+regex = "1.10"
+diesel-schemas = { path = "./crates/diesel-schemas" }
+serde = { version = "1", features = ["derive"] }
+dotenvy = "0.15"
+tonic-web = "0.11"
+tokio-stream = { version = "0.1" }
+
 [package]
 name = "evaluation-fin-juillet-2024"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
+exclude = ["/app", "/node_modules"]
 
 [dependencies]
+diesel.workspace = true
+dotenvy.workspace = true
+uuid = { workspace = true }
+jwt = "0.16"
+serde.workspace = true
+thiserror.workspace = true
+hmac = "0.12"
+sha2 = "0.10"
+time.workspace = true
+bigdecimal = { workspace = true, features = ["serde"] }
+regex.workspace = true
+rand = "0.8"
+tokio = { workspace = true, features = ["sync", "macros", "rt-multi-thread"] }
+convert_case = "0.6"
+tonic.workspace = true
+prost.workspace = true
+tonic-web.workspace = true
+tokio-stream = { workspace = true, features = ["sync"] }
+http = "1.1.0"
+csv.workspace = true
+diesel-schemas.workspace = true
+
+[build-dependencies]
+tonic-build = { version = "0.11" }
