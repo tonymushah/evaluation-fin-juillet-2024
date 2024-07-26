@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/diesel-schemas", "crates/macros"]
+members = ["crates/diesel-schemas", "crates/macros", "crates/protos/admin"]
 
 [workspace.dependencies]
 tonic = { version = "0.11" }
@@ -31,6 +31,7 @@ syn = "2"
 proc-macros2 = "1"
 quote = "1"
 darling = "0"
+tonic-build = { version = "0.11" }
 
 [package]
 name = "evaluation-fin-juillet-2024"
@@ -63,4 +64,4 @@ csv.workspace = true
 diesel-schemas.workspace = true
 
 [build-dependencies]
-tonic-build = { version = "0.11" }
+tonic-build = { workspace = true }

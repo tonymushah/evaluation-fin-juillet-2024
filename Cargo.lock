@@ -1002,6 +1002,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "proto-admin"
+version = "0.1.0"
+dependencies = [
+ "prost",
+ "tonic",
+ "tonic-build",
+]
+
+[[package]]
 name = "quote"
 version = "1.0.36"
 source = "registry+https://github.com/rust-lang/crates.io-index"
