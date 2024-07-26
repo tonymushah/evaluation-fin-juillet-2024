@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/diesel-schemas", "crates/macros", "crates/protos/admin"]
+members = ["crates/diesel-schemas", "crates/macros", "crates/protos/admin", "crates/protos/client"]
 
 [workspace.dependencies]
 tonic = { version = "0.11" }
