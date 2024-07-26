@@ -401,6 +401,12 @@ dependencies = [
 [[package]]
 name = "eval-macro"
 version = "0.1.0"
+dependencies = [
+ "darling",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "evaluation-fin-juillet-2024"
