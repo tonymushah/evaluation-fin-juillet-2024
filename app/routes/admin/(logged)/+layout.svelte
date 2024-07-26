@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AdminNavBar from '$lib/admin/components/AdminNavBar.svelte';
 	import { setToken } from '$lib/admin/token.client';
 	import { initGRPCClientContext } from '$lib/contexts/rpc_client';
 	import type { LayoutServerData } from './$types';
@@ -9,5 +10,7 @@
 	});
 	// setToken(data.token);
 </script>
+
+<AdminNavBar />
 
 <slot />
