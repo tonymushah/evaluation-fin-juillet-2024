@@ -1,5 +1,10 @@
 [workspace]
-members = ["crates/diesel-schemas", "crates/macros", "crates/protos/admin", "crates/protos/client"]
+members = [
+    "crates/diesel-schemas",
+    "crates/macros",
+    "crates/protos/admin",
+    "crates/protos/client",
+]
 
 [workspace.dependencies]
 tonic = { version = "0.11" }
@@ -32,6 +37,8 @@ proc-macros2 = "1"
 quote = "1"
 darling = "0"
 tonic-build = { version = "0.11" }
+proto-admin = { path = "./crates/protos/admin" }
+proto-client = { path = "./crates/protos/client" }
 
 [package]
 name = "evaluation-fin-juillet-2024"
