@@ -17,8 +17,7 @@
 		"proto:client": "protoc --ts_opt server_none --ts_out ./app/lib/protos/ --proto_path protos protos/client.proto",
 		"proto:all": "pnpm proto:admin && pnpm proto:client",
 		"back:admin": "cargo run --bin admin",
-		"back:client": "cargo run --bin client",
-		"back:proprio": "cargo run --bin proprio"
+		"back:client": "cargo run --bin client"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
