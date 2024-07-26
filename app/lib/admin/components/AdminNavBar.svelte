@@ -15,8 +15,10 @@
 			await resetDB(transport)
 				.then((result) => {
 					message.set('Database reseted');
+					errors.set(undefined);
 				})
 				.catch((error) => {
+					message.set(undefined);
 					errors.set(new Error(error));
 				})
 				.finally(() => {
@@ -25,7 +27,7 @@
 				});
 		}
 	}
-	const hasError = derived(errors, (e) => e != undefined);
+	const hasError = derived([errors, message], ([e, m]) => e != undefined && m == undefined);
 </script>
 
 <Navbar let:NavContainer color="primary">
@@ -49,13 +51,13 @@
 			isDone.set(false);
 		}}
 	>
-		{#if $hasError}
+		{#if $message != undefined}
+			<p class="flex text-green-500">{$message}</p>
+		{:else if $hasError}
 			<p class="flex flex-col">
 				Oh no! we caught some error:
 				<span class=" text-red-700">{$errors?.message}</span>
 			</p>
-		{:else if $message != undefined}
-			<p class="flex text-green-500">{$message}</p>
 		{:else}
 			Somewhat done??
 		{/if}
