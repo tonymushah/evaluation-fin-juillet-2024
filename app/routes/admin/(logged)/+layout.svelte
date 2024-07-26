@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setToken } from '$lib/admin/token.client';
-	import { initGRPCClientContext } from '$lib/rpc_client.context';
+	import { initGRPCClientContext } from '$lib/contexts/rpc_client';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
