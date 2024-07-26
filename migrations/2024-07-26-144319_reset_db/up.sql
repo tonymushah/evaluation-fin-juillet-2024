@@ -1,5 +1,6 @@
 -- Your SQL goes here
-CREATE OR REPLACE FUNCTION truncate_tables(username IN VARCHAR) RETURNS void AS $$
+-- Your SQL goes here
+CREATE OR REPLACE FUNCTION truncate_tables(username IN VARCHAR) RETURNS int AS $$
 DECLARE
     statements CURSOR FOR
         SELECT tablename FROM pg_tables
@@ -10,5 +11,7 @@ BEGIN
             EXECUTE 'TRUNCATE TABLE ' || quote_ident(stmt.tablename) || ' CASCADE;';
         END IF;
     END LOOP;
+    RETURN 0;
 END;
 $$ LANGUAGE plpgsql;
+
