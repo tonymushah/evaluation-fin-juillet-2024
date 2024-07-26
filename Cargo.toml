@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/diesel-schemas"]
+members = ["crates/diesel-schemas", "crates/macros"]
 
 [workspace.dependencies]
 tonic = { version = "0.11" }
@@ -27,6 +27,10 @@ serde = { version = "1", features = ["derive"] }
 dotenvy = "0.15"
 tonic-web = "0.11"
 tokio-stream = { version = "0.1" }
+syn = "2"
+proc-macros2 = "1"
+quote = "1"
+darling = "0"
 
 [package]
 name = "evaluation-fin-juillet-2024"

@@ -399,6 +399,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "eval-macro"
+version = "0.1.0"
+
+[[package]]
 name = "evaluation-fin-juillet-2024"
 version = "0.1.0"
 dependencies = [
