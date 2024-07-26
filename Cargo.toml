@@ -45,7 +45,7 @@ name = "evaluation-fin-juillet-2024"
 version = "0.1.0"
 edition = "2021"
 resolver = "2"
-exclude = ["/app", "/node_modules"]
+exclude = ["app", "node_modules"]
 
 [dependencies]
 diesel.workspace = true
@@ -69,6 +69,8 @@ tokio-stream = { workspace = true, features = ["sync"] }
 http = "1.1.0"
 csv.workspace = true
 diesel-schemas.workspace = true
+proto-client.workspace = true
+proto-admin.workspace = true
 
 [build-dependencies]
 tonic-build = { workspace = true }

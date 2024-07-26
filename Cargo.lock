@@ -422,6 +422,8 @@ dependencies = [
  "http 1.1.0",
  "jwt",
  "prost",
+ "proto-admin",
+ "proto-client",
  "rand",
  "regex",
  "serde",
