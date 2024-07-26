@@ -32,8 +32,8 @@ export default defineConfig({
 	],
 	server: {
 		fs: {
-			deny: ['src'],
-			allow: ['app/app.css']
+			deny: ['src', 'target'],
+			allow: ['./app/app.css']
 		}
 	},
 	test: {
