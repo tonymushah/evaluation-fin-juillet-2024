@@ -39,4 +39,5 @@
     },
     "explorerExclude.backup": {},
     "typescript.tsdk": "node_modules/typescript/lib",
+    "svelte.enable-ts-plugin": true,
 }
