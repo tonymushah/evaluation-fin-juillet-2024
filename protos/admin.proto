@@ -104,3 +104,17 @@ service Etudiants {
     rpc Info(EtudiantInfoRequest) returns (EtudiantInfoResponse);
     rpc ReleveNote(EtudiantReleveNoteRequest) returns (EtudiantReleveNoteResponse);
 }
+
+message InsertNotesRequest {
+    string etudiant = 1;
+    string matiere = 2;
+    uint32 note = 3;
+}
+
+message InsertNotesResponse {
+    string custom_message = 1;
+}
+
+service Notes {
+    rpc Insert(stream InsertNotesRequest) returns (stream InsertNotesResponse);
+}
