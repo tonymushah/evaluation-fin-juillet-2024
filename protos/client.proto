@@ -19,3 +19,15 @@ message HelloResponse {
 service HelloService {
     rpc Say(HelloRequest) returns (HelloResponse);
 }
+
+message LoginRequest{
+    string numero = 1;
+}
+
+message LoginResponse {
+    string token = 1;
+}
+
+service Auth {
+    rpc Login(LoginRequest) returns (LoginResponse);
+}
