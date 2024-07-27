@@ -4,6 +4,7 @@
 	import { Navbar, NavBrand, NavHamburger, NavLi, NavUl, Toast, Button } from 'flowbite-svelte';
 	import { derived, writable } from 'svelte/store';
 	import resetDB from './navbar/reset';
+	import { fade, fly } from 'svelte/transition';
 	const transport = getGRPCClientContext();
 	const isFetching = writable(false);
 	const isDone = writable(false);
@@ -19,7 +20,7 @@
 				})
 				.catch((error) => {
 					message.set(undefined);
-					errors.set(new Error(error));
+					errors.set(error);
 				})
 				.finally(() => {
 					isFetching.set(false);
@@ -45,21 +46,29 @@
 </Navbar>
 
 {#if !$isFetching && $isDone}
-	<Toast
-		color={$hasError ? 'red' : 'primary'}
-		on:close={() => {
-			isDone.set(false);
-		}}
-	>
-		{#if $message != undefined}
-			<p class="flex text-green-500">{$message}</p>
-		{:else if $hasError}
-			<p class="flex flex-col">
-				Oh no! we caught some error:
-				<span class=" text-red-700">{$errors?.message}</span>
-			</p>
-		{:else}
-			Somewhat done??
-		{/if}
-	</Toast>
+	<div transition:fade>
+		<Toast
+			position="bottom-right"
+			color={$hasError ? 'red' : 'primary'}
+			divClass="w-full max-w-xs p-4 text-gray-500 bg-slate-300 rounded shadow dark:text-gray-400 dark:bg-slate-700 gap-3"
+			on:close={() => {
+				isDone.set(false);
+			}}
+			transition={fly}
+			params={{
+				x: 300
+			}}
+		>
+			{#if $message != undefined}
+				<p class="flex text-green-500">{$message}</p>
+			{:else if $hasError}
+				<p class="flex flex-col">
+					Oh no! we caught some error:
+					<span class=" text-red-700">{$errors?.message}</span>
+				</p>
+			{:else}
+				Somewhat done??
+			{/if}
+		</Toast>
+	</div>
 {/if}
