@@ -53,7 +53,7 @@ message EtudiantsListResponse {
 }
 
 message EtudiantInfoRequest {
-    required string numero = 1;
+    string numero = 1;
 }
 
 message EtudiantInfoResponse {
