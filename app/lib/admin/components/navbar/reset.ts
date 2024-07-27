@@ -1,4 +1,4 @@
-import { Empty } from '$lib/protos/admin';
+import { Empty } from '$lib/protos/commons';
 import { DatabaseClient } from '$lib/protos/admin.client';
 import type { RpcTransport } from '@protobuf-ts/runtime-rpc';
 
