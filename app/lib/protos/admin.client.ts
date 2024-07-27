@@ -28,7 +28,7 @@ import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Database } from "./admin";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { Empty } from "./admin";
+import type { Empty } from "./commons";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
@@ -36,7 +36,7 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IDatabaseClient {
     /**
-     * @generated from protobuf rpc: Reset(mg.tonymushah.evalfjuil24.admin.Empty) returns (mg.tonymushah.evalfjuil24.admin.Empty);
+     * @generated from protobuf rpc: Reset(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.Empty);
      */
     reset(input: Empty, options?: RpcOptions): UnaryCall<Empty, Empty>;
 }
@@ -50,7 +50,7 @@ export class DatabaseClient implements IDatabaseClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: Reset(mg.tonymushah.evalfjuil24.admin.Empty) returns (mg.tonymushah.evalfjuil24.admin.Empty);
+     * @generated from protobuf rpc: Reset(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.Empty);
      */
     reset(input: Empty, options?: RpcOptions): UnaryCall<Empty, Empty> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
