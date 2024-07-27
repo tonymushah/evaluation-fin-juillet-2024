@@ -3,11 +3,8 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
-/**
- * @generated from protobuf message mg.tonymushah.evalfjuil24.client.Empty
- */
-export interface Empty {
-}
+import { ReleveNote } from "./commons";
+import { ReleveNoteStatus } from "./commons";
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.client.HelloRequest
  */
@@ -26,16 +23,73 @@ export interface HelloResponse {
      */
     message: string;
 }
-// @generated message type with reflection information, may provide speed optimized methods
-class Empty$Type extends MessageType<Empty> {
-    constructor() {
-        super("mg.tonymushah.evalfjuil24.client.Empty", []);
-    }
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.LoginRequest
+ */
+export interface LoginRequest {
+    /**
+     * @generated from protobuf field: string numero = 1;
+     */
+    numero: string;
 }
 /**
- * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.Empty
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.LoginResponse
  */
-export const Empty = new Empty$Type();
+export interface LoginResponse {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.SemestresListRequest
+ */
+export interface SemestresListRequest {
+    /**
+     * @generated from protobuf field: repeated uint32 semestre = 1;
+     */
+    semestre: number[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.EtudiantSemestre
+ */
+export interface EtudiantSemestre {
+    /**
+     * @generated from protobuf field: uint32 semetre = 1;
+     */
+    semetre: number;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 2;
+     */
+    status: ReleveNoteStatus;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.SemestresListResponse
+ */
+export interface SemestresListResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.client.EtudiantSemestre semetres = 1;
+     */
+    semetres: EtudiantSemestre[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.GetReleveRequest
+ */
+export interface GetReleveRequest {
+    /**
+     * @generated from protobuf field: uint32 semetre = 1;
+     */
+    semetre: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.GetReleveResponse
+ */
+export interface GetReleveResponse {
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNote releves = 1;
+     */
+    releves?: ReleveNote;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class HelloRequest$Type extends MessageType<HelloRequest> {
     constructor() {
@@ -60,9 +114,112 @@ class HelloResponse$Type extends MessageType<HelloResponse> {
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.HelloResponse
  */
 export const HelloResponse = new HelloResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LoginRequest$Type extends MessageType<LoginRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.LoginRequest", [
+            { no: 1, name: "numero", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.LoginRequest
+ */
+export const LoginRequest = new LoginRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LoginResponse$Type extends MessageType<LoginResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.LoginResponse", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.LoginResponse
+ */
+export const LoginResponse = new LoginResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SemestresListRequest$Type extends MessageType<SemestresListRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.SemestresListRequest", [
+            { no: 1, name: "semestre", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.SemestresListRequest
+ */
+export const SemestresListRequest = new SemestresListRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantSemestre$Type extends MessageType<EtudiantSemestre> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.EtudiantSemestre", [
+            { no: 1, name: "semetre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.EtudiantSemestre
+ */
+export const EtudiantSemestre = new EtudiantSemestre$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SemestresListResponse$Type extends MessageType<SemestresListResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.SemestresListResponse", [
+            { no: 1, name: "semetres", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => EtudiantSemestre }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.SemestresListResponse
+ */
+export const SemestresListResponse = new SemestresListResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetReleveRequest$Type extends MessageType<GetReleveRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.GetReleveRequest", [
+            { no: 1, name: "semetre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.GetReleveRequest
+ */
+export const GetReleveRequest = new GetReleveRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetReleveResponse$Type extends MessageType<GetReleveResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.GetReleveResponse", [
+            { no: 1, name: "releves", kind: "message", T: () => ReleveNote }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.GetReleveResponse
+ */
+export const GetReleveResponse = new GetReleveResponse$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.HelloService
  */
 export const HelloService = new ServiceType("mg.tonymushah.evalfjuil24.client.HelloService", [
     { name: "Say", options: {}, I: HelloRequest, O: HelloResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.Auth
+ */
+export const Auth = new ServiceType("mg.tonymushah.evalfjuil24.client.Auth", [
+    { name: "Login", options: {}, I: LoginRequest, O: LoginResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.Semestres
+ */
+export const Semestres = new ServiceType("mg.tonymushah.evalfjuil24.client.Semestres", [
+    { name: "List", options: {}, I: SemestresListRequest, O: SemestresListResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.Releve
+ */
+export const Releve = new ServiceType("mg.tonymushah.evalfjuil24.client.Releve", [
+    { name: "Get", options: {}, I: GetReleveRequest, O: GetReleveResponse }
 ]);
