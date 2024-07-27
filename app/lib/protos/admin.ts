@@ -26,6 +26,338 @@ export interface HelloResponse {
      */
     message: string;
 }
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Date
+ */
+export interface Date {
+    /**
+     * @generated from protobuf field: uint32 jour = 1;
+     */
+    jour: number;
+    /**
+     * @generated from protobuf field: uint32 mois = 2;
+     */
+    mois: number;
+    /**
+     * @generated from protobuf field: uint32 annee = 3;
+     */
+    annee: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Etudiant
+ */
+export interface Etudiant {
+    /**
+     * @generated from protobuf field: string numero = 1;
+     */
+    numero: string;
+    /**
+     * @generated from protobuf field: string nom = 2;
+     */
+    nom: string;
+    /**
+     * @generated from protobuf field: string prenom = 3;
+     */
+    prenom: string;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.Date date_naissance = 4;
+     */
+    dateNaissance?: Date;
+    /**
+     * @generated from protobuf field: uint32 age = 5;
+     */
+    age: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantsListRequest
+ */
+export interface EtudiantsListRequest {
+    /**
+     * @generated from protobuf field: repeated string promotion = 1;
+     */
+    promotion: string[];
+    /**
+     * @generated from protobuf field: optional string nom = 2;
+     */
+    nom?: string;
+    /**
+     * @generated from protobuf field: optional uint32 offset = 3;
+     */
+    offset?: number;
+    /**
+     * @generated from protobuf field: optional uint32 limit = 4;
+     */
+    limit?: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantsListResponse
+ */
+export interface EtudiantsListResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.Etudiant list = 1;
+     */
+    list: Etudiant[];
+    /**
+     * @generated from protobuf field: uint32 offset = 2;
+     */
+    offset: number;
+    /**
+     * @generated from protobuf field: uint32 limit = 3;
+     */
+    limit: number;
+    /**
+     * @generated from protobuf field: uint64 total = 4;
+     */
+    total: bigint;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantInfoRequest
+ */
+export interface EtudiantInfoRequest {
+    /**
+     * @generated from protobuf field: string numero = 1;
+     */
+    numero: string;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantInfoResponse
+ */
+export interface EtudiantInfoResponse {
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.Etudiant current = 1;
+     */
+    current?: Etudiant;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteRequest
+ */
+export interface EtudiantReleveNoteRequest {
+    /**
+     * @generated from protobuf field: string etudiant = 1;
+     */
+    etudiant: string;
+    /**
+     * @generated from protobuf field: repeated uint32 semestre = 2;
+     */
+    semestre: number[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Matiere
+ */
+export interface Matiere {
+    /**
+     * @generated from protobuf field: string numero = 1;
+     */
+    numero: string;
+    /**
+     * @generated from protobuf field: string nom = 2;
+     */
+    nom: string;
+    /**
+     * @generated from protobuf field: uint32 credits = 3;
+     */
+    credits: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.ReleveNoteUnit
+ */
+export interface ReleveNoteUnit {
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.Matiere matiere = 1;
+     */
+    matiere?: Matiere;
+    /**
+     * @generated from protobuf field: uint32 valeur = 2;
+     */
+    valeur: number;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.ReleveNoteStatus status = 3;
+     */
+    status: ReleveNoteStatus;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.ReleveNote
+ */
+export interface ReleveNote {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.ReleveNoteUnit notes = 1;
+     */
+    notes: ReleveNoteUnit[];
+    /**
+     * @generated from protobuf field: uint64 credits = 2;
+     */
+    credits: bigint;
+    /**
+     * @generated from protobuf field: uint32 semestre = 3;
+     */
+    semestre: number;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.ReleveNoteStatus status = 4;
+     */
+    status: ReleveNoteStatus;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteResponse
+ */
+export interface EtudiantReleveNoteResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.ReleveNote releves = 1;
+     */
+    releves: ReleveNote[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesRequest
+ */
+export interface InsertNotesRequest {
+    /**
+     * @generated from protobuf field: string etudiant = 1;
+     */
+    etudiant: string;
+    /**
+     * @generated from protobuf field: string matiere = 2;
+     */
+    matiere: string;
+    /**
+     * @generated from protobuf field: uint32 note = 3;
+     */
+    note: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesResponse
+ */
+export interface InsertNotesResponse {
+    /**
+     * @generated from protobuf field: string custom_message = 1;
+     */
+    customMessage: string;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Semestre
+ */
+export interface Semestre {
+    /**
+     * @generated from protobuf field: uint32 numero = 1;
+     */
+    numero: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetSemetresRequest
+ */
+export interface GetSemetresRequest {
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetSemetresResponse
+ */
+export interface GetSemetresResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.Semestre semestre = 1;
+     */
+    semestre: Semestre[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetMatieresRequest
+ */
+export interface GetMatieresRequest {
+    /**
+     * @generated from protobuf field: optional uint32 offset = 1;
+     */
+    offset?: number;
+    /**
+     * @generated from protobuf field: optional uint32 limit = 2;
+     */
+    limit?: number;
+    /**
+     * @generated from protobuf field: repeated uint32 semstres = 3;
+     */
+    semstres: number[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetMatieresResponse
+ */
+export interface GetMatieresResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.Matiere matieres = 1;
+     */
+    matieres: Matiere[];
+    /**
+     * @generated from protobuf field: uint32 offset = 2;
+     */
+    offset: number;
+    /**
+     * @generated from protobuf field: uint32 limit = 3;
+     */
+    limit: number;
+    /**
+     * @generated from protobuf field: uint64 total = 4;
+     */
+    total: bigint;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest
+ */
+export interface GetPromotionsRequest {
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse
+ */
+export interface GetPromotionsResponse {
+    /**
+     * @generated from protobuf field: repeated string promotions = 1;
+     */
+    promotions: string[];
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.LoginRequest
+ */
+export interface LoginRequest {
+    /**
+     * @generated from protobuf field: string username = 1;
+     */
+    username: string;
+    /**
+     * @generated from protobuf field: string password = 2;
+     */
+    password: string;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.LoginResponse
+ */
+export interface LoginResponse {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string;
+}
+/**
+ * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ReleveNoteUnitStatus
+ */
+export enum ReleveNoteUnitStatus {
+    /**
+     * @generated from protobuf enum value: M_VALID = 0;
+     */
+    M_VALID = 0,
+    /**
+     * @generated from protobuf enum value: M_AJOURNEE = 1;
+     */
+    M_AJOURNEE = 1,
+    /**
+     * @generated from protobuf enum value: M_COMPENSEE = 2;
+     */
+    M_COMPENSEE = 2
+}
+/**
+ * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ReleveNoteStatus
+ */
+export enum ReleveNoteStatus {
+    /**
+     * @generated from protobuf enum value: S_VALID = 0;
+     */
+    S_VALID = 0,
+    /**
+     * @generated from protobuf enum value: S_AJOURNEE = 1;
+     */
+    S_AJOURNEE = 1
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Empty$Type extends MessageType<Empty> {
     constructor() {
@@ -60,6 +392,294 @@ class HelloResponse$Type extends MessageType<HelloResponse> {
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.HelloResponse
  */
 export const HelloResponse = new HelloResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Date$Type extends MessageType<Date> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.Date", [
+            { no: 1, name: "jour", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "mois", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "annee", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.Date
+ */
+export const Date = new Date$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Etudiant$Type extends MessageType<Etudiant> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.Etudiant", [
+            { no: 1, name: "numero", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "nom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "prenom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "date_naissance", kind: "message", T: () => Date },
+            { no: 5, name: "age", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.Etudiant
+ */
+export const Etudiant = new Etudiant$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantsListRequest$Type extends MessageType<EtudiantsListRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantsListRequest", [
+            { no: 1, name: "promotion", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "nom", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "offset", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "limit", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantsListRequest
+ */
+export const EtudiantsListRequest = new EtudiantsListRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantsListResponse$Type extends MessageType<EtudiantsListResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantsListResponse", [
+            { no: 1, name: "list", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Etudiant },
+            { no: 2, name: "offset", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "limit", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "total", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantsListResponse
+ */
+export const EtudiantsListResponse = new EtudiantsListResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantInfoRequest$Type extends MessageType<EtudiantInfoRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantInfoRequest", [
+            { no: 1, name: "numero", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantInfoRequest
+ */
+export const EtudiantInfoRequest = new EtudiantInfoRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantInfoResponse$Type extends MessageType<EtudiantInfoResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantInfoResponse", [
+            { no: 1, name: "current", kind: "message", T: () => Etudiant }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantInfoResponse
+ */
+export const EtudiantInfoResponse = new EtudiantInfoResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantReleveNoteRequest$Type extends MessageType<EtudiantReleveNoteRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteRequest", [
+            { no: 1, name: "etudiant", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "semestre", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteRequest
+ */
+export const EtudiantReleveNoteRequest = new EtudiantReleveNoteRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Matiere$Type extends MessageType<Matiere> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.Matiere", [
+            { no: 1, name: "numero", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "nom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "credits", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.Matiere
+ */
+export const Matiere = new Matiere$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.ReleveNoteUnit", [
+            { no: 1, name: "matiere", kind: "message", T: () => Matiere },
+            { no: 2, name: "valeur", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.admin.ReleveNoteStatus", ReleveNoteStatus] }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.ReleveNoteUnit
+ */
+export const ReleveNoteUnit = new ReleveNoteUnit$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReleveNote$Type extends MessageType<ReleveNote> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.ReleveNote", [
+            { no: 1, name: "notes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReleveNoteUnit },
+            { no: 2, name: "credits", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 3, name: "semestre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.admin.ReleveNoteStatus", ReleveNoteStatus] }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.ReleveNote
+ */
+export const ReleveNote = new ReleveNote$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantReleveNoteResponse$Type extends MessageType<EtudiantReleveNoteResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteResponse", [
+            { no: 1, name: "releves", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReleveNote }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteResponse
+ */
+export const EtudiantReleveNoteResponse = new EtudiantReleveNoteResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InsertNotesRequest$Type extends MessageType<InsertNotesRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.InsertNotesRequest", [
+            { no: 1, name: "etudiant", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "matiere", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "note", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesRequest
+ */
+export const InsertNotesRequest = new InsertNotesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InsertNotesResponse$Type extends MessageType<InsertNotesResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.InsertNotesResponse", [
+            { no: 1, name: "custom_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesResponse
+ */
+export const InsertNotesResponse = new InsertNotesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Semestre$Type extends MessageType<Semestre> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.Semestre", [
+            { no: 1, name: "numero", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.Semestre
+ */
+export const Semestre = new Semestre$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetSemetresRequest$Type extends MessageType<GetSemetresRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetSemetresRequest", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetSemetresRequest
+ */
+export const GetSemetresRequest = new GetSemetresRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetSemetresResponse$Type extends MessageType<GetSemetresResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetSemetresResponse", [
+            { no: 1, name: "semestre", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Semestre }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetSemetresResponse
+ */
+export const GetSemetresResponse = new GetSemetresResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetMatieresRequest$Type extends MessageType<GetMatieresRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetMatieresRequest", [
+            { no: 1, name: "offset", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "limit", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "semstres", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetMatieresRequest
+ */
+export const GetMatieresRequest = new GetMatieresRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetMatieresResponse$Type extends MessageType<GetMatieresResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetMatieresResponse", [
+            { no: 1, name: "matieres", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Matiere },
+            { no: 2, name: "offset", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "limit", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "total", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetMatieresResponse
+ */
+export const GetMatieresResponse = new GetMatieresResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPromotionsRequest$Type extends MessageType<GetPromotionsRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest
+ */
+export const GetPromotionsRequest = new GetPromotionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPromotionsResponse$Type extends MessageType<GetPromotionsResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse", [
+            { no: 1, name: "promotions", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse
+ */
+export const GetPromotionsResponse = new GetPromotionsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LoginRequest$Type extends MessageType<LoginRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.LoginRequest", [
+            { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.LoginRequest
+ */
+export const LoginRequest = new LoginRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LoginResponse$Type extends MessageType<LoginResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.LoginResponse", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.LoginResponse
+ */
+export const LoginResponse = new LoginResponse$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Database
  */
@@ -71,4 +691,32 @@ export const Database = new ServiceType("mg.tonymushah.evalfjuil24.admin.Databas
  */
 export const HelloService = new ServiceType("mg.tonymushah.evalfjuil24.admin.HelloService", [
     { name: "Say", options: {}, I: HelloRequest, O: HelloResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Etudiants
+ */
+export const Etudiants = new ServiceType("mg.tonymushah.evalfjuil24.admin.Etudiants", [
+    { name: "List", options: {}, I: EtudiantsListRequest, O: EtudiantsListResponse },
+    { name: "Info", options: {}, I: EtudiantInfoRequest, O: EtudiantInfoResponse },
+    { name: "ReleveNote", options: {}, I: EtudiantReleveNoteRequest, O: EtudiantReleveNoteResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Notes
+ */
+export const Notes = new ServiceType("mg.tonymushah.evalfjuil24.admin.Notes", [
+    { name: "Insert", serverStreaming: true, clientStreaming: true, options: {}, I: InsertNotesRequest, O: InsertNotesResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Getters
+ */
+export const Getters = new ServiceType("mg.tonymushah.evalfjuil24.admin.Getters", [
+    { name: "Semetres", options: {}, I: GetSemetresRequest, O: GetSemetresResponse },
+    { name: "Matieres", options: {}, I: GetMatieresRequest, O: GetMatieresResponse },
+    { name: "Promotions", options: {}, I: GetPromotionsRequest, O: GetMatieresResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Auth
+ */
+export const Auth = new ServiceType("mg.tonymushah.evalfjuil24.admin.Auth", [
+    { name: "Login", options: {}, I: LoginRequest, O: LoginResponse }
 ]);
