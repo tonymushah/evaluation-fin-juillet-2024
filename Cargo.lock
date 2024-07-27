@@ -1025,6 +1025,7 @@ name = "proto-client"
 version = "0.1.0"
 dependencies = [
  "prost",
+ "protos-commons",
  "tonic",
  "tonic-build",
 ]
