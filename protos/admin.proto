@@ -23,3 +23,84 @@ message HelloResponse {
 service HelloService {
     rpc Say(HelloRequest) returns (HelloResponse);
 }
+
+message Date {
+    uint32 jour = 1;
+    uint32 mois = 2;
+    uint32 annee = 3;
+}
+
+message Etudiant {
+    string numero = 1;
+    string nom = 2;
+    string prenom = 3;
+    Date date_naissance = 4;
+    uint32 age = 5;
+}
+
+message EtudiantsListRequest {
+    repeated string promotion = 1;
+    optional string nom = 2;
+    optional uint32 offset = 3;
+    optional uint32 limit = 4; 
+}
+
+message EtudiantsListResponse {
+    repeated Etudiant list = 1;
+    uint32 offset = 2;
+    uint32 limit = 3;
+    uint64 total = 4;
+}
+
+message EtudiantInfoRequest {
+    required string numero = 1;
+}
+
+message EtudiantInfoResponse {
+    Etudiant current = 1;
+}
+
+message EtudiantReleveNoteRequest {
+    string etudiant = 1;
+    repeated uint32 semestre = 2;
+}
+
+message Matiere {
+    string numero = 1;
+    string nom = 2;
+    uint32 credits = 3;
+}
+
+enum ReleveNoteUnitStatus {
+    VALID = 0;
+    AJOURNEE = 1;
+    COMPENSEE = 2;
+}
+
+message ReleveNoteUnit {
+    Matiere matiere = 1;
+    uint32 valeur = 2;
+    ReleveNoteStatus status = 3;
+}
+
+enum ReleveNoteStatus {
+    VALID = 0;
+    AJOURNEE = 1;
+}
+
+message ReleveNote {
+    repeated ReleveNoteUnit notes = 1;
+    uint64 credits = 2;
+    uint32 semestre = 3;
+    ReleveNoteStatus status = 4;
+}
+
+message EtudiantReleveNoteResponse {
+    repeated ReleveNote releves = 1;
+}
+
+service Etudiants {
+    rpc List(EtudiantsListRequest) returns (EtudiantsListResponse);
+    rpc Info(EtudiantInfoRequest) returns (EtudiantInfoResponse);
+    rpc ReleveNote(EtudiantReleveNoteRequest) returns (EtudiantReleveNoteResponse);
+}
