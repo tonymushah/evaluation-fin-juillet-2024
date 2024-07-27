@@ -2,11 +2,9 @@ syntax = "proto3";
 
 option optimize_for = CODE_SIZE;
 
+import "commons.proto";
+
 package mg.tonymushah.evalfjuil24.client;
-
-message Empty {
-
-}
 
 message HelloRequest {
     string content = 1;
@@ -30,4 +28,33 @@ message LoginResponse {
 
 service Auth {
     rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+message SemestresListRequest {
+    repeated uint32 semestre = 1;
+}
+
+message EtudiantSemestre {
+    uint32 semetre = 1;
+    mg.tonymushah.evalfjuil24.ReleveNoteStatus = 2;
+}
+
+message SemestresListResponse {
+    repeated EtudiantSemestre semetres = 1;
+}
+
+service Semestres {
+    rpc List(SemestresListRequest) returns (SemestresListResponse);
+}
+
+message GetReleveRequest {
+    uint32 semetre = 1;
+}
+
+message GetReleveResponse {
+    mg.tonymushah.evalfjuil24.ReleveNote releves = 1;
+}
+
+service Releve {
+    rpc Get(GetReleveRequest) returns (GetReleveResponse);
 }
