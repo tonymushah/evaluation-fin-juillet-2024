@@ -21,6 +21,16 @@ diesel::table! {
 }
 
 diesel::table! {
+    note (id_note) {
+        id_note -> Uuid,
+        etudiant -> Text,
+        matiere -> Text,
+        submission -> Timestamp,
+        valeur -> Numeric,
+    }
+}
+
+diesel::table! {
     promotion (id_promotion) {
         id_promotion -> Text,
         nom -> Nullable<Text>,
@@ -35,10 +45,13 @@ diesel::table! {
 
 diesel::joinable!(etudiant -> promotion (promotion));
 diesel::joinable!(matiere -> semestre (semestre));
+diesel::joinable!(note -> etudiant (etudiant));
+diesel::joinable!(note -> matiere (matiere));
 
 diesel::allow_tables_to_appear_in_same_query!(
     etudiant,
     matiere,
+    note,
     promotion,
     semestre,
 );
