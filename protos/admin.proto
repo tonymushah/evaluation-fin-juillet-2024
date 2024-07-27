@@ -72,9 +72,9 @@ message Matiere {
 }
 
 enum ReleveNoteUnitStatus {
-    VALID = 0;
-    AJOURNEE = 1;
-    COMPENSEE = 2;
+    M_VALID = 0;
+    M_AJOURNEE = 1;
+    M_COMPENSEE = 2;
 }
 
 message ReleveNoteUnit {
@@ -84,8 +84,8 @@ message ReleveNoteUnit {
 }
 
 enum ReleveNoteStatus {
-    VALID = 0;
-    AJOURNEE = 1;
+    S_VALID = 0;
+    S_AJOURNEE = 1;
 }
 
 message ReleveNote {
@@ -154,8 +154,8 @@ message GetPromotionsResponse {
 
 service Getters {
     rpc Semetres(GetSemetresRequest) returns (GetSemetresResponse);
-    rpc matieres(GetMatieresRequest) returns (GetMatieresResponse);
-    rpc promotions(GetPromotionsRequest) returns (GetMatieresResponse);
+    rpc Matieres(GetMatieresRequest) returns (GetMatieresResponse);
+    rpc Promotions(GetPromotionsRequest) returns (GetMatieresResponse);
 }
 
 message LoginRequest{
