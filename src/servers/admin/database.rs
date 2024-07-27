@@ -1,4 +1,5 @@
-use proto_admin::{database_server::Database, Empty};
+use proto_admin::database_server::Database;
+use protos_commons::Empty;
 use tonic::{Request, Response};
 
 use crate::{servers::TonicRpcResult, DbPool};
