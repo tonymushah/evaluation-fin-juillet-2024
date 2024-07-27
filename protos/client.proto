@@ -36,7 +36,7 @@ message SemestresListRequest {
 
 message EtudiantSemestre {
     uint32 semetre = 1;
-    mg.tonymushah.evalfjuil24.ReleveNoteStatus = 2;
+    mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 2;
 }
 
 message SemestresListResponse {
