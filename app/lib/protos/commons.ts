@@ -91,9 +91,9 @@ export interface ReleveNoteUnit {
      */
     valeur: number;
     /**
-     * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 3;
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus status = 3;
      */
-    status: ReleveNoteStatus;
+    status: ReleveNoteUnitStatus;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.ReleveNote
@@ -108,9 +108,9 @@ export interface ReleveNote {
      */
     credits: bigint;
     /**
-     * @generated from protobuf field: uint32 semestre = 3;
+     * @generated from protobuf field: string semestre = 3;
      */
-    semestre: number;
+    semestre: string;
     /**
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4;
      */
@@ -389,7 +389,7 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
         super("mg.tonymushah.evalfjuil24.ReleveNoteUnit", [
             { no: 1, name: "matiere", kind: "message", T: () => Matiere },
             { no: 2, name: "valeur", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] }
+            { no: 3, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus", ReleveNoteUnitStatus] }
         ]);
     }
     create(value?: PartialMessage<ReleveNoteUnit>): ReleveNoteUnit {
@@ -411,7 +411,7 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
                 case /* uint32 valeur */ 2:
                     message.valeur = reader.uint32();
                     break;
-                case /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status */ 3:
+                case /* mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus status */ 3:
                     message.status = reader.int32();
                     break;
                 default:
@@ -432,7 +432,7 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
         /* uint32 valeur = 2; */
         if (message.valeur !== 0)
             writer.tag(2, WireType.Varint).uint32(message.valeur);
-        /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 3; */
+        /* mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus status = 3; */
         if (message.status !== 0)
             writer.tag(3, WireType.Varint).int32(message.status);
         let u = options.writeUnknownFields;
@@ -451,7 +451,7 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         super("mg.tonymushah.evalfjuil24.ReleveNote", [
             { no: 1, name: "notes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReleveNoteUnit },
             { no: 2, name: "credits", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
-            { no: 3, name: "semestre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "semestre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] }
         ]);
     }
@@ -459,7 +459,7 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.notes = [];
         message.credits = 0n;
-        message.semestre = 0;
+        message.semestre = "";
         message.status = 0;
         if (value !== undefined)
             reflectionMergePartial<ReleveNote>(this, message, value);
@@ -476,8 +476,8 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
                 case /* uint64 credits */ 2:
                     message.credits = reader.uint64().toBigInt();
                     break;
-                case /* uint32 semestre */ 3:
-                    message.semestre = reader.uint32();
+                case /* string semestre */ 3:
+                    message.semestre = reader.string();
                     break;
                 case /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status */ 4:
                     message.status = reader.int32();
@@ -500,9 +500,9 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         /* uint64 credits = 2; */
         if (message.credits !== 0n)
             writer.tag(2, WireType.Varint).uint64(message.credits);
-        /* uint32 semestre = 3; */
-        if (message.semestre !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.semestre);
+        /* string semestre = 3; */
+        if (message.semestre !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.semestre);
         /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4; */
         if (message.status !== 0)
             writer.tag(4, WireType.Varint).int32(message.status);

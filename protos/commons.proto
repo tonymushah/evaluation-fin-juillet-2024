@@ -48,6 +48,6 @@ enum ReleveNoteStatus {
 message ReleveNote {
     repeated ReleveNoteUnit notes = 1;
     uint64 credits = 2;
-    uint32 semestre = 3;
+    string semestre = 3;
     ReleveNoteStatus status = 4;
 }
