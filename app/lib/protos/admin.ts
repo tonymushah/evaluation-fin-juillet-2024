@@ -501,7 +501,7 @@ export const Notes = new ServiceType("mg.tonymushah.evalfjuil24.admin.Notes", [
 export const Getters = new ServiceType("mg.tonymushah.evalfjuil24.admin.Getters", [
     { name: "Semetres", options: {}, I: GetSemetresRequest, O: GetSemetresResponse },
     { name: "Matieres", options: {}, I: GetMatieresRequest, O: GetMatieresResponse },
-    { name: "Promotions", options: {}, I: GetPromotionsRequest, O: GetMatieresResponse }
+    { name: "Promotions", options: {}, I: GetPromotionsRequest, O: GetPromotionsResponse }
 ]);
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Auth

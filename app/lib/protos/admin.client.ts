@@ -5,6 +5,7 @@ import { Auth } from "./admin";
 import type { LoginResponse } from "./admin";
 import type { LoginRequest } from "./admin";
 import { Getters } from "./admin";
+import type { GetPromotionsResponse } from "./admin";
 import type { GetPromotionsRequest } from "./admin";
 import type { GetMatieresResponse } from "./admin";
 import type { GetMatieresRequest } from "./admin";
@@ -170,9 +171,9 @@ export interface IGettersClient {
      */
     matieres(input: GetMatieresRequest, options?: RpcOptions): UnaryCall<GetMatieresRequest, GetMatieresResponse>;
     /**
-     * @generated from protobuf rpc: Promotions(mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest) returns (mg.tonymushah.evalfjuil24.admin.GetMatieresResponse);
+     * @generated from protobuf rpc: Promotions(mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest) returns (mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse);
      */
-    promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetMatieresResponse>;
+    promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetPromotionsResponse>;
 }
 /**
  * @generated from protobuf service mg.tonymushah.evalfjuil24.admin.Getters
@@ -198,11 +199,11 @@ export class GettersClient implements IGettersClient, ServiceInfo {
         return stackIntercept<GetMatieresRequest, GetMatieresResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: Promotions(mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest) returns (mg.tonymushah.evalfjuil24.admin.GetMatieresResponse);
+     * @generated from protobuf rpc: Promotions(mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest) returns (mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse);
      */
-    promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetMatieresResponse> {
+    promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetPromotionsResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetPromotionsRequest, GetMatieresResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<GetPromotionsRequest, GetPromotionsResponse>("unary", this._transport, method, opt, input);
     }
 }
 /**
