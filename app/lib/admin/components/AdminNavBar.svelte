@@ -38,8 +38,8 @@
 		</NavBrand>
 		<NavHamburger />
 		<NavUl>
+			<NavLi href={route('/admin/etudiant')}>Etudiants</NavLi>
 			<NavLi href={route('/admin/imports')}>Imports</NavLi>
-
 			<NavLi on:click={() => reset()}>Reset database</NavLi>
 		</NavUl>
 	</NavContainer>
