@@ -13,6 +13,7 @@
 	import type { Etudiant } from '$lib/protos/commons';
 	import { route } from '$lib/ROUTES';
 	import { goto } from '$app/navigation';
+	import { commonDateToDate } from '$lib';
 
 	export let etudiants: Etudiant[];
 	export let input: string = '';
@@ -26,7 +27,7 @@
 >
 	<EtudiantTableHead />
 	<TableBody tableBodyClass="divide-y">
-		{#each etudiants as { nom, numero, prenom, dateNaissance, age }}
+		{#each etudiants as { nom, numero, prenom, dateNaissance, age, promotion }}
 			<a
 				class="contents"
 				href={route('/admin/etudiant/[etu]', {
@@ -46,7 +47,7 @@
 					</TableBodyCell>
 					<TableBodyCell>
 						{#if dateNaissance}
-							{new Date(dateNaissance.annee, dateNaissance.mois, dateNaissance.jour).toDateString()}
+							{commonDateToDate(dateNaissance).toDateString()}
 						{:else}
 							NaN
 						{/if}
@@ -58,6 +59,9 @@
 						{:else}
 							an
 						{/if}
+					</TableBodyCell>
+					<TableBodyCell>
+						{promotion}
 					</TableBodyCell>
 				</TableBodyRow>
 			</a>

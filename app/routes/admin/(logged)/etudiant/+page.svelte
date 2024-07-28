@@ -14,7 +14,8 @@
 					mois: birthdate.getMonth(),
 					annee: birthdate.getFullYear()
 				},
-				age: dayjs(now()).diff(birthdate, 'years')
+				age: dayjs(now()).diff(birthdate, 'years'),
+				promotion: 'Some promotion'
 			});
 		}
 		return res;

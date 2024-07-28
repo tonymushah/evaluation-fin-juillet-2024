@@ -7,4 +7,5 @@
 	<TableHeadCell>Nom et prenom</TableHeadCell>
 	<TableHeadCell>Date naissance</TableHeadCell>
 	<TableHeadCell>Age</TableHeadCell>
+	<TableHeadCell>Promotion</TableHeadCell>
 </TableHead>
