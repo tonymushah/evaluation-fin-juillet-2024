@@ -24,3 +24,20 @@ diesel::table! {
         optionel -> Bool
     }
 }
+
+diesel::table! {
+    v_etudiant_matiere_note(id_note) {
+        etu -> Text,
+        etu_nom -> Text,
+        etu_prenom -> Text,
+        etu_dtn -> Date,
+        id_note -> Uuid,
+        matiere -> Text,
+        submission -> Timestamp,
+        valeur -> Numeric,
+        matiere_nom -> Text,
+        semestre -> Text,
+        matiere_credits -> Integer,
+        matiere_optionel -> Bool
+    }
+}
