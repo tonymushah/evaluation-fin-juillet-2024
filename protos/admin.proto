@@ -109,7 +109,7 @@ message GetPromotionsResponse {
 service Getters {
     rpc Semetres(GetSemetresRequest) returns (GetSemetresResponse);
     rpc Matieres(GetMatieresRequest) returns (GetMatieresResponse);
-    rpc Promotions(GetPromotionsRequest) returns (GetMatieresResponse);
+    rpc Promotions(GetPromotionsRequest) returns (GetPromotionsResponse);
 }
 
 message LoginRequest{
