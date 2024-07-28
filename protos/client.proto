@@ -58,3 +58,7 @@ message GetReleveResponse {
 service Releve {
     rpc Get(GetReleveRequest) returns (GetReleveResponse);
 }
+
+service Current {
+    rpc Get(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.Etudiant);
+}
