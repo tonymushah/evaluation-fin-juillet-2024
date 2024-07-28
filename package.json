@@ -21,6 +21,7 @@
 		"back:client": "cargo run --bin client"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^8.4.1",
 		"@playwright/test": "^1.28.1",
 		"@protobuf-ts/plugin": "^2.9.4",
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -29,6 +30,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/typography": "^0.5.13",
 		"@types/eslint": "^9.6.0",
+		"@types/lodash-es": "^4.17.12",
 		"@types/node": "^20.14.12",
 		"autoprefixer": "^10.4.19",
 		"eslint": "^9.0.0",
@@ -60,6 +62,8 @@
 		"@fontsource/poppins": "^5.0.14",
 		"@protobuf-ts/grpcweb-transport": "^2.9.4",
 		"@protobuf-ts/runtime": "^2.9.4",
-		"@protobuf-ts/runtime-rpc": "^2.9.4"
+		"@protobuf-ts/runtime-rpc": "^2.9.4",
+		"dayjs": "^1.11.12",
+		"lodash-es": "^4.17.21"
 	}
 }
