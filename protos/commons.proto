@@ -37,7 +37,7 @@ enum ReleveNoteUnitStatus {
 message ReleveNoteUnit {
     Matiere matiere = 1;
     uint32 valeur = 2;
-    ReleveNoteStatus status = 3;
+    ReleveNoteUnitStatus status = 3;
 }
 
 enum ReleveNoteStatus {
