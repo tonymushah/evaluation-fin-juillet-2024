@@ -10,3 +10,17 @@ diesel::table! {
         valeur -> Numeric
     }
 }
+
+diesel::table! {
+    v_matiere_note(id_note) {
+        id_note -> Uuid,
+        etudiant -> Text,
+        matiere -> Text,
+        submission -> Timestamp,
+        valeur -> Numeric,
+        nom -> Text,
+        semestre -> Text,
+        credits -> Integer,
+        optionel -> Bool
+    }
+}
