@@ -27,6 +27,7 @@
 	import { faker } from '@faker-js/faker';
 	import { now, random } from 'lodash-es';
 	import { writable } from 'svelte/store';
+	import { Heading } from 'flowbite-svelte';
 
 	const etudiants = writable<Etudiant[]>(generateEtu());
 </script>
@@ -35,8 +36,8 @@
 	<title>Liste des etudiants | Admin</title>
 </svelte:head>
 
-<div class="content mx-8">
-	<h2 class="mb-4 text-xl font-bold">Liste des etudiants</h2>
+<div class="content z-0 mx-8">
+	<Heading tag="h1" class="mb-4 text-2xl font-bold">Liste des etudiants</Heading>
 
 	<EtudiantTable etudiants={$etudiants} />
 </div>

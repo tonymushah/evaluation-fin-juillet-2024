@@ -1,7 +1,16 @@
 <script lang="ts">
 	import { getGRPCClientContext } from '$lib/contexts/rpc_client';
 	import { route } from '$lib/ROUTES';
-	import { Navbar, NavBrand, NavHamburger, NavLi, NavUl, Toast, Button } from 'flowbite-svelte';
+	import {
+		Navbar,
+		NavBrand,
+		NavHamburger,
+		NavLi,
+		NavUl,
+		Toast,
+		Button,
+		DarkMode
+	} from 'flowbite-svelte';
 	import { derived, writable } from 'svelte/store';
 	import resetDB from './navbar/reset';
 	import { fade, fly } from 'svelte/transition';
@@ -42,6 +51,9 @@
 			<NavLi href={route('/admin/imports')}>Imports</NavLi>
 			<NavLi on:click={() => reset()}>Reset database</NavLi>
 		</NavUl>
+		<div>
+			<DarkMode size="md" />
+		</div>
 	</NavContainer>
 </Navbar>
 
@@ -50,7 +62,7 @@
 		<Toast
 			position="bottom-right"
 			color={$hasError ? 'red' : 'primary'}
-			divClass="w-full max-w-xs p-4 text-gray-500 bg-slate-300 rounded shadow dark:text-gray-400 dark:bg-slate-700 gap-3"
+			divClass="w-full max-w-xs p-4 text-gray-500 bg-slate-300 rounded shadow dark:text-gray-400 dark:bg-slate-700 gap-3 z-10"
 			on:close={() => {
 				isDone.set(false);
 			}}
@@ -64,7 +76,7 @@
 			{:else if $hasError}
 				<p class="flex flex-col">
 					Oh no! we caught some error:
-					<span class=" text-red-700">{$errors?.message}</span>
+					<span class=" text-red-700 dark:text-red-300">{$errors?.message}</span>
 				</p>
 			{:else}
 				Somewhat done??

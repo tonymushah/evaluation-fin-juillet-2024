@@ -25,7 +25,7 @@
 	placeholder="Recherche par nom et utiliser (Promotion:p1,p2) pour filtrer"
 >
 	<EtudiantTableHead />
-	<TableBody>
+	<TableBody tableBodyClass="divide-y">
 		{#each etudiants as { nom, numero, prenom, dateNaissance, age }}
 			<a
 				class="contents"
