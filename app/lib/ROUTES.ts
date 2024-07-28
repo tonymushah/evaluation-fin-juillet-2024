@@ -19,6 +19,7 @@ const PAGES = {
     return `/admin/etudiant/${params.etu}/${params.semestre}`
   },
   "/admin/imports": `/admin/imports`,
+  "/admin/note-insert": `/admin/note-insert`,
   "/admin/login": `/admin/login`,
   "/client": `/client`,
   "/client/semestre/[sem]": (params: { sem: (string | number) }) => {
@@ -153,7 +154,7 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 * ```
 */
 export type KIT_ROUTES = {
-  PAGES: { '/': never, '/admin': never, '/admin/etudiant': never, '/admin/etudiant/[etu]': 'etu', '/admin/etudiant/[etu]/[semestre]': 'etu' | 'semestre', '/admin/imports': never, '/admin/login': never, '/client': never, '/client/semestre/[sem]': 'sem', '/client/login': never }
+  PAGES: { '/': never, '/admin': never, '/admin/etudiant': never, '/admin/etudiant/[etu]': 'etu', '/admin/etudiant/[etu]/[semestre]': 'etu' | 'semestre', '/admin/imports': never, '/admin/note-insert': never, '/admin/login': never, '/client': never, '/client/semestre/[sem]': 'sem', '/client/login': never }
   SERVERS: Record<string, never>
   ACTIONS: Record<string, never>
   LINKS: Record<string, never>
