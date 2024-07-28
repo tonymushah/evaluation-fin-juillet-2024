@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { commonDateToDate } from '$lib';
-	import { Heading, P } from 'flowbite-svelte';
+	import { Heading, Hr, P } from 'flowbite-svelte';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
@@ -8,13 +8,9 @@
 	$: isAges = etudiant.age > 1;
 </script>
 
-<svelte:head>
-	<title>Etudiant {etudiant.numero}</title>
-</svelte:head>
-
 <div class="mx-10">
 	<div>
-		<Heading tag="h1" class="mb-4 text-4xl font-bold">
+		<Heading tag="h1">
 			{etudiant.nom}
 			{etudiant.prenom}
 		</Heading>
@@ -27,6 +23,5 @@
 		{/if}
 		<P size="xl">Promotion: {etudiant.promotion}</P>
 	</div>
-
 	<slot />
 </div>
