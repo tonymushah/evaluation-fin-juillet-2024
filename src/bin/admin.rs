@@ -2,9 +2,15 @@ use std::env;
 
 use evaluation_fin_juillet_2024::{self as backend};
 
-use backend::servers::admin::{DatabaseService, HelloServ};
+use backend::servers::admin::{
+    AuthService, DatabaseService, EtudiantsService, GettersService, HelloServ, NotesService,
+};
 
-use proto_admin::{database_server::DatabaseServer, hello_service_server::HelloServiceServer};
+use proto_admin::{
+    auth_server::AuthServer, database_server::DatabaseServer, etudiants_server::EtudiantsServer,
+    getters_server::GettersServer, hello_service_server::HelloServiceServer,
+    notes_server::NotesServer,
+};
 use tonic::transport::Server;
 
 #[tokio::main]
@@ -21,6 +27,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .accept_http1(true)
         .add_service(tonic_web::enable(HelloServiceServer::new(HelloServ)))
         .add_service(tonic_web::enable(DatabaseServer::new(DatabaseService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(AuthServer::new(AuthService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(EtudiantsServer::new(EtudiantsService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(GettersServer::new(GettersService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(NotesServer::new(NotesService {
             pool: pool.clone(),
         })))
         .serve(addr)
