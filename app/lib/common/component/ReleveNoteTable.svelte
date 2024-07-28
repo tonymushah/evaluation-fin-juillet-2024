@@ -20,9 +20,9 @@
 	};
 </script>
 
-<div class="flex w-screen items-center justify-center">
+<div class="flex w-full items-center justify-center">
 	<div class="w-11/12">
-		<Heading tag="h2" class="text-xl">Semestre: {data.semestre}</Heading>
+		<Heading tag="h2" class="text-3xl">Semestre: {data.semestre}</Heading>
 		<P>
 			Status:
 			{#if data.status == ReleveNoteStatus.S_VALID}
@@ -31,6 +31,7 @@
 				Ajournee
 			{/if}
 		</P>
+		<P>Credits obtenue: {data.credits}</P>
 		<Table>
 			<TableHead>
 				<TableHeadCell>Matiere</TableHeadCell>
