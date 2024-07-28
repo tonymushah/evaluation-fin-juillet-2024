@@ -19,6 +19,7 @@ message Etudiant {
     string prenom = 3;
     Date date_naissance = 4;
     uint32 age = 5;
+    string promotion = 6;
 }
 
 message Matiere {

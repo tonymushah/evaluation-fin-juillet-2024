@@ -56,6 +56,10 @@ export interface Etudiant {
      * @generated from protobuf field: uint32 age = 5;
      */
     age: number;
+    /**
+     * @generated from protobuf field: string promotion = 6;
+     */
+    promotion: string;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.Matiere
@@ -238,7 +242,8 @@ class Etudiant$Type extends MessageType<Etudiant> {
             { no: 2, name: "nom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "prenom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "date_naissance", kind: "message", T: () => Date },
-            { no: 5, name: "age", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 5, name: "age", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 6, name: "promotion", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<Etudiant>): Etudiant {
@@ -247,6 +252,7 @@ class Etudiant$Type extends MessageType<Etudiant> {
         message.nom = "";
         message.prenom = "";
         message.age = 0;
+        message.promotion = "";
         if (value !== undefined)
             reflectionMergePartial<Etudiant>(this, message, value);
         return message;
@@ -270,6 +276,9 @@ class Etudiant$Type extends MessageType<Etudiant> {
                     break;
                 case /* uint32 age */ 5:
                     message.age = reader.uint32();
+                    break;
+                case /* string promotion */ 6:
+                    message.promotion = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -298,6 +307,9 @@ class Etudiant$Type extends MessageType<Etudiant> {
         /* uint32 age = 5; */
         if (message.age !== 0)
             writer.tag(5, WireType.Varint).uint32(message.age);
+        /* string promotion = 6; */
+        if (message.promotion !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.promotion);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
