@@ -39,7 +39,7 @@ pub struct VMatiereNote {
 }
 
 // VEtudiantMatiereNote struct
-#[derive(Queryable, Selectable)]
+#[derive(Queryable, Selectable, Clone)]
 #[diesel(table_name = v_etudiant_matiere_note)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct VEtudiantMatiereNote {

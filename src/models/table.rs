@@ -1,3 +1,4 @@
+pub mod etudiant_note;
 pub mod sem_mat;
 
 use bigdecimal::BigDecimal;
@@ -110,4 +111,14 @@ pub struct Promotion {
 #[diesel(table_name = semestre)]
 pub struct Semestre {
     pub id_sem: String,
+}
+
+impl From<Matiere> for protos_commons::Matiere {
+    fn from(value: Matiere) -> Self {
+        Self {
+            numero: value.id_matiere,
+            nom: value.nom,
+            credits: value.credits as u32,
+        }
+    }
 }

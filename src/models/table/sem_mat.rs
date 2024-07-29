@@ -70,6 +70,22 @@ impl SemestreMatieres {
         let sems_mat = SemestreMatiere::fold_matieres(matieres.into_iter());
         Ok(Self(sems_mat))
     }
+    pub fn is_matiere_there(&self, mat: &String) -> bool {
+        self.0.iter().any(|sem_mat| match sem_mat {
+            SemestreMatiere::Choix(mats) => mats.iter().any(|mat_| &mat_.id_matiere == mat),
+            SemestreMatiere::Unique(mat_) => &mat_.id_matiere == mat,
+        })
+    }
+    pub fn is_matiere_optionel(&self, mat: &String) -> Option<bool> {
+        if self.is_matiere_there(mat) {
+            None
+        } else {
+            Some(self.0.iter().any(|sem_mat| match sem_mat {
+                SemestreMatiere::Choix(mats) => mats.iter().any(|mat_| &mat_.id_matiere == mat),
+                SemestreMatiere::Unique(_) => false,
+            }))
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
