@@ -102,12 +102,15 @@ impl EtudiantNotes {
         });
     }
     pub fn moyenne(&self) -> f64 {
-        let units = self.0.iter().flat_map(|m| m.unit()).collect::<Vec<_>>();
+        let units = self.into_unique();
         if units.is_empty() {
             0f64
         } else {
             units.iter().map(|u| u.note).sum::<f64>() / units.len() as f64
         }
+    }
+    pub fn into_unique(&self) -> Vec<EtudiantNoteUnit> {
+        self.0.iter().flat_map(|m| m.unit()).collect::<Vec<_>>()
     }
 }
 
