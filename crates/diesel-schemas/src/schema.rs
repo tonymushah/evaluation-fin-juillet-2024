@@ -15,7 +15,7 @@ diesel::table! {
     matiere (id_matiere) {
         id_matiere -> Text,
         credits -> Int4,
-        semestre -> Int4,
+        semestre -> Text,
         optionel -> Nullable<Bool>,
         nom -> Text,
     }
@@ -40,7 +40,7 @@ diesel::table! {
 
 diesel::table! {
     semestre (id_sem) {
-        id_sem -> Int4,
+        id_sem -> Text,
     }
 }
 

@@ -50,7 +50,7 @@ pub struct Etudiant {
 pub struct Matiere {
     pub id_matiere: String,
     pub credits: i32,
-    pub semestre: i32,
+    pub semestre: String,
     pub optionel: Option<bool>,
     pub nom: String,
 }
@@ -103,9 +103,9 @@ pub struct Promotion {
 }
 
 // Semestre struct
-#[derive(Queryable, Insertable, Selectable, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Queryable, Insertable, Selectable, Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 #[diesel(table_name = semestre)]
 pub struct Semestre {
-    pub id_sem: i32,
+    pub id_sem: String,
 }
