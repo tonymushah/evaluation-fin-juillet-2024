@@ -7,6 +7,7 @@ diesel::table! {
         prenom -> Text,
         date_naissance -> Date,
         promotion -> Text,
+        genre -> Int4,
     }
 }
 

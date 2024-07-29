@@ -6,6 +6,7 @@ SELECT
     V_EN.ETU_PRENOM,
     V_EN.ETU_DTN,
     V_EN.ETU_PROM,
+    V_EN.etu_genre,
     V_EN.ID_NOTE,
     V_EN.MATIERE,
     V_EN.SUBMISSION,
