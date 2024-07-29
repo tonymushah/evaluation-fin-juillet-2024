@@ -2,7 +2,7 @@ use std::env;
 
 use diesel::connection::SimpleConnection;
 
-use crate::DbPoolConnection;
+use crate::{seed::seed, DbPoolConnection};
 
 pub fn reset_db(con: &mut DbPoolConnection) -> crate::Result<()> {
     let user = env::var("DBUSER")?;
@@ -14,5 +14,6 @@ pub fn reset_db(con: &mut DbPoolConnection) -> crate::Result<()> {
         eprintln!("{:?}", e);
         e
     })?;
+    seed(con)?;
     Ok(())
 }
