@@ -1,6 +1,14 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+    configuration_note (code) {
+        code -> Text,
+        config -> Text,
+        valeur -> Numeric,
+    }
+}
+
+diesel::table! {
     etudiant (etu) {
         etu -> Text,
         nom -> Text,
@@ -50,6 +58,7 @@ diesel::joinable!(note -> etudiant (etudiant));
 diesel::joinable!(note -> matiere (matiere));
 
 diesel::allow_tables_to_appear_in_same_query!(
+    configuration_note,
     etudiant,
     matiere,
     note,
