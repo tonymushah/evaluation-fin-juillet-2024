@@ -8,6 +8,10 @@
 	$: notes = form?.errors.notes;
 </script>
 
+<svelte:head>
+	<title>Import de donnee</title>
+</svelte:head>
+
 <div class="flex w-screen justify-center">
 	<div class="flex w-2/3 flex-col gap-4">
 		<Heading>Import de donnees</Heading>
