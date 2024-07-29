@@ -12,6 +12,11 @@ message Date {
     uint32 annee = 3;
 }
 
+enum Genre {
+    G_AUTRE = 0;
+    G_MASCULIN = 1;
+    G_FEMININ = 2;
+}
 
 message Etudiant {
     string numero = 1;
@@ -20,6 +25,7 @@ message Etudiant {
     Date date_naissance = 4;
     uint32 age = 5;
     string promotion = 6;
+    Genre genre = 7;
 }
 
 message Matiere {
