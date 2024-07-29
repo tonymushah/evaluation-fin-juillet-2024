@@ -2,6 +2,7 @@
 	import { commonDateToDate } from '$lib';
 	import { Heading, Hr, P } from 'flowbite-svelte';
 	import type { LayoutServerData } from './$types';
+	import { Genre } from '$lib/protos/commons';
 
 	export let data: LayoutServerData;
 	$: etudiant = data.etudiant;
@@ -22,6 +23,15 @@
 			</P>
 		{/if}
 		<P size="xl">Promotion: {etudiant.promotion}</P>
+		<P size="xl"
+			>Genre: {#if etudiant.genre == Genre.G_FEMININ}
+				Feminin
+			{:else if etudiant.genre == Genre.G_MASCULIN}
+				Masculin
+			{:else}
+				Autre
+			{/if}</P
+		>
 	</div>
 	<slot />
 </div>

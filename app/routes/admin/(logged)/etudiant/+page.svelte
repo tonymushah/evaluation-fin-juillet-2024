@@ -15,7 +15,8 @@
 					annee: birthdate.getFullYear()
 				},
 				age: dayjs(now()).diff(birthdate, 'years'),
-				promotion: 'Some promotion'
+				promotion: 'Some promotion',
+				genre: Genre.G_AUTRE
 			});
 		}
 		return res;
@@ -24,7 +25,7 @@
 
 <script lang="ts">
 	import EtudiantTable from '$lib/admin/components/etudiant-page/EtudiantTable.svelte';
-	import type { Etudiant } from '$lib/protos/commons';
+	import { Genre, type Etudiant } from '$lib/protos/commons';
 	import { faker } from '@faker-js/faker';
 	import { now, random } from 'lodash-es';
 	import { writable } from 'svelte/store';

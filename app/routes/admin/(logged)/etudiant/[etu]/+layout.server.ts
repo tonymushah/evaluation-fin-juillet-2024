@@ -1,5 +1,5 @@
 import { dateToCommonDate } from '$lib';
-import type { Etudiant } from '$lib/protos/commons';
+import { Genre, type Etudiant } from '$lib/protos/commons';
 import dayjs from 'dayjs';
 import type { LayoutServerLoad } from './$types';
 import { faker } from '@faker-js/faker';
@@ -14,7 +14,8 @@ export const load: LayoutServerLoad = async function () {
 		dateNaissance: dateToCommonDate(birthday),
 		numero: 'Numero etu',
 		age: dayjs(new Date()).diff(birthday, 'years'),
-		promotion: 'P15'
+		promotion: 'P15',
+		genre: Genre.G_AUTRE
 	};
 	return {
 		etudiant
