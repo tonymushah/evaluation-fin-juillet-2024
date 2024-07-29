@@ -1053,6 +1053,7 @@ name = "protos-commons"
 version = "0.1.0"
 dependencies = [
  "prost",
+ "time",
  "tonic",
  "tonic-build",
 ]

@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 tonic.workspace = true
 prost.workspace = true
+time.workspace = true
 
 [build-dependencies]
 tonic-build = { workspace = true }
