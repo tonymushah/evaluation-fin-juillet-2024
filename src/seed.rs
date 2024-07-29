@@ -313,7 +313,7 @@ pub fn seed_matiere(con: &mut PgConnection) -> QueryResult<()> {
             nom: "Projet de développement".into(),
         },
         Matiere {
-            id_matiere: "ORG303".into(),
+            id_matiere: "ORG304".into(),
             credits: 4,
             semestre: "S6".into(),
             optionel: Some(false),
