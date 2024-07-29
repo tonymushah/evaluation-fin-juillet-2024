@@ -2,6 +2,7 @@ mod error;
 pub mod models;
 pub mod paginate;
 pub mod reset;
+pub mod seed;
 pub mod servers;
 pub mod token;
 
