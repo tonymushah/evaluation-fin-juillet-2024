@@ -20,7 +20,8 @@
 		"back:admin": "cargo run --bin admin",
 		"back:client": "cargo run --bin client",
 		"back:seed": "cargo run --bin seed",
-		"back:reset-no-seed": "cargo run --bin reset-no-seed"
+		"back:reset-no-seed": "cargo run --bin reset-no-seed",
+		"back:reset": "pnpm back:reset-no-seed && pnpm back:seed"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.4.1",
