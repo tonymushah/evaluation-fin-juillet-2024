@@ -78,6 +78,7 @@ proto-client.workspace = true
 proto-admin.workspace = true
 protos-commons.workspace = true
 itu-csv-import.workspace = true
+tempfile = "3.10.1"
 
 [build-dependencies]
 tonic-build = { workspace = true }
