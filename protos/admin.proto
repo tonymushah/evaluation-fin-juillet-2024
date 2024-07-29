@@ -63,10 +63,12 @@ message InsertNotesRequest {
     string etudiant = 1;
     string matiere = 2;
     uint32 note = 3;
+    string req_id = 4;
 }
 
 message InsertNotesResponse {
     string custom_message = 1;
+    string req_id = 5;
 }
 
 service Notes {
