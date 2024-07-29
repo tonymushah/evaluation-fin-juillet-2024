@@ -25,3 +25,13 @@ impl TryFrom<Date> for time::Date {
         )
     }
 }
+
+impl From<u8> for Genre {
+    fn from(value: u8) -> Self {
+        match value {
+            1 => Self::GMasculin,
+            2 => Self::GFeminin,
+            _ => Self::GAutre,
+        }
+    }
+}
