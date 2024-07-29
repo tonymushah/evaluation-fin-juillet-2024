@@ -5,8 +5,22 @@ use time::{Date, PrimitiveDateTime};
 use uuid::Uuid;
 
 // Etudiant struct
-#[derive(Queryable, Insertable)]
+#[derive(
+    Queryable,
+    Insertable,
+    Selectable,
+    AsChangeset,
+    Clone,
+    Debug,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    Identifiable,
+)]
+#[diesel(primary_key(etu))]
 #[diesel(table_name = etudiant)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Etudiant {
     pub etu: String,
     pub nom: String,
@@ -17,8 +31,22 @@ pub struct Etudiant {
 }
 
 // Matiere struct
-#[derive(Queryable, Insertable)]
+#[derive(
+    Queryable,
+    Insertable,
+    Selectable,
+    AsChangeset,
+    Clone,
+    Debug,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    Identifiable,
+)]
+#[diesel(primary_key(id_matiere))]
 #[diesel(table_name = matiere)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Matiere {
     pub id_matiere: String,
     pub credits: i32,
@@ -28,8 +56,22 @@ pub struct Matiere {
 }
 
 // Note struct
-#[derive(Queryable, Insertable)]
+#[derive(
+    Queryable,
+    Insertable,
+    Selectable,
+    AsChangeset,
+    Clone,
+    Debug,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    Identifiable,
+)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 #[diesel(table_name = note)]
+#[diesel(primary_key(id_note))]
 pub struct Note {
     pub id_note: Uuid,
     pub etudiant: String,
@@ -39,15 +81,30 @@ pub struct Note {
 }
 
 // Promotion struct
-#[derive(Queryable, Insertable)]
+#[derive(
+    Queryable,
+    Insertable,
+    Selectable,
+    AsChangeset,
+    Clone,
+    Debug,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    Identifiable,
+)]
+#[diesel(primary_key(id_promotion))]
 #[diesel(table_name = promotion)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Promotion {
     pub id_promotion: String,
     pub nom: Option<String>,
 }
 
 // Semestre struct
-#[derive(Queryable, Insertable)]
+#[derive(Queryable, Insertable, Selectable, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 #[diesel(table_name = semestre)]
 pub struct Semestre {
     pub id_sem: i32,
