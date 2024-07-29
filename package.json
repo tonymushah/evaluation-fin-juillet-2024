@@ -18,7 +18,8 @@
 		"proto:client": "protoc --ts_opt server_none --ts_out ./app/lib/protos/ --proto_path protos protos/client.proto",
 		"proto:all": "pnpm proto:commons && pnpm proto:admin && pnpm proto:client",
 		"back:admin": "cargo run --bin admin",
-		"back:client": "cargo run --bin client"
+		"back:client": "cargo run --bin client",
+		"back:seed": "cargo run --bin seed"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.4.1",
