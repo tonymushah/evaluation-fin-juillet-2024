@@ -42,7 +42,7 @@ impl EtudiantNote {
 #[derive(Debug, Clone)]
 pub struct EtudiantNotes(pub Vec<EtudiantNote>);
 
-fn now() -> PrimitiveDateTime {
+pub fn now() -> PrimitiveDateTime {
     let now = OffsetDateTime::now_utc();
     PrimitiveDateTime::new(now.date(), now.time())
 }

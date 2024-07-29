@@ -5,7 +5,8 @@ pub mod sem_mat;
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use diesel_schemas::schema::*;
-use time::{Date, PrimitiveDateTime};
+use etudiant_note::now;
+use time::{Date, OffsetDateTime, PrimitiveDateTime};
 use uuid::Uuid;
 
 // Etudiant struct
@@ -120,6 +121,26 @@ impl From<Matiere> for protos_commons::Matiere {
             numero: value.id_matiere,
             nom: value.nom,
             credits: value.credits as u32,
+        }
+    }
+}
+
+impl From<Etudiant> for protos_commons::Etudiant {
+    fn from(value: Etudiant) -> Self {
+        let age_dur = OffsetDateTime::now_utc().date() - value.date_naissance;
+        let age = {
+            let now = now().date();
+            let next = now + age_dur;
+            next.year() - now.year()
+        } as u32;
+        Self {
+            numero: value.etu,
+            nom: value.nom,
+            prenom: value.prenom,
+            date_naissance: Some(value.date_naissance.into()),
+            age,
+            promotion: value.promotion,
+            genre: (value.genre as u8).into(),
         }
     }
 }
