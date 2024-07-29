@@ -1,0 +1,12 @@
+[package]
+name = "itu-csv-import"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+csv.workspace = true
+diesel-schemas.workspace = true
+diesel.workspace = true
+serde.workspace = true
+time.workspace = true
+uuid = { workspace = true }

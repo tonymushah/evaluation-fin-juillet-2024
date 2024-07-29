@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/diesel-schemas",
+    "crates/imports",
     "crates/macros",
     "crates/protos/admin",
     "crates/protos/client",
@@ -41,6 +42,7 @@ tonic-build = { version = "0.11" }
 proto-admin = { path = "./crates/protos/admin" }
 proto-client = { path = "./crates/protos/client" }
 protos-commons = { path = "./crates/protos/commons" }
+itu-csv-import = { path = "./crates/imports" }
 
 [package]
 name = "evaluation-fin-juillet-2024"
@@ -74,6 +76,7 @@ diesel-schemas.workspace = true
 proto-client.workspace = true
 proto-admin.workspace = true
 protos-commons.workspace = true
+itu-csv-import.workspace = true
 
 [build-dependencies]
 tonic-build = { workspace = true }
