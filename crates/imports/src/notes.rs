@@ -1,7 +1,11 @@
+pub mod models;
+
 use std::io::Read;
 
 use bigdecimal::{BigDecimal, FromPrimitive};
 use csv::Reader;
+use diesel::{insert_into, PgConnection, QueryResult, RunQueryDsl};
+use models::{collect_etudiant, collect_promotions, Note, Promotion};
 use serde::{Deserialize, Deserializer};
 use time::Date;
 
@@ -47,6 +51,35 @@ pub struct CSVNote {
 impl CSVNote {
     pub fn read<R: Read>(mut reader: Reader<R>) -> Vec<Self> {
         reader.deserialize::<Self>().flatten().collect()
+    }
+    pub fn inserts(values: Vec<Self>, con: &mut PgConnection) -> QueryResult<()> {
+        let promotions = collect_promotions(values.iter());
+        let etudiants = collect_etudiant(values.iter());
+        {
+            use diesel_schemas::schema::promotion::dsl::*;
+            insert_into(promotion)
+                .values(
+                    promotions
+                        .into_iter()
+                        .map(|prom| Promotion {
+                            id_promotion: prom,
+                            nom: None,
+                        })
+                        .collect::<Vec<Promotion>>(),
+                )
+                .execute(con)?;
+        }
+        {
+            use diesel_schemas::schema::etudiant::dsl::*;
+            insert_into(etudiant).values(etudiants).execute(con)?;
+        }
+        {
+            use diesel_schemas::schema::note::dsl::*;
+            insert_into(note)
+                .values(values.into_iter().map(|v| v.into()).collect::<Vec<Note>>())
+                .execute(con)?;
+        }
+        Ok(())
     }
 }
 
