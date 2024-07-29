@@ -301,7 +301,7 @@ pub fn seed_matiere(con: &mut PgConnection) -> QueryResult<()> {
         Matiere {
             id_matiere: "INF303".into(),
             credits: 6,
-            semestre: "S5".into(),
+            semestre: "S6".into(),
             optionel: Some(true),
             nom: "Multimédia".into(),
         },
