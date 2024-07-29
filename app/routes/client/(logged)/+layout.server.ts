@@ -4,7 +4,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
 	return {
-		// token: getToken(cookies),
+		token: getToken(cookies),
 		backUrl: CLIENT_BACK_URL
 	};
 };
