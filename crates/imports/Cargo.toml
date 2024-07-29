@@ -10,3 +10,7 @@ diesel.workspace = true
 serde.workspace = true
 time.workspace = true
 uuid = { workspace = true }
+bigdecimal.workspace = true
+
+[dev-dependencies]
+anyhow.workspace = true
