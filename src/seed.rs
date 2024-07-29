@@ -332,6 +332,6 @@ pub fn seed_matiere(con: &mut PgConnection) -> QueryResult<()> {
 
 pub fn seed(con: &mut PgConnection) -> QueryResult<()> {
     seed_semestre(con)?;
-    seed_semestre(con)?;
+    seed_matiere(con)?;
     Ok(())
 }
