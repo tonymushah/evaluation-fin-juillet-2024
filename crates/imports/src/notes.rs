@@ -17,6 +17,29 @@ pub enum Genre {
     Feminin,
 }
 
+#[derive(Clone, Copy, Debug)]
+pub struct ParseGenreError(pub(crate) ());
+
+impl std::fmt::Display for ParseGenreError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Invalid input for parsing a int to Genre")
+    }
+}
+
+impl std::error::Error for ParseGenreError {}
+
+impl TryFrom<u8> for Genre {
+    type Error = ParseGenreError;
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            1 => Ok(Self::Masculin),
+            2 => Ok(Self::Feminin),
+            _ => Err(ParseGenreError(())),
+        }
+    }
+}
+
 impl From<Genre> for u8 {
     fn from(value: Genre) -> Self {
         match value {

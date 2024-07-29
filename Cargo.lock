@@ -714,6 +714,7 @@ dependencies = [
  "diesel",
  "diesel-schemas",
  "serde",
+ "thiserror",
  "time",
  "uuid",
 ]
