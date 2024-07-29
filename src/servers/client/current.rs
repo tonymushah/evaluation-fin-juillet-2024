@@ -1,8 +1,16 @@
+use diesel::prelude::*;
+use diesel_schemas::schema::etudiant;
 use proto_client::current_server::Current;
 use protos_commons::{Empty, Etudiant};
-use tonic::Request;
+use tonic::{Request, Response, Status};
 
-use crate::{servers::TonicRpcResult, tonic_not_implemented, DbPool};
+use crate::{
+    models::table::Etudiant as CEtudiant,
+    servers::TonicRpcResult,
+    spawn_blocking,
+    token::{ClientHmac, ExtractSessionData},
+    DbPool,
+};
 
 #[derive(Debug, Clone)]
 pub struct CurrentService {
@@ -11,7 +19,22 @@ pub struct CurrentService {
 
 #[tonic::async_trait]
 impl Current for CurrentService {
-    async fn get(&self, _request: Request<Empty>) -> TonicRpcResult<Etudiant> {
-        tonic_not_implemented()
+    async fn get(&self, request: Request<Empty>) -> TonicRpcResult<Etudiant> {
+        let mut con = self
+            .pool
+            .get()
+            .map_err(|e| Status::internal(e.to_string()))?;
+        let id = request.get_current(&{ ClientHmac::extract_client() })?;
+        Ok(Response::new(
+            spawn_blocking(move || -> crate::Result<CEtudiant> {
+                use self::etudiant::dsl::*;
+                Ok(etudiant
+                    .filter(etu.eq(id))
+                    .select(CEtudiant::as_select())
+                    .get_result(&mut con)?)
+            })
+            .await??
+            .into(),
+        ))
     }
 }
