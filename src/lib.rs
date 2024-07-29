@@ -1,4 +1,5 @@
 mod error;
+pub mod models;
 pub mod paginate;
 pub mod reset;
 pub mod servers;
