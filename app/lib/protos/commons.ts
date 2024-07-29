@@ -60,6 +60,10 @@ export interface Etudiant {
      * @generated from protobuf field: string promotion = 6;
      */
     promotion: string;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.Genre genre = 7;
+     */
+    genre: Genre;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.Matiere
@@ -115,6 +119,23 @@ export interface ReleveNote {
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4;
      */
     status: ReleveNoteStatus;
+}
+/**
+ * @generated from protobuf enum mg.tonymushah.evalfjuil24.Genre
+ */
+export enum Genre {
+    /**
+     * @generated from protobuf enum value: G_AUTRE = 0;
+     */
+    G_AUTRE = 0,
+    /**
+     * @generated from protobuf enum value: G_MASCULIN = 1;
+     */
+    G_MASCULIN = 1,
+    /**
+     * @generated from protobuf enum value: G_FEMININ = 2;
+     */
+    G_FEMININ = 2
 }
 /**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus
@@ -243,7 +264,8 @@ class Etudiant$Type extends MessageType<Etudiant> {
             { no: 3, name: "prenom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "date_naissance", kind: "message", T: () => Date },
             { no: 5, name: "age", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 6, name: "promotion", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "promotion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "genre", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.Genre", Genre] }
         ]);
     }
     create(value?: PartialMessage<Etudiant>): Etudiant {
@@ -253,6 +275,7 @@ class Etudiant$Type extends MessageType<Etudiant> {
         message.prenom = "";
         message.age = 0;
         message.promotion = "";
+        message.genre = 0;
         if (value !== undefined)
             reflectionMergePartial<Etudiant>(this, message, value);
         return message;
@@ -279,6 +302,9 @@ class Etudiant$Type extends MessageType<Etudiant> {
                     break;
                 case /* string promotion */ 6:
                     message.promotion = reader.string();
+                    break;
+                case /* mg.tonymushah.evalfjuil24.Genre genre */ 7:
+                    message.genre = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -310,6 +336,9 @@ class Etudiant$Type extends MessageType<Etudiant> {
         /* string promotion = 6; */
         if (message.promotion !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.promotion);
+        /* mg.tonymushah.evalfjuil24.Genre genre = 7; */
+        if (message.genre !== 0)
+            writer.tag(7, WireType.Varint).int32(message.genre);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
