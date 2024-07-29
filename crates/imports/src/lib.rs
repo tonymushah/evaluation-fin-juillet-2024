@@ -1,6 +1,7 @@
 use serde::{Deserialize, Deserializer};
 use time::{format_description, Date, PrimitiveDateTime, Time};
 
+pub mod config;
 pub mod notes;
 
 pub use notes::{CSVNote, Genre};

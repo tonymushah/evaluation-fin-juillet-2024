@@ -106,7 +106,7 @@ impl CSVNote {
     }
 }
 
-fn deserealize_decimale<'de, D>(de: D) -> Result<BigDecimal, D::Error>
+pub fn deserealize_decimale<'de, D>(de: D) -> Result<BigDecimal, D::Error>
 where
     D: Deserializer<'de>,
 {
