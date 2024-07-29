@@ -6,9 +6,12 @@
 
 	export let data: LayoutServerData;
 	initGRPCClientContext({
-		baseUrl: data.backUrl
+		baseUrl: data.backUrl,
+		meta: {
+			authorization: data.token
+		}
 	});
-	//setToken(data.token);
+	setToken(data.token);
 </script>
 
 <ClientNavBar />
