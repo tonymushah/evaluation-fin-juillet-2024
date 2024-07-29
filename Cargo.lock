@@ -412,6 +412,7 @@ dependencies = [
 name = "evaluation-fin-juillet-2024"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "bigdecimal",
  "convert_case",
  "csv",

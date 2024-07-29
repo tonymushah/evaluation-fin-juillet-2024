@@ -1,3 +1,5 @@
+pub mod sem_mat;
+
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use diesel_schemas::schema::*;

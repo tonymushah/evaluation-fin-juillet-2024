@@ -81,3 +81,6 @@ itu-csv-import.workspace = true
 
 [build-dependencies]
 tonic-build = { workspace = true }
+
+[dev-dependencies]
+anyhow.workspace = true
