@@ -7,6 +7,10 @@
 	let ajournee = 16;
 </script>
 
+<svelte:head>
+	<title>Admin</title>
+</svelte:head>
+
 <div class="mx-10">
 	<section>
 		<Heading tag="h2">Statistique etudiant</Heading>
