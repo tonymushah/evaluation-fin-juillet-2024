@@ -1,9 +1,10 @@
 use diesel::prelude::*;
 use diesel_schemas::schema::etudiant;
+use jwt::SignWithKey;
 use proto_client::{auth_server::Auth, LoginRequest, LoginResponse};
-use tonic::{Request, Response};
+use tonic::{Request, Response, Status};
 
-use crate::{servers::TonicRpcResult, DbPool};
+use crate::{servers::TonicRpcResult, token::ClientHmac, DbPool};
 
 #[derive(Debug, Clone)]
 pub struct AuthService {
@@ -15,7 +16,7 @@ impl Auth for AuthService {
     async fn login(&self, request: Request<LoginRequest>) -> TonicRpcResult<LoginResponse> {
         let pool = self.pool.clone();
         let numero = request.get_ref().numero.clone();
-
+        let hmac = ClientHmac::extract_client();
         let token = crate::spawn_blocking(move || -> crate::Result<String> {
             use self::etudiant::dsl::*;
             let mut con = pool.get()?;
@@ -25,7 +26,9 @@ impl Auth for AuthService {
                 .get_result::<String>(&mut con);
             Ok(res?)
         })
-        .await??;
+        .await??
+        .sign_with_key(&*hmac)
+        .map_err(|e| Status::unknown(e.to_string()))?;
         Ok(Response::new(LoginResponse { token }))
     }
 }
