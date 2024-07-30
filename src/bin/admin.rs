@@ -3,13 +3,14 @@ use std::env;
 use evaluation_fin_juillet_2024::{self as backend};
 
 use backend::servers::admin::{
-    AuthService, DatabaseService, EtudiantsService, GettersService, HelloServ, NotesService,
+    AuthService, DatabaseService, EtudiantsService, GettersService, HelloServ, ImportService,
+    NotesService,
 };
 
 use proto_admin::{
     auth_server::AuthServer, database_server::DatabaseServer, etudiants_server::EtudiantsServer,
     getters_server::GettersServer, hello_service_server::HelloServiceServer,
-    notes_server::NotesServer,
+    imports_server::ImportsServer, notes_server::NotesServer,
 };
 use tonic::transport::Server;
 
@@ -39,6 +40,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             pool: pool.clone(),
         })))
         .add_service(tonic_web::enable(NotesServer::new(NotesService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(ImportsServer::new(ImportService {
             pool: pool.clone(),
         })))
         .serve(addr)

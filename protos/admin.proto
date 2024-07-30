@@ -135,7 +135,7 @@ enum ImportType {
 
 message ImportDataMessage {
     ImportType i_type = 1;
-    repeated bytes buf = 2;
+    bytes buf = 2;
 }
 
 service Imports {

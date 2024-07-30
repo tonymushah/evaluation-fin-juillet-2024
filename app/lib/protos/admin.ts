@@ -238,6 +238,36 @@ export interface LoginResponse {
      */
     token: string;
 }
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.ImportDataMessage
+ */
+export interface ImportDataMessage {
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.admin.ImportType i_type = 1;
+     */
+    iType: ImportType;
+    /**
+     * @generated from protobuf field: repeated bytes buf = 2;
+     */
+    buf: Uint8Array[];
+}
+/**
+ * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ImportType
+ */
+export enum ImportType {
+    /**
+     * @generated from protobuf enum value: IT_NONE = 0;
+     */
+    IT_NONE = 0,
+    /**
+     * @generated from protobuf enum value: IT_NOTE = 1;
+     */
+    IT_NOTE = 1,
+    /**
+     * @generated from protobuf enum value: IT_CONFIG = 2;
+     */
+    IT_CONFIG = 2
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class HelloRequest$Type extends MessageType<HelloRequest> {
     constructor() {
@@ -479,6 +509,19 @@ class LoginResponse$Type extends MessageType<LoginResponse> {
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.LoginResponse
  */
 export const LoginResponse = new LoginResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ImportDataMessage$Type extends MessageType<ImportDataMessage> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.ImportDataMessage", [
+            { no: 1, name: "i_type", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.admin.ImportType", ImportType] },
+            { no: 2, name: "buf", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.ImportDataMessage
+ */
+export const ImportDataMessage = new ImportDataMessage$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Database
  */
@@ -518,4 +561,10 @@ export const Getters = new ServiceType("mg.tonymushah.evalfjuil24.admin.Getters"
  */
 export const Auth = new ServiceType("mg.tonymushah.evalfjuil24.admin.Auth", [
     { name: "Login", options: {}, I: LoginRequest, O: LoginResponse }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Imports
+ */
+export const Imports = new ServiceType("mg.tonymushah.evalfjuil24.admin.Imports", [
+    { name: "import", clientStreaming: true, options: {}, I: ImportDataMessage, O: Empty }
 ]);
