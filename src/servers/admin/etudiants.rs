@@ -90,6 +90,7 @@ impl Etudiants for EtudiantsService {
                 semestre: sem.clone(),
             })
             .collect::<Vec<_>>();
+        //println!("{:#?} - {}", sems, etu);
         let pool = self.pool.clone();
         let releves = crate::spawn_blocking(move || -> crate::Result<Vec<ReleveNote>> {
             let mut con = pool.get()?;
@@ -99,6 +100,7 @@ impl Etudiants for EtudiantsService {
                 .collect())
         })
         .await??;
+        //println!("{:#?}", releves);
         Ok(Response::new(EtudiantReleveNoteResponse { releves }))
     }
 }

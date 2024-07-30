@@ -16,14 +16,11 @@
 	import { commonDateToDate } from '$lib';
 
 	export let etudiants: Etudiant[];
-	export let input: string = '';
 </script>
 
-<TableSearch
-	bind:inputValue={input}
+<Table
 	inputClass="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 ps-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 	hoverable
-	placeholder="Recherche par nom et utiliser (Promotion:p1,p2) pour filtrer"
 >
 	<EtudiantTableHead />
 	<TableBody tableBodyClass="divide-y">
@@ -67,4 +64,4 @@
 			</a>
 		{/each}
 	</TableBody>
-</TableSearch>
+</Table>

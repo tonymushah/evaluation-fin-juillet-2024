@@ -1,23 +1,20 @@
-import { dateToCommonDate } from '$lib';
-import { Genre, type Etudiant } from '$lib/protos/commons';
-import dayjs from 'dayjs';
+import { EtudiantInfoResponse } from '$lib/protos/admin';
+import { EtudiantsClient } from '$lib/protos/admin.client';
+import { adminClient } from '$lib/server/protoclients';
 import type { LayoutServerLoad } from './$types';
-import { faker } from '@faker-js/faker';
 
 export const ssr = true;
 
-export const load: LayoutServerLoad = async function () {
-	const birthday = faker.date.birthdate();
-	const etudiant: Etudiant = {
-		nom: faker.person.lastName(),
-		prenom: faker.person.firstName(),
-		dateNaissance: dateToCommonDate(birthday),
-		numero: 'Numero etu',
-		age: dayjs(new Date()).diff(birthday, 'years'),
-		promotion: 'P15',
-		genre: Genre.G_AUTRE
-	};
+export const load: LayoutServerLoad = async function ({ params }) {
+	const etudiant_client = new EtudiantsClient(adminClient);
+	const res: EtudiantInfoResponse = EtudiantInfoResponse.toJson(
+		(
+			await etudiant_client.info({
+				numero: params.etu
+			})
+		).response
+	);
 	return {
-		etudiant
+		etudiant: res.current!
 	};
 };

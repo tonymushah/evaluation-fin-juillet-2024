@@ -24,9 +24,9 @@
 		{/if}
 		<P size="xl">Promotion: {etudiant.promotion}</P>
 		<P size="xl"
-			>Genre: {#if etudiant.genre == Genre.G_FEMININ}
+			>Genre: {#if Genre[etudiant.genre] == Genre.G_FEMININ}
 				Feminin
-			{:else if etudiant.genre == Genre.G_MASCULIN}
+			{:else if Genre[etudiant.genre] == Genre.G_MASCULIN}
 				Masculin
 			{:else}
 				Autre

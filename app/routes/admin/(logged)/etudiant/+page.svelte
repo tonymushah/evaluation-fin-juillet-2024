@@ -1,37 +1,16 @@
 <script lang="ts" context="module">
-	import dayjs from 'dayjs';
-	function generateEtu(limit = 10): Etudiant[] {
-		const rand = random(0, limit, false);
-		let res: Etudiant[] = [];
-		for (let index = 0; index < rand; index++) {
-			const birthdate = faker.date.birthdate();
-			res.push({
-				nom: faker.person.firstName(),
-				prenom: faker.person.lastName(),
-				numero: `ETU${index}`,
-				dateNaissance: {
-					jour: birthdate.getDate(),
-					mois: birthdate.getMonth(),
-					annee: birthdate.getFullYear()
-				},
-				age: dayjs(now()).diff(birthdate, 'years'),
-				promotion: 'Some promotion',
-				genre: Genre.G_AUTRE
-			});
-		}
-		return res;
-	}
+	import { Button, Input, Label } from 'flowbite-svelte';
 </script>
 
 <script lang="ts">
 	import EtudiantTable from '$lib/admin/components/etudiant-page/EtudiantTable.svelte';
-	import { Genre, type Etudiant } from '$lib/protos/commons';
-	import { faker } from '@faker-js/faker';
-	import { now, random } from 'lodash-es';
-	import { writable } from 'svelte/store';
+	import { type Etudiant } from '$lib/protos/commons';
 	import { Heading } from 'flowbite-svelte';
+	import { SearchSolid } from 'flowbite-svelte-icons';
+	import type { PageServerData, PageServerLoad } from './$types';
 
-	const etudiants = writable<Etudiant[]>(generateEtu());
+	export let data: PageServerData;
+	$: etudiants = data.res.list;
 </script>
 
 <svelte:head>
@@ -40,6 +19,25 @@
 
 <div class="content z-0 mx-8">
 	<Heading tag="h1" class="mb-4 text-2xl font-bold">Liste des etudiants</Heading>
-
-	<EtudiantTable etudiants={$etudiants} />
+	<section>
+		<form method="get">
+			<div class="mb-6 grid gap-6 md:grid-cols-2">
+				<div>
+					<Label for="nom" class="mb-2">Nom</Label>
+					<Input type="text" id="nom" name="nom" placeholder="John" />
+				</div>
+				<div>
+					<Label for="nom" class="mb-2">Promotion</Label>
+					<Input type="text" id="prenom" placeholder="P5, P4,..." />
+				</div>
+			</div>
+			<Button>
+				<SearchSolid />
+				Rechercher
+			</Button>
+		</form>
+	</section>
+	<section class="mt-10">
+		<EtudiantTable {etudiants} />
+	</section>
 </div>
