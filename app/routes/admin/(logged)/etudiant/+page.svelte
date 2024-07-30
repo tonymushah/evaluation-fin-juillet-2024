@@ -38,6 +38,8 @@
 		</form>
 	</section>
 	<section class="mt-10">
-		<EtudiantTable {etudiants} />
+		{#if etudiants}
+			<EtudiantTable {etudiants} />
+		{/if}
 	</section>
 </div>
