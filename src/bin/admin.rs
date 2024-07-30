@@ -25,26 +25,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .parse()?;
     let pool = backend::etablish_connection();
     Server::builder()
-        .accept_http1(true)
-        .add_service(tonic_web::enable(HelloServiceServer::new(HelloServ)))
-        .add_service(tonic_web::enable(DatabaseServer::new(DatabaseService {
+        .add_service(HelloServiceServer::new(HelloServ))
+        .add_service(DatabaseServer::new(DatabaseService { pool: pool.clone() }))
+        .add_service(AuthServer::new(AuthService { pool: pool.clone() }))
+        .add_service(EtudiantsServer::new(EtudiantsService {
             pool: pool.clone(),
-        })))
-        .add_service(tonic_web::enable(AuthServer::new(AuthService {
-            pool: pool.clone(),
-        })))
-        .add_service(tonic_web::enable(EtudiantsServer::new(EtudiantsService {
-            pool: pool.clone(),
-        })))
-        .add_service(tonic_web::enable(GettersServer::new(GettersService {
-            pool: pool.clone(),
-        })))
-        .add_service(tonic_web::enable(NotesServer::new(NotesService {
-            pool: pool.clone(),
-        })))
-        .add_service(tonic_web::enable(ImportsServer::new(ImportService {
-            pool: pool.clone(),
-        })))
+        }))
+        .add_service(GettersServer::new(GettersService { pool: pool.clone() }))
+        .add_service(NotesServer::new(NotesService { pool: pool.clone() }))
+        .add_service(ImportsServer::new(ImportService { pool: pool.clone() }))
         .serve(addr)
         .await?;
     Ok(())

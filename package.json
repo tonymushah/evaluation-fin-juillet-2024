@@ -19,6 +19,8 @@
 		"proto:all": "pnpm proto:commons && pnpm proto:admin && pnpm proto:client",
 		"back:admin": "cargo run --bin admin",
 		"back:client": "cargo run --bin client",
+		"back:admin-web": "cargo run --bin admin-web",
+		"back:client-web": "cargo run --bin client-web",
 		"back:seed": "cargo run --bin seed",
 		"back:reset-no-seed": "cargo run --bin reset-no-seed",
 		"back:reset": "pnpm back:reset-no-seed && pnpm back:seed"
@@ -64,6 +66,8 @@
 		"@fontsource/fira-mono": "^5.0.13",
 		"@fontsource/freckle-face": "^5.0.20",
 		"@fontsource/poppins": "^5.0.14",
+		"@grpc/grpc-js": "^1.11.1",
+		"@protobuf-ts/grpc-transport": "^2.9.4",
 		"@protobuf-ts/grpcweb-transport": "^2.9.4",
 		"@protobuf-ts/runtime": "^2.9.4",
 		"@protobuf-ts/runtime-rpc": "^2.9.4",

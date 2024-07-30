@@ -16,7 +16,7 @@ use tonic::transport::Server;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenvy::dotenv().ok();
-    let addr = env::var("CLIENT_BACK_ADDR")
+    let addr = env::var("CLIENT_BACK_ADDR_WEB")
         .map(|r| {
             println!("{r}");
             r
@@ -24,13 +24,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .parse()?;
     let pool = backend::etablish_connection();
     Server::builder()
-        .add_service(HelloServiceServer::new(HelloServ))
-        .add_service(AuthServer::new(AuthService { pool: pool.clone() }))
-        .add_service(CurrentServer::new(CurrentService { pool: pool.clone() }))
-        .add_service(ReleveServer::new(ReleveService { pool: pool.clone() }))
-        .add_service(SemestresServer::new(SemestresService {
+        .accept_http1(true)
+        .add_service(tonic_web::enable(HelloServiceServer::new(HelloServ)))
+        .add_service(tonic_web::enable(AuthServer::new(AuthService {
             pool: pool.clone(),
-        }))
+        })))
+        .add_service(tonic_web::enable(CurrentServer::new(CurrentService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(ReleveServer::new(ReleveService {
+            pool: pool.clone(),
+        })))
+        .add_service(tonic_web::enable(SemestresServer::new(SemestresService {
+            pool: pool.clone(),
+        })))
         .serve(addr)
         .await?;
     Ok(())

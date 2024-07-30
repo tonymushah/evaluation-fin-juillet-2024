@@ -13,7 +13,12 @@
 
 	export let data: ReleveNote;
 	$: isAjournee = (matiere: string) => {
-		return data.notes.find((mat) => mat.matiere?.numero == matiere)?.status == 'M_AJOURNEE';
+		return (
+			ReleveNoteUnitStatus[
+				data.notes.find((mat) => mat.matiere?.numero == matiere)?.status ??
+					ReleveNoteUnitStatus.M_VALID
+			] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_AJOURNEE]
+		);
 	};
 </script>
 
@@ -61,9 +66,9 @@
 							{/if}
 						</TableBodyCell>
 						<TableBodyCell>
-							{#if note.status == 'M_AJOURNEE'}
+							{#if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_AJOURNEE]}
 								Ajournee
-							{:else if note.status == 'M_COMPENSEE'}
+							{:else if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_COMPENSEE]}
 								Compensee
 							{:else}
 								Valide
