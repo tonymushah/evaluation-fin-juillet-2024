@@ -2,7 +2,7 @@ use diesel::prelude::*;
 use diesel_schemas::schema::etudiant;
 use proto_client::current_server::Current;
 use protos_commons::{Empty, Etudiant};
-use tonic::{Request, Response, Status};
+use tonic::{Request, Response};
 
 use crate::{
     models::table::Etudiant as CEtudiant,
