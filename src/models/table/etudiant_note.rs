@@ -128,6 +128,10 @@ impl GetReleveNote {
     }
 }
 
+pub fn get_etudiant_notes(etudiant: &String) -> QueryResult<Vec<ReleveNote>> {
+    todo!()
+}
+
 impl EtudiantNotes {
     pub fn seed(&mut self, v_notes: &[VEtudiantMatiereNote]) {
         self.0.iter_mut().for_each(|note| {

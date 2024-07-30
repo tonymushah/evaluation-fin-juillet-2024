@@ -1,7 +1,7 @@
 pub mod config_note;
 pub mod etudiant_note;
+pub mod is_admis;
 pub mod sem_mat;
-pub mod validation_note;
 
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
