@@ -3,9 +3,10 @@ use proto_admin::{
     EtudiantReleveNoteRequest, EtudiantReleveNoteResponse, EtudiantsListRequest,
     EtudiantsListResponse,
 };
-use tonic::Request;
+use protos_commons::ReleveNote;
+use tonic::{Request, Response};
 
-use crate::{servers::TonicRpcResult, DbPool};
+use crate::{models::table::etudiant_note::GetReleveNote, servers::TonicRpcResult, DbPool};
 
 #[derive(Debug, Clone)]
 pub struct EtudiantsService {
@@ -30,6 +31,26 @@ impl Etudiants for EtudiantsService {
         &self,
         request: Request<EtudiantReleveNoteRequest>,
     ) -> TonicRpcResult<EtudiantReleveNoteResponse> {
-        crate::tonic_not_implemented()
+        let EtudiantReleveNoteRequest {
+            etudiant: etu,
+            semestre: sems,
+        } = request.get_ref();
+        let get_releves = sems
+            .iter()
+            .map(|sem| GetReleveNote {
+                etudiant: etu.clone(),
+                semestre: sem.clone(),
+            })
+            .collect::<Vec<_>>();
+        let pool = self.pool.clone();
+        let releves = crate::spawn_blocking(move || -> crate::Result<Vec<ReleveNote>> {
+            let mut con = pool.get()?;
+            Ok(get_releves
+                .into_iter()
+                .flat_map(|get| get.get(&mut con))
+                .collect())
+        })
+        .await??;
+        Ok(Response::new(EtudiantReleveNoteResponse { releves }))
     }
 }
