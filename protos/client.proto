@@ -35,7 +35,7 @@ message SemestresListRequest {
 }
 
 message EtudiantSemestre {
-    uint32 semetre = 1;
+    string semetre = 1;
     mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 2;
     float moyenne = 3;
 }
