@@ -20,14 +20,12 @@ pub struct CurrentService {
 #[tonic::async_trait]
 impl Current for CurrentService {
     async fn get(&self, request: Request<Empty>) -> TonicRpcResult<Etudiant> {
-        let mut con = self
-            .pool
-            .get()
-            .map_err(|e| Status::internal(e.to_string()))?;
+        let pool = self.pool.clone();
         let id = request.get_current(&{ ClientHmac::extract_client() })?;
         Ok(Response::new(
             spawn_blocking(move || -> crate::Result<CEtudiant> {
                 use self::etudiant::dsl::*;
+                let mut con = pool.get()?;
                 Ok(etudiant
                     .filter(etu.eq(id))
                     .select(CEtudiant::as_select())
