@@ -76,7 +76,7 @@ service Notes {
 }
 
 message Semestre {
-    uint32 numero = 1;
+    string numero = 1;
 }
 
 message GetSemetresRequest {
