@@ -3,11 +3,12 @@ use std::cmp::Ordering;
 use bigdecimal::ToPrimitive;
 use diesel::{prelude::*, QueryResult};
 use diesel_schemas::view::v_etudiant_matiere_note;
+use protos_commons::{ReleveNote, ReleveNoteStatus, ReleveNoteUnit, ReleveNoteUnitStatus};
 use time::{OffsetDateTime, PrimitiveDateTime};
 
 use crate::models::view::VEtudiantMatiereNote;
 
-use super::sem_mat::SemestreMatieres;
+use super::{config_note::ConfigNote, sem_mat::SemestreMatieres, Matiere};
 
 #[derive(Debug, Clone)]
 pub struct GetReleveNote {
@@ -60,12 +61,70 @@ impl GetReleveNote {
             .select(VEtudiantMatiereNote::as_select())
             .load(con)
     }
-    pub fn get(&self, con: &mut PgConnection) -> QueryResult<EtudiantNotes> {
+    pub fn get_notes(&self, con: &mut PgConnection) -> QueryResult<EtudiantNotes> {
         let vnotes = self.get_v_notes(con)?;
         let matieres = self.get_semestre_matiere(con)?;
         let mut notes: EtudiantNotes = (&matieres).into();
         notes.seed(&vnotes);
         Ok(notes)
+    }
+    fn get_matiere(&self, mat: String, con: &mut PgConnection) -> QueryResult<Matiere> {
+        use diesel_schemas::schema::matiere::dsl::*;
+        matiere
+            .filter(id_matiere.eq(mat))
+            .select(Matiere::as_select())
+            .get_result(con)
+    }
+    pub fn get(&self, con: &mut PgConnection) -> QueryResult<ReleveNote> {
+        let conf_ajournee = ConfigNote::limite_note_ajournee(con);
+        let conf_limit_comp = ConfigNote::nb_matiere_max_componse(con);
+        let moyenne_generale = ConfigNote::moyenne_generale(con);
+        let notes = self.get_notes(con)?.into_unique();
+        let has_ajournee = notes.iter().any(|m| m.note < conf_ajournee);
+        let much_componsed = notes
+            .iter()
+            .filter(|m| conf_ajournee <= m.note && m.note <= moyenne_generale)
+            .count();
+        let moyenne = notes.iter().map(|u| u.note).sum::<f64>() / notes.len() as f64;
+        let mut r_note_units: Vec<ReleveNoteUnit> = Vec::new();
+        for note in notes {
+            let matiere = self.get_matiere(note.matiere.clone(), con)?;
+            r_note_units.push(ReleveNoteUnit {
+                matiere: Some(matiere.into()),
+                valeur: note.note as f32,
+                status: if note.note < conf_ajournee {
+                    ReleveNoteUnitStatus::MAjournee.into()
+                } else if conf_ajournee <= note.note && note.note < moyenne_generale {
+                    if much_componsed > (conf_limit_comp as usize) {
+                        ReleveNoteUnitStatus::MAjournee.into()
+                    } else {
+                        ReleveNoteUnitStatus::MCompensee.into()
+                    }
+                } else {
+                    ReleveNoteUnitStatus::MValid.into()
+                },
+            });
+        }
+        Ok(ReleveNote {
+            credits: r_note_units
+                .iter()
+                .flat_map(|note| {
+                    if note.status == Into::<i32>::into(ReleveNoteUnitStatus::MAjournee) {
+                        None
+                    } else {
+                        Some(note.matiere.as_ref()?.credits as u64)
+                    }
+                })
+                .sum::<u64>(),
+            semestre: self.semestre.clone(),
+            status: if has_ajournee || much_componsed > (conf_limit_comp as usize) {
+                ReleveNoteStatus::SAjournee.into()
+            } else {
+                ReleveNoteStatus::SValid.into()
+            },
+            moyenne: moyenne as f32,
+            notes: r_note_units,
+        })
     }
 }
 
@@ -145,6 +204,7 @@ impl From<&SemestreMatieres> for EtudiantNotes {
 mod tests {
     use bigdecimal::{BigDecimal, FromPrimitive};
     use diesel::{insert_into, prelude::*};
+    use protos_commons::ReleveNoteStatus;
     use time::Date;
     use uuid::Uuid;
 
@@ -214,9 +274,23 @@ mod tests {
             etudiant: "ETU001844".into(),
             semestre: "S5".into(),
         }
-        .get(&mut con)?;
+        .get_notes(&mut con)?;
         assert_eq!(data.0.len(), 6);
         println!("{}", data.moyenne());
+        Ok(())
+    }
+    #[test]
+    fn test_releve() -> anyhow::Result<()> {
+        let pool = crate::etablish_connection();
+        let mut con = pool.get()?;
+        let _ = con.transaction(|con| seed(con));
+        let data = GetReleveNote {
+            etudiant: "ETU001844".into(),
+            semestre: "S5".into(),
+        }
+        .get(&mut con)?;
+        assert_eq!(data.status, Into::<i32>::into(ReleveNoteStatus::SAjournee));
+        println!("{}", data.credits);
         Ok(())
     }
 }

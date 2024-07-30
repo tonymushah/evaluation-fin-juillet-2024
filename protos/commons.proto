@@ -42,7 +42,7 @@ enum ReleveNoteUnitStatus {
 
 message ReleveNoteUnit {
     Matiere matiere = 1;
-    uint32 valeur = 2;
+    float valeur = 2;
     ReleveNoteUnitStatus status = 3;
 }
 
@@ -56,4 +56,5 @@ message ReleveNote {
     uint64 credits = 2;
     string semestre = 3;
     ReleveNoteStatus status = 4;
+    float moyenne = 5;
 }

@@ -31,10 +31,13 @@ impl ConfigNote {
     pub fn get(self, con: &mut PgConnection) -> BigDecimal {
         self.get_from_db(con).unwrap_or(self.default_value())
     }
-    pub fn limite_note_ajournee(con: &mut PgConnection) -> BigDecimal {
-        Self::LimiteNoteAjournee.get(con)
+    pub fn limite_note_ajournee(con: &mut PgConnection) -> f64 {
+        Self::LimiteNoteAjournee.get(con).to_f64().unwrap_or(6f64)
     }
     pub fn nb_matiere_max_componse(con: &mut PgConnection) -> u32 {
         Self::NbMatiereMaxComponse.get(con).to_u32().unwrap_or(2)
+    }
+    pub fn moyenne_generale(_con: &mut PgConnection) -> f64 {
+        10f64
     }
 }
