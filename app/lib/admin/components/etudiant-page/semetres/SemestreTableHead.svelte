@@ -4,5 +4,6 @@
 
 <TableHead>
 	<TableHeadCell>Semestre</TableHeadCell>
+	<TableHeadCell>Moyenne</TableHeadCell>
 	<TableHeadCell>Status</TableHeadCell>
 </TableHead>

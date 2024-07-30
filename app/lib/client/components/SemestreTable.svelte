@@ -16,7 +16,7 @@
 <Table hoverable shadow color="blue">
 	<SemestreTableHead />
 	<TableBody tableBodyClass="divide-y">
-		{#each data as { semestre, status }}
+		{#each data as { semestre, status, moyenne }}
 			<a
 				class="contents"
 				href={route('/client/semestre/[sem]', {
@@ -28,6 +28,9 @@
 						<P>
 							{semestre}
 						</P>
+					</TableBodyCell>
+					<TableBodyCell>
+						{moyenne}
 					</TableBodyCell>
 					<TableBodyCell>
 						<P>

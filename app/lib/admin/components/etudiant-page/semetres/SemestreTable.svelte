@@ -3,6 +3,7 @@
 	export type EtudiantSemestre = {
 		semestre: string;
 		status: ReleveNoteStatus;
+		moyenne: number;
 	};
 </script>
 
@@ -20,7 +21,7 @@
 <Table hoverable shadow color="blue">
 	<SemestreTableHead />
 	<TableBody tableBodyClass="divide-y">
-		{#each data as { semestre, status }}
+		{#each data as { semestre, status, moyenne }}
 			<a
 				class="contents"
 				href={route('/admin/etudiant/[etu]/[semestre]', {
@@ -33,6 +34,9 @@
 						<P>
 							{semestre}
 						</P>
+					</TableBodyCell>
+					<TableBodyCell>
+						{moyenne}
 					</TableBodyCell>
 					<TableBodyCell>
 						<P>
