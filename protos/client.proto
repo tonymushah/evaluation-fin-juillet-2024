@@ -48,7 +48,7 @@ service Semestres {
 }
 
 message GetReleveRequest {
-    uint32 semetre = 1;
+    string semetre = 1;
 }
 
 message GetReleveResponse {
