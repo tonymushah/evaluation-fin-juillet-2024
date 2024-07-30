@@ -57,13 +57,17 @@ export interface SemestresListRequest {
  */
 export interface EtudiantSemestre {
     /**
-     * @generated from protobuf field: uint32 semetre = 1;
+     * @generated from protobuf field: string semetre = 1;
      */
-    semetre: number;
+    semetre: string;
     /**
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 2;
      */
     status: ReleveNoteStatus;
+    /**
+     * @generated from protobuf field: float moyenne = 3;
+     */
+    moyenne: number;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.client.SemestresListResponse
@@ -156,8 +160,9 @@ export const SemestresListRequest = new SemestresListRequest$Type();
 class EtudiantSemestre$Type extends MessageType<EtudiantSemestre> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.client.EtudiantSemestre", [
-            { no: 1, name: "semetre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] }
+            { no: 1, name: "semetre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] },
+            { no: 3, name: "moyenne", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
 }
