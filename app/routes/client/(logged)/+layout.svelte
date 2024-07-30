@@ -11,7 +11,7 @@
 			authorization: data.token
 		}
 	});
-	setToken(data.token);
+	//setToken(data.token);
 </script>
 
 <ClientNavBar />
