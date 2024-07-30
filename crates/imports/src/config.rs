@@ -7,7 +7,7 @@ use serde::Deserialize;
 use crate::notes::deserealize_decimale;
 use std::io::Read;
 
-#[derive(Debug, Clone, Deserialize, Insertable)]
+#[derive(Debug, Clone, Deserialize, Insertable, Selectable)]
 #[diesel(table_name = configuration_note)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CSVConfigNote {

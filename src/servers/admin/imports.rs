@@ -1,11 +1,11 @@
-use std::io::{BufReader, BufWriter, Write};
+use std::io::{BufReader, BufWriter, Seek, Write};
 
 use csv::Reader;
 use diesel::insert_into;
 use itu_csv_import::{config::CSVConfigNote, CSVNote};
 use proto_admin::{imports_server::Imports, ImportDataMessage};
 use protos_commons::Empty;
-use tempfile::tempfile;
+use tempfile::{tempfile, tempfile_in};
 use tokio_stream::StreamExt;
 use tonic::{Request, Response, Status, Streaming};
 
@@ -30,6 +30,7 @@ impl Imports for ImportService {
             let mut notes_writer = BufWriter::new(&mut notes);
             while let Some(input) = request.get_mut().next().await {
                 let input = input?;
+                println!("getted req {} - {}", input.i_type, input.buf.len());
                 match input.i_type {
                     2 => {
                         config_file_writer.write_all(&input.buf)?;
@@ -39,30 +40,43 @@ impl Imports for ImportService {
                     }
                     _ => {}
                 };
+                println!("writing")
             }
             config_file_writer.flush()?;
             notes_writer.flush()?;
+            println!("flushing")
         }
+        notes.rewind()?;
+        config_file.rewind()?;
         let pool1 = pool.clone();
-        crate::spawn_blocking(move || -> crate::Result<()> {
+        if let Err(e) = crate::spawn_blocking(move || -> crate::Result<()> {
             let vs = CSVNote::read(Reader::from_reader(BufReader::new(notes)));
+            println!("vs {:#?}", vs);
             let mut con = pool1.get()?;
             CSVNote::inserts(vs, &mut con)?;
             Ok(())
         })
-        .await??;
+        .await?
+        {
+            eprintln!("{:?}", e);
+        };
         let pool2 = pool.clone();
-        crate::spawn_blocking(move || -> crate::Result<()> {
+        if let Err(e) = crate::spawn_blocking(move || -> crate::Result<()> {
             use diesel::prelude::*;
             use diesel_schemas::schema::configuration_note::dsl::*;
             let cfg_notes = CSVConfigNote::read(Reader::from_reader(BufReader::new(config_file)));
+            println!("notes {}", cfg_notes.len());
+            println!("notes {:#?}", cfg_notes);
             let mut con = pool2.get()?;
             insert_into(configuration_note)
-                .values(cfg_notes)
+                .values(&cfg_notes)
                 .execute(&mut con)?;
             Ok(())
         })
-        .await??;
+        .await?
+        {
+            eprintln!("{:?}", e);
+        };
         Ok(Response::new(Empty {}))
     }
 }

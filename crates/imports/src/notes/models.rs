@@ -8,7 +8,7 @@ use uuid::Uuid;
 pub fn collect_promotions<'a, I: Iterator<Item = &'a CSVNote>>(iter: I) -> Vec<String> {
     iter.fold(Vec::new(), |mut acc, note| {
         if !acc.contains(&note.prom) {
-            acc.push(note.nom.clone());
+            acc.push(note.prom.clone());
         }
         acc
     })

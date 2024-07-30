@@ -77,7 +77,10 @@ impl CSVNote {
     }
     pub fn inserts(values: Vec<Self>, con: &mut PgConnection) -> QueryResult<()> {
         let promotions = collect_promotions(values.iter());
+        //promotions.dedup();
+        //println!("{:#?}", promotions);
         let etudiants = collect_etudiant(values.iter());
+        //etudiants.dedup_by(|a, b| a.etu == b.etu);
         {
             use diesel_schemas::schema::promotion::dsl::*;
             insert_into(promotion)
