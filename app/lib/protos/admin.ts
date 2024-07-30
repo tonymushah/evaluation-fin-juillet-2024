@@ -247,9 +247,9 @@ export interface ImportDataMessage {
      */
     iType: ImportType;
     /**
-     * @generated from protobuf field: repeated bytes buf = 2;
+     * @generated from protobuf field: bytes buf = 2;
      */
-    buf: Uint8Array[];
+    buf: Uint8Array;
 }
 /**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ImportType
@@ -514,7 +514,7 @@ class ImportDataMessage$Type extends MessageType<ImportDataMessage> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.ImportDataMessage", [
             { no: 1, name: "i_type", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.admin.ImportType", ImportType] },
-            { no: 2, name: "buf", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 12 /*ScalarType.BYTES*/ }
+            { no: 2, name: "buf", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
 }
