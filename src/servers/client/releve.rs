@@ -1,7 +1,13 @@
 use proto_client::{releve_server::Releve, GetReleveRequest, GetReleveResponse};
-use tonic::Request;
+use protos_commons::ReleveNote;
+use tonic::{Request, Response};
 
-use crate::{servers::TonicRpcResult, tonic_not_implemented, DbPool};
+use crate::{
+    models::table::etudiant_note::GetReleveNote,
+    servers::TonicRpcResult,
+    token::{ClientHmac, ExtractSessionData},
+    DbPool,
+};
 
 #[derive(Debug, Clone)]
 pub struct ReleveService {
@@ -11,6 +17,19 @@ pub struct ReleveService {
 #[tonic::async_trait]
 impl Releve for ReleveService {
     async fn get(&self, request: Request<GetReleveRequest>) -> TonicRpcResult<GetReleveResponse> {
-        tonic_not_implemented()
+        let id = request.get_current(&{ ClientHmac::extract_client() })?;
+        let pool = self.pool.clone();
+        let getter = GetReleveNote {
+            etudiant: id,
+            semestre: request.get_ref().semetre.clone(),
+        };
+        let releve = crate::spawn_blocking(move || -> crate::Result<ReleveNote> {
+            let mut con = pool.get()?;
+            Ok(getter.get(&mut con)?)
+        })
+        .await??;
+        Ok(Response::new(GetReleveResponse {
+            releves: Some(releve),
+        }))
     }
 }
