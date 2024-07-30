@@ -46,7 +46,7 @@ message EtudiantInfoResponse {
 
 message EtudiantReleveNoteRequest {
     string etudiant = 1;
-    repeated uint32 semestre = 2;
+    repeated string semestre = 2;
 }
 
 message EtudiantReleveNoteResponse {
@@ -90,7 +90,7 @@ message GetSemetresResponse {
 message GetMatieresRequest {
     optional uint32 offset = 1;
     optional uint32 limit = 2;
-    repeated uint32 semstres = 3;
+    repeated string semstres = 3;
 }
 
 message GetMatieresResponse {
