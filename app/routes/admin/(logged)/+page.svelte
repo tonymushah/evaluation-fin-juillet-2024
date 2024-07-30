@@ -3,8 +3,8 @@
 	import { route } from '$lib/ROUTES';
 
 	import { Button, Heading, Hr, P } from 'flowbite-svelte';
-	let admis = 12;
-	let ajournee = 16;
+	let admis = NaN;
+	let ajournee = NaN;
 </script>
 
 <svelte:head>
@@ -14,8 +14,20 @@
 <div class="mx-10">
 	<section>
 		<Heading tag="h2">Statistique etudiant</Heading>
-		<P>Admis en licence: {admis}</P>
-		<P>Ajourees: {ajournee}</P>
+		<P
+			>Admis en licence: {#if isNaN(admis)}
+				NaN
+			{:else}
+				{admis}
+			{/if}
+		</P>
+		<P
+			>Ajourees: {#if isNaN(ajournee)}
+				NaN
+			{:else}
+				{ajournee}
+			{/if}</P
+		>
 	</section>
 	<Hr />
 	<section>
