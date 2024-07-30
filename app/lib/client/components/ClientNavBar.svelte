@@ -11,7 +11,7 @@
 		</NavBrand>
 		<NavHamburger />
 		<NavUl>
-			<NavLi>Se deconnecter</NavLi>
+			<NavLi href={route('/client/logout')}>Se deconnecter</NavLi>
 		</NavUl>
 		<div>
 			<DarkMode size="md" />
