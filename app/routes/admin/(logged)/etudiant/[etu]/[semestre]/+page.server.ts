@@ -1,5 +1,5 @@
 import { EtudiantsClient } from '$lib/protos/admin.client';
-import { ReleveNote, ReleveNoteStatus, ReleveNoteUnitStatus } from '$lib/protos/commons';
+import { ReleveNote } from '$lib/protos/commons';
 import { adminClient } from '$lib/server/protoclients';
 import type { PageServerLoad } from './$types';
 
