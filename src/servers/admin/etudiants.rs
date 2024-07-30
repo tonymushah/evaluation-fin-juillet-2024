@@ -6,7 +6,11 @@ use proto_admin::{
 use protos_commons::ReleveNote;
 use tonic::{Request, Response};
 
-use crate::{models::table::etudiant_note::GetReleveNote, servers::TonicRpcResult, DbPool};
+use crate::{
+    models::table::{etudiant_note::GetReleveNote, Etudiant},
+    servers::TonicRpcResult,
+    DbPool,
+};
 
 #[derive(Debug, Clone)]
 pub struct EtudiantsService {
@@ -25,7 +29,21 @@ impl Etudiants for EtudiantsService {
         &self,
         request: Request<EtudiantInfoRequest>,
     ) -> TonicRpcResult<EtudiantInfoResponse> {
-        crate::tonic_not_implemented()
+        let EtudiantInfoRequest { numero } = request.get_ref().clone();
+        let pool = self.pool.clone();
+        let etu = crate::spawn_blocking(move || -> crate::Result<Etudiant> {
+            use diesel::prelude::*;
+            use diesel_schemas::schema::etudiant::dsl::*;
+            let mut con = pool.get()?;
+            Ok(etudiant
+                .filter(etu.eq(numero))
+                .select(Etudiant::as_select())
+                .get_result(&mut con)?)
+        })
+        .await??;
+        Ok(Response::new(EtudiantInfoResponse {
+            current: Some(etu.into()),
+        }))
     }
     async fn releve_note(
         &self,
