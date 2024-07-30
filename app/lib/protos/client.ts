@@ -48,9 +48,9 @@ export interface LoginResponse {
  */
 export interface SemestresListRequest {
     /**
-     * @generated from protobuf field: repeated uint32 semestre = 1;
+     * @generated from protobuf field: repeated string semestre = 1;
      */
-    semestre: number[];
+    semestre: string[];
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.client.EtudiantSemestre
@@ -79,9 +79,9 @@ export interface SemestresListResponse {
  */
 export interface GetReleveRequest {
     /**
-     * @generated from protobuf field: uint32 semetre = 1;
+     * @generated from protobuf field: string semetre = 1;
      */
-    semetre: number;
+    semetre: string;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.client.GetReleveResponse
@@ -144,7 +144,7 @@ export const LoginResponse = new LoginResponse$Type();
 class SemestresListRequest$Type extends MessageType<SemestresListRequest> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.client.SemestresListRequest", [
-            { no: 1, name: "semestre", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+            { no: 1, name: "semestre", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -181,7 +181,7 @@ export const SemestresListResponse = new SemestresListResponse$Type();
 class GetReleveRequest$Type extends MessageType<GetReleveRequest> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.client.GetReleveRequest", [
-            { no: 1, name: "semetre", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 1, name: "semetre", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

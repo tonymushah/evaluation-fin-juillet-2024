@@ -94,9 +94,9 @@ export interface EtudiantReleveNoteRequest {
      */
     etudiant: string;
     /**
-     * @generated from protobuf field: repeated uint32 semestre = 2;
+     * @generated from protobuf field: repeated string semestre = 2;
      */
-    semestre: number[];
+    semestre: string[];
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteResponse
@@ -123,6 +123,10 @@ export interface InsertNotesRequest {
      * @generated from protobuf field: uint32 note = 3;
      */
     note: number;
+    /**
+     * @generated from protobuf field: string req_id = 4;
+     */
+    reqId: string;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesResponse
@@ -132,15 +136,19 @@ export interface InsertNotesResponse {
      * @generated from protobuf field: string custom_message = 1;
      */
     customMessage: string;
+    /**
+     * @generated from protobuf field: string req_id = 5;
+     */
+    reqId: string;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Semestre
  */
 export interface Semestre {
     /**
-     * @generated from protobuf field: uint32 numero = 1;
+     * @generated from protobuf field: string numero = 1;
      */
-    numero: number;
+    numero: string;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetSemetresRequest
@@ -169,9 +177,9 @@ export interface GetMatieresRequest {
      */
     limit?: number;
     /**
-     * @generated from protobuf field: repeated uint32 semstres = 3;
+     * @generated from protobuf field: repeated string semstres = 3;
      */
-    semstres: number[];
+    semstres: string[];
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetMatieresResponse
@@ -313,7 +321,7 @@ class EtudiantReleveNoteRequest$Type extends MessageType<EtudiantReleveNoteReque
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.EtudiantReleveNoteRequest", [
             { no: 1, name: "etudiant", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "semestre", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+            { no: 2, name: "semestre", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -339,7 +347,8 @@ class InsertNotesRequest$Type extends MessageType<InsertNotesRequest> {
         super("mg.tonymushah.evalfjuil24.admin.InsertNotesRequest", [
             { no: 1, name: "etudiant", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "matiere", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "note", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 3, name: "note", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "req_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -351,7 +360,8 @@ export const InsertNotesRequest = new InsertNotesRequest$Type();
 class InsertNotesResponse$Type extends MessageType<InsertNotesResponse> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.InsertNotesResponse", [
-            { no: 1, name: "custom_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "custom_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "req_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -363,7 +373,7 @@ export const InsertNotesResponse = new InsertNotesResponse$Type();
 class Semestre$Type extends MessageType<Semestre> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.Semestre", [
-            { no: 1, name: "numero", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 1, name: "numero", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -399,7 +409,7 @@ class GetMatieresRequest$Type extends MessageType<GetMatieresRequest> {
         super("mg.tonymushah.evalfjuil24.admin.GetMatieresRequest", [
             { no: 1, name: "offset", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
             { no: 2, name: "limit", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "semstres", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+            { no: 3, name: "semstres", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

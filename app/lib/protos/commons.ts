@@ -91,7 +91,7 @@ export interface ReleveNoteUnit {
      */
     matiere?: Matiere;
     /**
-     * @generated from protobuf field: uint32 valeur = 2;
+     * @generated from protobuf field: float valeur = 2;
      */
     valeur: number;
     /**
@@ -119,6 +119,10 @@ export interface ReleveNote {
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4;
      */
     status: ReleveNoteStatus;
+    /**
+     * @generated from protobuf field: float moyenne = 5;
+     */
+    moyenne: number;
 }
 /**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.Genre
@@ -417,7 +421,7 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.ReleveNoteUnit", [
             { no: 1, name: "matiere", kind: "message", T: () => Matiere },
-            { no: 2, name: "valeur", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "valeur", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 3, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus", ReleveNoteUnitStatus] }
         ]);
     }
@@ -437,8 +441,8 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
                 case /* mg.tonymushah.evalfjuil24.Matiere matiere */ 1:
                     message.matiere = Matiere.internalBinaryRead(reader, reader.uint32(), options, message.matiere);
                     break;
-                case /* uint32 valeur */ 2:
-                    message.valeur = reader.uint32();
+                case /* float valeur */ 2:
+                    message.valeur = reader.float();
                     break;
                 case /* mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus status */ 3:
                     message.status = reader.int32();
@@ -458,9 +462,9 @@ class ReleveNoteUnit$Type extends MessageType<ReleveNoteUnit> {
         /* mg.tonymushah.evalfjuil24.Matiere matiere = 1; */
         if (message.matiere)
             Matiere.internalBinaryWrite(message.matiere, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* uint32 valeur = 2; */
+        /* float valeur = 2; */
         if (message.valeur !== 0)
-            writer.tag(2, WireType.Varint).uint32(message.valeur);
+            writer.tag(2, WireType.Bit32).float(message.valeur);
         /* mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus status = 3; */
         if (message.status !== 0)
             writer.tag(3, WireType.Varint).int32(message.status);
@@ -481,7 +485,8 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
             { no: 1, name: "notes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReleveNoteUnit },
             { no: 2, name: "credits", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
             { no: 3, name: "semestre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] }
+            { no: 4, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] },
+            { no: 5, name: "moyenne", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<ReleveNote>): ReleveNote {
@@ -490,6 +495,7 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         message.credits = 0n;
         message.semestre = "";
         message.status = 0;
+        message.moyenne = 0;
         if (value !== undefined)
             reflectionMergePartial<ReleveNote>(this, message, value);
         return message;
@@ -510,6 +516,9 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
                     break;
                 case /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status */ 4:
                     message.status = reader.int32();
+                    break;
+                case /* float moyenne */ 5:
+                    message.moyenne = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -535,6 +544,9 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4; */
         if (message.status !== 0)
             writer.tag(4, WireType.Varint).int32(message.status);
+        /* float moyenne = 5; */
+        if (message.moyenne !== 0)
+            writer.tag(5, WireType.Bit32).float(message.moyenne);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
