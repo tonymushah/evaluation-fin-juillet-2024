@@ -8,6 +8,7 @@ use tonic::{Request, Response};
 
 use crate::{
     models::table::{etudiant_note::GetReleveNote, Etudiant},
+    paginate::Paginate,
     servers::TonicRpcResult,
     DbPool,
 };
@@ -23,7 +24,36 @@ impl Etudiants for EtudiantsService {
         &self,
         request: Request<EtudiantsListRequest>,
     ) -> TonicRpcResult<EtudiantsListResponse> {
-        crate::tonic_not_implemented()
+        let pool = self.pool.clone();
+        let req_data = request.get_ref().clone();
+        let req = req_data.clone();
+        let (data, total) =
+            crate::spawn_blocking(move || -> crate::Result<(Vec<Etudiant>, i64)> {
+                use diesel::prelude::*;
+                use diesel_schemas::schema::etudiant::dsl::*;
+                let mut con = pool.get()?;
+                let offset = req.offset.unwrap_or_default();
+                let limit = req.limit.unwrap_or(10);
+                let mut query = etudiant.into_boxed();
+                if !req.promotion.is_empty() {
+                    query = query.filter(promotion.eq_any(req.promotion));
+                }
+                if let Some(nom_) = req.nom.as_ref() {
+                    query = query.filter(nom.like(nom_));
+                }
+                Ok(query
+                    .paginate(offset as i64, limit as i64)
+                    .load_data(&mut con)?)
+            })
+            .await??;
+        let offset = req_data.offset.unwrap_or_default();
+        let limit = req_data.limit.unwrap_or(10);
+        Ok(Response::new(EtudiantsListResponse {
+            list: data.into_iter().map(|e| e.into()).collect(),
+            offset,
+            limit,
+            total: total as u64,
+        }))
     }
     async fn info(
         &self,
