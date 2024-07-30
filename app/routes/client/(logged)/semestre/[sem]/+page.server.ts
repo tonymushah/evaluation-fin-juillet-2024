@@ -1,23 +1,26 @@
-import { ReleveNoteStatus, ReleveNoteUnitStatus, type ReleveNote } from '$lib/protos/commons';
+import { getToken } from '$lib/client/token.server';
+import { ReleveClient } from '$lib/protos/client.client';
+import { ReleveNote } from '$lib/protos/commons';
+import { clientClient } from '$lib/server/protoclients';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	const releve: ReleveNote = {
-		credits: 0 as unknown as bigint,
-		semestre: 'S1',
-		status: ReleveNoteStatus.S_AJOURNEE,
-		notes: [
-			{
-				matiere: {
-					nom: 'some matiere',
-					numero: 'some num',
-					credits: 12
+export const load: PageServerLoad = async ({ cookies, params }) => {
+	const token = getToken(cookies);
+	const releve_client = new ReleveClient(clientClient);
+	const releve: ReleveNote = ReleveNote.toJson(
+		(
+			await releve_client.get(
+				{
+					semetre: params.sem
 				},
-				status: ReleveNoteUnitStatus.M_AJOURNEE,
-				valeur: 5
-			}
-		]
-	};
+				{
+					meta: {
+						authorization: token
+					}
+				}
+			)
+		).response.releves!
+	);
 	return {
 		releve
 	};
