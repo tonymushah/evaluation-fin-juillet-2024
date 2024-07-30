@@ -126,3 +126,18 @@ message LoginResponse {
 service Auth {
     rpc Login(LoginRequest) returns (LoginResponse);
 }
+
+enum ImportType {
+    IT_NONE = 0;
+    IT_NOTE = 1;
+    IT_CONFIG = 2;
+}
+
+message ImportDataMessage {
+    ImportType i_type = 1;
+    repeated bytes buf = 2;
+}
+
+service Imports {
+    rpc import(stream ImportDataMessage) returns(mg.tonymushah.evalfjuil24.Empty);
+}
