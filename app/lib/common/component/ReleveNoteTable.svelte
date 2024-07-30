@@ -17,7 +17,7 @@
 			ReleveNoteUnitStatus[
 				data.notes.find((mat) => mat.matiere?.numero == matiere)?.status ??
 					ReleveNoteUnitStatus.M_VALID
-			] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_AJOURNEE]
+			] == ReleveNoteUnitStatus.M_AJOURNEE
 		);
 	};
 </script>
@@ -66,9 +66,9 @@
 							{/if}
 						</TableBodyCell>
 						<TableBodyCell>
-							{#if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_AJOURNEE]}
+							{#if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus.M_AJOURNEE}
 								Ajournee
-							{:else if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus[ReleveNoteUnitStatus.M_COMPENSEE]}
+							{:else if ReleveNoteUnitStatus[note.status] == ReleveNoteUnitStatus.M_COMPENSEE}
 								Compensee
 							{:else}
 								Valide
