@@ -56,5 +56,5 @@ message ReleveNote {
     uint64 credits = 2;
     string semestre = 3;
     ReleveNoteStatus status = 4;
-    float moyenne = 5;
+    double moyenne = 5;
 }
