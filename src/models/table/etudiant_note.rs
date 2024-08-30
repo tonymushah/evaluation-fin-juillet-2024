@@ -1,4 +1,4 @@
-use std::cmp::Ordering;
+use std::{cmp::Ordering, collections::HashMap};
 
 use bigdecimal::ToPrimitive;
 use diesel::{prelude::*, QueryResult};
@@ -351,6 +351,23 @@ mod tests_s4_1 {
         assert_eq!(data.moyenne() as u32, 11);
         assert!(data.moyenne() < 11.5f64);
         assert!(data.moyenne() > 11.3f64);
+        Ok(())
+    }
+    #[test]
+    fn test_data_ikor_kanto() -> anyhow::Result<()> {
+        let pool = crate::etablish_connection();
+        let mut con = pool.get()?;
+        let _ = con.transaction(|con| import("./data/3 - test donne - moyenne note.csv", con));
+        let data = GetReleveNote {
+            etudiant: "ETU002456".into(),
+            semestre: "S4".into(),
+        }
+        .get_notes(&mut con)?;
+        // println!("{:#?}", data);
+        println!("{}", data.moyenne());
+        assert_eq!(data.moyenne() as u32, 8);
+        assert!(data.moyenne() < 8.9f64);
+        assert!(data.moyenne() > 8.7f64);
         Ok(())
     }
 }
