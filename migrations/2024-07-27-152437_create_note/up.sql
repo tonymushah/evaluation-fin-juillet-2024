@@ -4,5 +4,5 @@ create table note (
     etudiant text not null references etudiant(etu),
     matiere text not null references matiere(id_matiere),
     submission TIMESTAMP not null default now(),
-    valeur decimal not null
+    valeur decimal(10, 2) not null
 );
