@@ -327,7 +327,7 @@ mod tests_s4_1 {
         Ok(())
     }
     #[test]
-    fn test_data() -> anyhow::Result<()> {
+    fn test_data_nasa() -> anyhow::Result<()> {
         let pool = crate::etablish_connection();
         let mut con = pool.get()?;
         let _ = con.transaction(|con| import("./data/1 - test donne - moyenne note.csv", con));
@@ -338,6 +338,22 @@ mod tests_s4_1 {
         .get_notes(&mut con)?;
         println!("{}", data.moyenne());
         assert_eq!(data.moyenne() as u32, 10);
+        Ok(())
+    }
+    #[test]
+    fn test_data_im_nabi() -> anyhow::Result<()> {
+        let pool = crate::etablish_connection();
+        let mut con = pool.get()?;
+        let _ = con.transaction(|con| import("./data/2 - test donne - moyenne note.csv", con));
+        let data = GetReleveNote {
+            etudiant: "ETU002455".into(),
+            semestre: "S4".into(),
+        }
+        .get_notes(&mut con)?;
+        println!("{}", data.moyenne());
+        assert_eq!(data.moyenne() as u32, 11);
+        assert!(data.moyenne() < 11.5f64);
+        assert!(data.moyenne() > 11.3f64);
         Ok(())
     }
 }
