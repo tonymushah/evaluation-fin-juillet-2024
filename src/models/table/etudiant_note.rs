@@ -146,33 +146,30 @@ pub fn get_etudiant_notes(etudiant: &str, con: &mut PgConnection) -> QueryResult
 
 impl EtudiantNotes {
     pub fn seed(&mut self, v_notes: &[VEtudiantMatiereNote]) {
-        self.0.iter_mut().for_each(|note| {
-            let notes = v_notes
-                .iter()
-                .filter(|n| {
-                    let mat = match note {
-                        EtudiantNote::Unique(e) => e.matiere.clone(),
-                        EtudiantNote::Choix(e) => e
-                            .iter()
-                            .find(|e| e.matiere == n.matiere)
-                            .map(|e| e.matiere.clone())
-                            .unwrap_or_default(),
-                    };
-                    n.matiere == mat
-                })
-                .cloned()
-                .collect::<Vec<VEtudiantMatiereNote>>();
-            if let Some(value) = notes.iter().max_by(|a, b| a.submission.cmp(&b.submission)) {
-                match note {
-                    EtudiantNote::Unique(e) => {
-                        e.note = value.valeur.to_f64().unwrap_or_default();
-                    }
-                    EtudiantNote::Choix(e) => {
-                        if let Some(v) = e.iter_mut().find(|e| e.matiere == value.matiere) {
-                            v.note = value.valeur.to_f64().unwrap_or_default();
-                        }
-                    }
+        let folded_notes = v_notes.iter().fold(
+            HashMap::<String, Vec<&VEtudiantMatiereNote>>::new(),
+            |mut agg, note| {
+                agg.entry(note.matiere.clone()).or_default().push(note);
+                agg
+            },
+        );
+        self.0.iter_mut().for_each(|note| match note {
+            EtudiantNote::Unique(e) => {
+                if let Some(fnote) = folded_notes
+                    .get(&e.matiere)
+                    .and_then(|fnote| fnote.iter().max_by(|a, b| a.submission.cmp(&b.submission)))
+                {
+                    e.note = fnote.valeur.to_f64().unwrap_or_default();
                 }
+            }
+            EtudiantNote::Choix(es) => {
+                es.iter_mut().for_each(|e| {
+                    if let Some(fnote) = folded_notes.get(&e.matiere).and_then(|fnote| {
+                        fnote.iter().max_by(|a, b| a.submission.cmp(&b.submission))
+                    }) {
+                        e.note = fnote.valeur.to_f64().unwrap_or_default();
+                    }
+                });
             }
         });
     }
@@ -181,7 +178,7 @@ impl EtudiantNotes {
         if units.is_empty() {
             0f64
         } else {
-            units.iter().map(|u| u.note).sum::<f64>() / units.len() as f64
+            units.iter().map(|u| u.note).sum::<f64>() / (units.len() as f64)
         }
     }
     pub fn into_unique(&self) -> Vec<EtudiantNoteUnit> {
