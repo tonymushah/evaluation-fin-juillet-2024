@@ -122,14 +122,26 @@ impl GetReleveNote {
             } else {
                 ReleveNoteStatus::SValid.into()
             },
-            moyenne: moyenne as f32,
+            moyenne,
             notes: r_note_units,
         })
     }
 }
 
-pub fn get_etudiant_notes(etudiant: &String) -> QueryResult<Vec<ReleveNote>> {
-    todo!()
+pub fn get_etudiant_notes(etudiant: &str, con: &mut PgConnection) -> QueryResult<Vec<ReleveNote>> {
+    let sems: Vec<String> = {
+        use diesel_schemas::schema::semestre::dsl::*;
+        semestre.select(id_sem).get_results(con)?
+    };
+    sems.into_iter()
+        .map(|semestre| {
+            GetReleveNote {
+                etudiant: etudiant.into(),
+                semestre,
+            }
+            .get(con)
+        })
+        .collect()
 }
 
 impl EtudiantNotes {
@@ -205,7 +217,7 @@ impl From<&SemestreMatieres> for EtudiantNotes {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests_s5 {
     use bigdecimal::{BigDecimal, FromPrimitive};
     use diesel::{insert_into, prelude::*};
     use protos_commons::ReleveNoteStatus;
@@ -217,7 +229,7 @@ mod tests {
 
     use super::{now, GetReleveNote};
 
-    fn seed(con: &mut PgConnection) -> QueryResult<()> {
+    fn seed(con: &mut PgConnection) -> QueryResult<Vec<Note>> {
         let prom = Promotion {
             id_promotion: "P15".into(),
             nom: None,
@@ -266,8 +278,8 @@ mod tests {
         insert_into(etudiant::dsl::etudiant)
             .values(etudiant_)
             .execute(con)?;
-        insert_into(note::dsl::note).values(notes).execute(con)?;
-        Ok(())
+        insert_into(note::dsl::note).values(&notes).execute(con)?;
+        Ok(notes)
     }
     #[test]
     fn test_data() -> anyhow::Result<()> {
