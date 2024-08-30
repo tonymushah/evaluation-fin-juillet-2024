@@ -310,3 +310,34 @@ mod tests_s5 {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests_s4_1 {
+    use std::{fs::File, io::BufReader, path::Path};
+
+    use csv::Reader;
+    use diesel::{Connection, PgConnection};
+    use itu_csv_import::CSVNote;
+
+    use crate::models::table::etudiant_note::GetReleveNote;
+
+    fn import<P: AsRef<Path>>(path: P, con: &mut PgConnection) -> anyhow::Result<()> {
+        let notes = CSVNote::read(Reader::from_reader(BufReader::new(File::open(path)?)));
+        CSVNote::inserts(notes, con)?;
+        Ok(())
+    }
+    #[test]
+    fn test_data() -> anyhow::Result<()> {
+        let pool = crate::etablish_connection();
+        let mut con = pool.get()?;
+        let _ = con.transaction(|con| import("./data/1 - test donne - moyenne note.csv", con));
+        let data = GetReleveNote {
+            etudiant: "ETU002454".into(),
+            semestre: "S4".into(),
+        }
+        .get_notes(&mut con)?;
+        println!("{}", data.moyenne());
+        assert_eq!(data.moyenne() as u32, 10);
+        Ok(())
+    }
+}
