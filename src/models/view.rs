@@ -6,7 +6,7 @@ use time::PrimitiveDateTime;
 use uuid::Uuid;
 
 // VEtudiantNote struct
-#[derive(Queryable, Selectable)]
+#[derive(Queryable, Selectable, Debug)]
 #[diesel(table_name = v_etudiant_note)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct VEtudiantNote {
@@ -23,7 +23,7 @@ pub struct VEtudiantNote {
 }
 
 // VMatiereNote struct
-#[derive(Queryable, Selectable)]
+#[derive(Queryable, Selectable, Debug)]
 #[diesel(table_name = v_matiere_note)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct VMatiereNote {
@@ -39,7 +39,7 @@ pub struct VMatiereNote {
 }
 
 // VEtudiantMatiereNote struct
-#[derive(Queryable, Selectable, Clone)]
+#[derive(Queryable, Selectable, Clone, Debug)]
 #[diesel(table_name = v_etudiant_matiere_note)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct VEtudiantMatiereNote {
