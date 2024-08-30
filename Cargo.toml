@@ -9,8 +9,8 @@ members = [
 ]
 
 [workspace.dependencies]
-tonic = { version = "0.11" }
-prost = { version = "0.12" }
+tonic = { version = "0.12" }
+prost = { version = "0.13" }
 diesel = { version = "2", features = [
     "postgres",
     "r2d2",
@@ -32,13 +32,13 @@ regex = "1.10"
 diesel-schemas = { path = "./crates/diesel-schemas" }
 serde = { version = "1", features = ["derive"] }
 dotenvy = "0.15"
-tonic-web = "0.11"
+tonic-web = "0.12"
 tokio-stream = { version = "0.1" }
 syn = "2"
 proc-macro2 = "1"
 quote = "1"
 darling = "0"
-tonic-build = { version = "0.11" }
+tonic-build = { version = "0.12" }
 proto-admin = { path = "./crates/protos/admin" }
 proto-client = { path = "./crates/protos/client" }
 protos-commons = { path = "./crates/protos/commons" }
