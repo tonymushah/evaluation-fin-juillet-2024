@@ -252,6 +252,32 @@ export interface ImportDataMessage {
     buf: Uint8Array;
 }
 /**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.ConfigNote
+ */
+export interface ConfigNote {
+    /**
+     * @generated from protobuf field: string code = 1;
+     */
+    code: string;
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: double value = 3;
+     */
+    value: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.GetConfigsMessageResponse
+ */
+export interface GetConfigsMessageResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.ConfigNote configs = 1;
+     */
+    configs: ConfigNote[];
+}
+/**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ImportType
  */
 export enum ImportType {
@@ -522,6 +548,32 @@ class ImportDataMessage$Type extends MessageType<ImportDataMessage> {
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.ImportDataMessage
  */
 export const ImportDataMessage = new ImportDataMessage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ConfigNote$Type extends MessageType<ConfigNote> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.ConfigNote", [
+            { no: 1, name: "code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.ConfigNote
+ */
+export const ConfigNote = new ConfigNote$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetConfigsMessageResponse$Type extends MessageType<GetConfigsMessageResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.GetConfigsMessageResponse", [
+            { no: 1, name: "configs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ConfigNote }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetConfigsMessageResponse
+ */
+export const GetConfigsMessageResponse = new GetConfigsMessageResponse$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Database
  */
@@ -567,4 +619,11 @@ export const Auth = new ServiceType("mg.tonymushah.evalfjuil24.admin.Auth", [
  */
 export const Imports = new ServiceType("mg.tonymushah.evalfjuil24.admin.Imports", [
     { name: "import", clientStreaming: true, options: {}, I: ImportDataMessage, O: Empty }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.CfgNoteService
+ */
+export const CfgNoteService = new ServiceType("mg.tonymushah.evalfjuil24.admin.CfgNoteService", [
+    { name: "getConfigs", options: {}, I: Empty, O: GetConfigsMessageResponse },
+    { name: "updateConfig", options: {}, I: ConfigNote, O: Empty }
 ]);

@@ -65,7 +65,7 @@ export interface EtudiantSemestre {
      */
     status: ReleveNoteStatus;
     /**
-     * @generated from protobuf field: float moyenne = 3;
+     * @generated from protobuf field: double moyenne = 3;
      */
     moyenne: number;
 }
@@ -95,6 +95,36 @@ export interface GetReleveResponse {
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.ReleveNote releves = 1;
      */
     releves?: ReleveNote;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.Ratrapage
+ */
+export interface Ratrapage {
+    /**
+     * @generated from protobuf field: string semestre = 1;
+     */
+    semestre: string;
+    /**
+     * @generated from protobuf field: string matiere = 2;
+     */
+    matiere: string;
+    /**
+     * @generated from protobuf field: double note = 3;
+     */
+    note: number;
+    /**
+     * @generated from protobuf field: double montant = 4;
+     */
+    montant: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.client.ListeRatrapageResponse
+ */
+export interface ListeRatrapageResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.client.Ratrapage list = 1;
+     */
+    list: Ratrapage[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HelloRequest$Type extends MessageType<HelloRequest> {
@@ -162,7 +192,7 @@ class EtudiantSemestre$Type extends MessageType<EtudiantSemestre> {
         super("mg.tonymushah.evalfjuil24.client.EtudiantSemestre", [
             { no: 1, name: "semetre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] },
-            { no: 3, name: "moyenne", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 3, name: "moyenne", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
 }
@@ -206,6 +236,33 @@ class GetReleveResponse$Type extends MessageType<GetReleveResponse> {
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.GetReleveResponse
  */
 export const GetReleveResponse = new GetReleveResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Ratrapage$Type extends MessageType<Ratrapage> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.Ratrapage", [
+            { no: 1, name: "semestre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "matiere", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "note", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "montant", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.Ratrapage
+ */
+export const Ratrapage = new Ratrapage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListeRatrapageResponse$Type extends MessageType<ListeRatrapageResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.client.ListeRatrapageResponse", [
+            { no: 1, name: "list", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Ratrapage }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.client.ListeRatrapageResponse
+ */
+export const ListeRatrapageResponse = new ListeRatrapageResponse$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.HelloService
  */
@@ -228,7 +285,8 @@ export const Semestres = new ServiceType("mg.tonymushah.evalfjuil24.client.Semes
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.Releve
  */
 export const Releve = new ServiceType("mg.tonymushah.evalfjuil24.client.Releve", [
-    { name: "Get", options: {}, I: GetReleveRequest, O: GetReleveResponse }
+    { name: "Get", options: {}, I: GetReleveRequest, O: GetReleveResponse },
+    { name: "ListeRatrapage", options: {}, I: Empty, O: ListeRatrapageResponse }
 ]);
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.client.Current

@@ -3,8 +3,9 @@
 // tslint:disable
 import { Current } from "./client";
 import type { Etudiant } from "./commons";
-import type { Empty } from "./commons";
 import { Releve } from "./client";
+import type { ListeRatrapageResponse } from "./client";
+import type { Empty } from "./commons";
 import type { GetReleveResponse } from "./client";
 import type { GetReleveRequest } from "./client";
 import { Semestres } from "./client";
@@ -107,6 +108,10 @@ export interface IReleveClient {
      * @generated from protobuf rpc: Get(mg.tonymushah.evalfjuil24.client.GetReleveRequest) returns (mg.tonymushah.evalfjuil24.client.GetReleveResponse);
      */
     get(input: GetReleveRequest, options?: RpcOptions): UnaryCall<GetReleveRequest, GetReleveResponse>;
+    /**
+     * @generated from protobuf rpc: ListeRatrapage(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.client.ListeRatrapageResponse);
+     */
+    listeRatrapage(input: Empty, options?: RpcOptions): UnaryCall<Empty, ListeRatrapageResponse>;
 }
 /**
  * @generated from protobuf service mg.tonymushah.evalfjuil24.client.Releve
@@ -123,6 +128,13 @@ export class ReleveClient implements IReleveClient, ServiceInfo {
     get(input: GetReleveRequest, options?: RpcOptions): UnaryCall<GetReleveRequest, GetReleveResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<GetReleveRequest, GetReleveResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListeRatrapage(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.client.ListeRatrapageResponse);
+     */
+    listeRatrapage(input: Empty, options?: RpcOptions): UnaryCall<Empty, ListeRatrapageResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Empty, ListeRatrapageResponse>("unary", this._transport, method, opt, input);
     }
 }
 /**

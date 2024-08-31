@@ -120,7 +120,7 @@ export interface ReleveNote {
      */
     status: ReleveNoteStatus;
     /**
-     * @generated from protobuf field: float moyenne = 5;
+     * @generated from protobuf field: double moyenne = 5;
      */
     moyenne: number;
 }
@@ -486,7 +486,7 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
             { no: 2, name: "credits", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
             { no: 3, name: "semestre", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.ReleveNoteStatus", ReleveNoteStatus] },
-            { no: 5, name: "moyenne", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 5, name: "moyenne", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<ReleveNote>): ReleveNote {
@@ -517,8 +517,8 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
                 case /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status */ 4:
                     message.status = reader.int32();
                     break;
-                case /* float moyenne */ 5:
-                    message.moyenne = reader.float();
+                case /* double moyenne */ 5:
+                    message.moyenne = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -544,9 +544,9 @@ class ReleveNote$Type extends MessageType<ReleveNote> {
         /* mg.tonymushah.evalfjuil24.ReleveNoteStatus status = 4; */
         if (message.status !== 0)
             writer.tag(4, WireType.Varint).int32(message.status);
-        /* float moyenne = 5; */
+        /* double moyenne = 5; */
         if (message.moyenne !== 0)
-            writer.tag(5, WireType.Bit32).float(message.moyenne);
+            writer.tag(5, WireType.Bit64).double(message.moyenne);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
