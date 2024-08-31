@@ -1,6 +1,6 @@
 use std::{error::Error, fmt::Display};
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Default)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Default, Clone, Copy)]
 pub enum TypeCalculNote {
     #[default]
     Max,
