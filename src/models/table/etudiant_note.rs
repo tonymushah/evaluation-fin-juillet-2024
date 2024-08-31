@@ -300,28 +300,34 @@ mod tests_s5 {
     fn test_data() -> anyhow::Result<()> {
         let pool = crate::etablish_connection();
         let mut con = pool.get()?;
-        let _ = con.transaction(|con| seed(con));
-        let data = GetReleveNote {
-            etudiant: "ETU001844".into(),
-            semestre: "S5".into(),
-        }
-        .get_notes(&mut con)?;
-        assert_eq!(data.0.len(), 6);
-        println!("{}", data.moyenne());
+        con.test_transaction(|con| {
+            seed(con)?;
+            let data = GetReleveNote {
+                etudiant: "ETU001844".into(),
+                semestre: "S5".into(),
+            }
+            .get_notes(con)?;
+            assert_eq!(data.0.len(), 6);
+            println!("{}", data.moyenne());
+            Ok::<_, anyhow::Error>(())
+        });
         Ok(())
     }
     #[test]
     fn test_releve() -> anyhow::Result<()> {
         let pool = crate::etablish_connection();
         let mut con = pool.get()?;
-        let _ = con.transaction(|con| seed(con));
-        let data = GetReleveNote {
-            etudiant: "ETU001844".into(),
-            semestre: "S5".into(),
-        }
-        .get(&mut con)?;
-        assert_eq!(data.status, Into::<i32>::into(ReleveNoteStatus::SAjournee));
-        println!("{}", data.credits);
+        con.test_transaction(|con| {
+            seed(con)?;
+            let data = GetReleveNote {
+                etudiant: "ETU001844".into(),
+                semestre: "S5".into(),
+            }
+            .get(con)?;
+            assert_eq!(data.status, Into::<i32>::into(ReleveNoteStatus::SAjournee));
+            println!("{}", data.credits);
+            Ok::<_, anyhow::Error>(())
+        });
         Ok(())
     }
 }
@@ -334,58 +340,105 @@ mod tests_s4_1 {
     use diesel::{Connection, PgConnection};
     use itu_csv_import::CSVNote;
 
-    use crate::models::table::etudiant_note::GetReleveNote;
+    use crate::models::table::{
+        config_note::{type_calcul::TypeCalculNote, ConfigNote},
+        etudiant_note::GetReleveNote,
+    };
 
     fn import<P: AsRef<Path>>(path: P, con: &mut PgConnection) -> anyhow::Result<()> {
         let notes = CSVNote::read(Reader::from_reader(BufReader::new(File::open(path)?)));
         CSVNote::inserts(notes, con)?;
         Ok(())
     }
-    #[test]
-    fn test_data_nasa() -> anyhow::Result<()> {
+    fn test_transaction<P, F, T>(path: P, transaction: F) -> anyhow::Result<T>
+    where
+        P: AsRef<Path>,
+        F: FnOnce(&mut PgConnection) -> Result<T, anyhow::Error>,
+    {
         let pool = crate::etablish_connection();
         let mut con = pool.get()?;
-        let _ = con.transaction(|con| import("./data/1 - test donne - moyenne note.csv", con));
-        let data = GetReleveNote {
-            etudiant: "ETU002454".into(),
-            semestre: "S4".into(),
-        }
-        .get_notes(&mut con)?;
-        println!("{}", data.moyenne());
-        assert_eq!(data.moyenne() as u32, 10);
+        Ok(con.test_transaction(|con| {
+            import(path, con)?;
+            transaction(con)
+        }))
+    }
+    #[test]
+    fn test_data_nasa() -> anyhow::Result<()> {
+        test_transaction("./data/1 - test donne - moyenne note.csv", |con| {
+            let data = GetReleveNote {
+                etudiant: "ETU002454".into(),
+                semestre: "S4".into(),
+            }
+            .get_notes(con)?;
+            println!("{}", data.moyenne());
+            assert_eq!(data.moyenne() as u32, 10);
+            Ok(())
+        })?;
         Ok(())
     }
     #[test]
     fn test_data_im_nabi() -> anyhow::Result<()> {
-        let pool = crate::etablish_connection();
-        let mut con = pool.get()?;
-        let _ = con.transaction(|con| import("./data/2 - test donne - moyenne note.csv", con));
-        let data = GetReleveNote {
-            etudiant: "ETU002455".into(),
-            semestre: "S4".into(),
-        }
-        .get_notes(&mut con)?;
-        println!("{}", data.moyenne());
-        assert_eq!(data.moyenne() as u32, 11);
-        assert!(data.moyenne() < 11.5f64);
-        assert!(data.moyenne() > 11.3f64);
+        test_transaction("./data/2 - test donne - moyenne note.csv", |con| {
+            let data = GetReleveNote {
+                etudiant: "ETU002455".into(),
+                semestre: "S4".into(),
+            }
+            .get_notes(con)?;
+            println!("{}", data.moyenne());
+            assert_eq!(data.moyenne() as u32, 11);
+            assert!(data.moyenne() < 11.5f64);
+            assert!(data.moyenne() > 11.3f64);
+            Ok(())
+        })?;
+
         Ok(())
     }
     #[test]
     fn test_data_ikor_kanto() -> anyhow::Result<()> {
-        let pool = crate::etablish_connection();
-        let mut con = pool.get()?;
-        let _ = con.transaction(|con| import("./data/3 - test donne - moyenne note.csv", con));
-        let data = GetReleveNote {
-            etudiant: "ETU002456".into(),
-            semestre: "S4".into(),
-        }
-        .get_notes(&mut con)?;
-        // println!("{:#?}", data);
-        println!("{}", data.moyenne());
-        assert_eq!(data.moyenne() as u32, 8);
-        assert!(data.moyenne() < 8.9f64);
-        assert!(data.moyenne() > 8.7f64);
+        test_transaction("./data/3 - test donne - moyenne note.csv", |con| {
+            let data = GetReleveNote {
+                etudiant: "ETU002456".into(),
+                semestre: "S4".into(),
+            }
+            .get_notes(con)?;
+            // println!("{:#?}", data);
+            println!("{}", data.moyenne());
+            assert_eq!(data.moyenne() as u32, 8);
+            assert!(data.moyenne() < 8.9f64);
+            assert!(data.moyenne() > 8.7f64);
+            Ok(())
+        })?;
         Ok(())
+    }
+    #[test]
+    fn test_data_yuki_kanamaru() -> anyhow::Result<()> {
+        test_transaction("./data/4 - test donne - moyenne note.csv", |con| {
+            let getter = GetReleveNote {
+                etudiant: "ETU002457".into(),
+                semestre: "S4".into(),
+            };
+
+            {
+                let data = getter.get_notes(con)?;
+                // println!("{:#?}", data);
+                println!("{}", data.moyenne());
+                assert_eq!(data.moyenne() as u32, 16);
+                assert!(data.moyenne() < 16.9f64);
+                assert!(data.moyenne() > 16.7f64);
+            }
+            {
+                println!("setting type calcul note");
+                ConfigNote::TypeCalculNote
+                    .upsert(TypeCalculNote::Moyenne.to_value().into(), con)?;
+                println!("setted");
+                let data = getter.get_notes(con)?;
+                // println!("{:#?}", data);
+                println!("{}", data.moyenne());
+                assert_eq!(data.moyenne() as u32, 12);
+                assert!(data.moyenne() < 12.5f64);
+                assert!(data.moyenne() > 12.4f64);
+            }
+            Ok(())
+        })
     }
 }
