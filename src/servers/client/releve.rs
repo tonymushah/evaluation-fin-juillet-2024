@@ -1,5 +1,7 @@
-use proto_client::{releve_server::Releve, GetReleveRequest, GetReleveResponse};
-use protos_commons::ReleveNote;
+use proto_client::{
+    releve_server::Releve, GetReleveRequest, GetReleveResponse, ListeRatrapageResponse,
+};
+use protos_commons::{Empty, ReleveNote};
 use tonic::{Request, Response};
 
 use crate::{
@@ -31,5 +33,11 @@ impl Releve for ReleveService {
         Ok(Response::new(GetReleveResponse {
             releves: Some(releve),
         }))
+    }
+    async fn liste_ratrapage(
+        &self,
+        _request: Request<Empty>,
+    ) -> TonicRpcResult<ListeRatrapageResponse> {
+        crate::tonic_not_implemented()
     }
 }
