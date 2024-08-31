@@ -141,3 +141,18 @@ message ImportDataMessage {
 service Imports {
     rpc import(stream ImportDataMessage) returns(mg.tonymushah.evalfjuil24.Empty);
 }
+
+message ConfigNote {
+    string code = 1;
+    string name = 2;
+    double value = 3;
+}
+
+message GetConfigsMessageResponse {
+    repeated ConfigNote configs = 1;
+}
+
+service CfgNoteService {
+    rpc getConfigs(mg.tonymushah.evalfjuil24.Empty) returns (GetConfigsMessageResponse);
+    rpc updateConfig(ConfigNote) returns (mg.tonymushah.evalfjuil24.Empty);
+}
