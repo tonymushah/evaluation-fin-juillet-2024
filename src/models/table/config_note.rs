@@ -53,4 +53,18 @@ impl ConfigNote {
     pub fn moyenne_generale(_con: &mut PgConnection) -> f64 {
         10f64
     }
+    pub fn upsert_type_config_note(
+        key: String,
+        value: BigDecimal,
+        con: &mut PgConnection,
+    ) -> QueryResult<()> {
+        use self::configuration_note::dsl::*;
+        diesel::insert_into(configuration_note)
+            .values((code.eq(key), valeur.eq(&value)))
+            .on_conflict(code)
+            .do_update()
+            .set(valeur.eq(&value))
+            .execute(con)?;
+        Ok(())
+    }
 }
