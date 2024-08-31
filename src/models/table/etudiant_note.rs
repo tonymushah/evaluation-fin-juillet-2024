@@ -8,7 +8,11 @@ use time::{OffsetDateTime, PrimitiveDateTime};
 
 use crate::models::view::VEtudiantMatiereNote;
 
-use super::{config_note::ConfigNote, sem_mat::SemestreMatieres, Matiere};
+use super::{
+    config_note::{type_calcul::TypeCalculNote, ConfigNote},
+    sem_mat::SemestreMatieres,
+    Matiere,
+};
 
 #[derive(Debug, Clone)]
 pub struct GetReleveNote {
@@ -62,10 +66,11 @@ impl GetReleveNote {
             .load(con)
     }
     pub fn get_notes(&self, con: &mut PgConnection) -> QueryResult<EtudiantNotes> {
+        let type_calcul = ConfigNote::type_calcul_note(con);
         let vnotes = self.get_v_notes(con)?;
         let matieres = self.get_semestre_matiere(con)?;
         let mut notes: EtudiantNotes = (&matieres).into();
-        notes.seed(&vnotes);
+        notes.seed(&vnotes, type_calcul);
         Ok(notes)
     }
     fn get_matiere(&self, mat: String, con: &mut PgConnection) -> QueryResult<Matiere> {
@@ -144,8 +149,26 @@ pub fn get_etudiant_notes(etudiant: &str, con: &mut PgConnection) -> QueryResult
         .collect()
 }
 
+fn unique_from_type_calcule(v_notes: &[&VEtudiantMatiereNote], type_calcul: TypeCalculNote) -> f64 {
+    match type_calcul {
+        TypeCalculNote::Max => v_notes
+            .iter()
+            .max_by(|a, b| a.valeur.cmp(&b.valeur))
+            .and_then(|note| note.valeur.to_f64())
+            .unwrap_or_default(),
+        TypeCalculNote::Moyenne => {
+            let count = v_notes.len();
+            v_notes
+                .iter()
+                .flat_map(|note| note.valeur.to_f64())
+                .sum::<f64>()
+                / (count as f64)
+        }
+    }
+}
+
 impl EtudiantNotes {
-    pub fn seed(&mut self, v_notes: &[VEtudiantMatiereNote]) {
+    pub fn seed(&mut self, v_notes: &[VEtudiantMatiereNote], type_calcul: TypeCalculNote) {
         let folded_notes = v_notes.iter().fold(
             HashMap::<String, Vec<&VEtudiantMatiereNote>>::new(),
             |mut agg, note| {
@@ -155,19 +178,14 @@ impl EtudiantNotes {
         );
         self.0.iter_mut().for_each(|note| match note {
             EtudiantNote::Unique(e) => {
-                if let Some(fnote) = folded_notes
-                    .get(&e.matiere)
-                    .and_then(|fnote| fnote.iter().max_by(|a, b| a.submission.cmp(&b.submission)))
-                {
-                    e.note = fnote.valeur.to_f64().unwrap_or_default();
+                if let Some(fnote) = folded_notes.get(&e.matiere) {
+                    e.note = unique_from_type_calcule(fnote, type_calcul);
                 }
             }
             EtudiantNote::Choix(es) => {
                 es.iter_mut().for_each(|e| {
-                    if let Some(fnote) = folded_notes.get(&e.matiere).and_then(|fnote| {
-                        fnote.iter().max_by(|a, b| a.submission.cmp(&b.submission))
-                    }) {
-                        e.note = fnote.valeur.to_f64().unwrap_or_default();
+                    if let Some(fnote) = folded_notes.get(&e.matiere) {
+                        e.note = unique_from_type_calcule(fnote, type_calcul);
                     }
                 });
             }
