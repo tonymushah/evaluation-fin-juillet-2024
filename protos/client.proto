@@ -56,8 +56,20 @@ message GetReleveResponse {
     mg.tonymushah.evalfjuil24.ReleveNote releves = 1;
 }
 
+message Ratrapage {
+    string semestre = 1;
+    string matiere = 2;
+    double note = 3;
+    double montant = 4;
+}
+
+message ListeRatrapageResponse {
+    repeated Ratrapage list = 1;
+}
+
 service Releve {
     rpc Get(GetReleveRequest) returns (GetReleveResponse);
+    rpc ListeRatrapage(mg.tonymushah.evalfjuil24.Empty) returns (ListeRatrapageResponse);
 }
 
 service Current {
