@@ -29,8 +29,20 @@ impl TryFrom<u8> for TypeCalculNote {
     }
 }
 
+impl From<TypeCalculNote> for u8 {
+    fn from(value: TypeCalculNote) -> u8 {
+        match value {
+            TypeCalculNote::Max => 1,
+            TypeCalculNote::Moyenne => 2,
+        }
+    }
+}
+
 impl TypeCalculNote {
     pub fn parse(value: u8) -> Result<Self, TypeCalculNoteParseError> {
         Self::try_from(value)
+    }
+    pub fn to_value(self) -> u8 {
+        self.into()
     }
 }
