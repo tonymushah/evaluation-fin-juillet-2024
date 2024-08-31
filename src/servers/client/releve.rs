@@ -38,6 +38,7 @@ impl Releve for ReleveService {
         &self,
         _request: Request<Empty>,
     ) -> TonicRpcResult<ListeRatrapageResponse> {
+        // TODO implement
         crate::tonic_not_implemented()
     }
 }
