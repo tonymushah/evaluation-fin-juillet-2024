@@ -1,3 +1,4 @@
+pub mod entry;
 pub mod type_calcul;
 
 use bigdecimal::{BigDecimal, ToPrimitive};
