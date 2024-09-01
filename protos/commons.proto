@@ -18,6 +18,11 @@ enum Genre {
     G_FEMININ = 2;
 }
 
+enum EtudiantStatus {
+    E_ADMIS = 0;
+    E_AJOURNEE = 1;
+}
+
 message Etudiant {
     string numero = 1;
     string nom = 2;
@@ -26,6 +31,8 @@ message Etudiant {
     uint32 age = 5;
     string promotion = 6;
     Genre genre = 7;
+    double moyenne = 8;
+    EtudiantStatus status = 9;
 }
 
 message Matiere {
