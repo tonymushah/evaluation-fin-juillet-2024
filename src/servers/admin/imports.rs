@@ -68,9 +68,15 @@ impl Imports for ImportService {
             println!("notes {}", cfg_notes.len());
             println!("notes {:#?}", cfg_notes);
             let mut con = pool2.get()?;
-            insert_into(configuration_note)
-                .values(&cfg_notes)
-                .execute(&mut con)?;
+            for cfg_note in cfg_notes {
+                insert_into(configuration_note)
+                    .values(&cfg_note)
+                    .on_conflict(code)
+                    .do_update()
+                    .set(&cfg_note)
+                    .execute(&mut con)?;
+            }
+
             Ok(())
         })
         .await?
