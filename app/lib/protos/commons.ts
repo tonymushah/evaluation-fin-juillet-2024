@@ -64,6 +64,14 @@ export interface Etudiant {
      * @generated from protobuf field: mg.tonymushah.evalfjuil24.Genre genre = 7;
      */
     genre: Genre;
+    /**
+     * @generated from protobuf field: double moyenne = 8;
+     */
+    moyenne: number;
+    /**
+     * @generated from protobuf field: mg.tonymushah.evalfjuil24.EtudiantStatus status = 9;
+     */
+    status: EtudiantStatus;
 }
 /**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.Matiere
@@ -140,6 +148,19 @@ export enum Genre {
      * @generated from protobuf enum value: G_FEMININ = 2;
      */
     G_FEMININ = 2
+}
+/**
+ * @generated from protobuf enum mg.tonymushah.evalfjuil24.EtudiantStatus
+ */
+export enum EtudiantStatus {
+    /**
+     * @generated from protobuf enum value: E_ADMIS = 0;
+     */
+    E_ADMIS = 0,
+    /**
+     * @generated from protobuf enum value: E_AJOURNEE = 1;
+     */
+    E_AJOURNEE = 1
 }
 /**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.ReleveNoteUnitStatus
@@ -269,7 +290,9 @@ class Etudiant$Type extends MessageType<Etudiant> {
             { no: 4, name: "date_naissance", kind: "message", T: () => Date },
             { no: 5, name: "age", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 6, name: "promotion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "genre", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.Genre", Genre] }
+            { no: 7, name: "genre", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.Genre", Genre] },
+            { no: 8, name: "moyenne", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "status", kind: "enum", T: () => ["mg.tonymushah.evalfjuil24.EtudiantStatus", EtudiantStatus] }
         ]);
     }
     create(value?: PartialMessage<Etudiant>): Etudiant {
@@ -280,6 +303,8 @@ class Etudiant$Type extends MessageType<Etudiant> {
         message.age = 0;
         message.promotion = "";
         message.genre = 0;
+        message.moyenne = 0;
+        message.status = 0;
         if (value !== undefined)
             reflectionMergePartial<Etudiant>(this, message, value);
         return message;
@@ -309,6 +334,12 @@ class Etudiant$Type extends MessageType<Etudiant> {
                     break;
                 case /* mg.tonymushah.evalfjuil24.Genre genre */ 7:
                     message.genre = reader.int32();
+                    break;
+                case /* double moyenne */ 8:
+                    message.moyenne = reader.double();
+                    break;
+                case /* mg.tonymushah.evalfjuil24.EtudiantStatus status */ 9:
+                    message.status = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -343,6 +374,12 @@ class Etudiant$Type extends MessageType<Etudiant> {
         /* mg.tonymushah.evalfjuil24.Genre genre = 7; */
         if (message.genre !== 0)
             writer.tag(7, WireType.Varint).int32(message.genre);
+        /* double moyenne = 8; */
+        if (message.moyenne !== 0)
+            writer.tag(8, WireType.Bit64).double(message.moyenne);
+        /* mg.tonymushah.evalfjuil24.EtudiantStatus status = 9; */
+        if (message.status !== 0)
+            writer.tag(9, WireType.Varint).int32(message.status);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

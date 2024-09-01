@@ -217,6 +217,19 @@ export interface GetPromotionsResponse {
     promotions: string[];
 }
 /**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantAdmisOuNonResponse
+ */
+export interface EtudiantAdmisOuNonResponse {
+    /**
+     * @generated from protobuf field: int64 admis = 1;
+     */
+    admis: bigint;
+    /**
+     * @generated from protobuf field: int64 ajournee = 2;
+     */
+    ajournee: bigint;
+}
+/**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.LoginRequest
  */
 export interface LoginRequest {
@@ -511,6 +524,19 @@ class GetPromotionsResponse$Type extends MessageType<GetPromotionsResponse> {
  */
 export const GetPromotionsResponse = new GetPromotionsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class EtudiantAdmisOuNonResponse$Type extends MessageType<EtudiantAdmisOuNonResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantAdmisOuNonResponse", [
+            { no: 1, name: "admis", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 2, name: "ajournee", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantAdmisOuNonResponse
+ */
+export const EtudiantAdmisOuNonResponse = new EtudiantAdmisOuNonResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class LoginRequest$Type extends MessageType<LoginRequest> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.LoginRequest", [
@@ -606,7 +632,8 @@ export const Notes = new ServiceType("mg.tonymushah.evalfjuil24.admin.Notes", [
 export const Getters = new ServiceType("mg.tonymushah.evalfjuil24.admin.Getters", [
     { name: "Semetres", options: {}, I: GetSemetresRequest, O: GetSemetresResponse },
     { name: "Matieres", options: {}, I: GetMatieresRequest, O: GetMatieresResponse },
-    { name: "Promotions", options: {}, I: GetPromotionsRequest, O: GetPromotionsResponse }
+    { name: "Promotions", options: {}, I: GetPromotionsRequest, O: GetPromotionsResponse },
+    { name: "EtudiantAdmisOuNon", options: {}, I: Empty, O: EtudiantAdmisOuNonResponse }
 ]);
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Auth

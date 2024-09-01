@@ -11,6 +11,7 @@ import { Auth } from "./admin";
 import type { LoginResponse } from "./admin";
 import type { LoginRequest } from "./admin";
 import { Getters } from "./admin";
+import type { EtudiantAdmisOuNonResponse } from "./admin";
 import type { GetPromotionsResponse } from "./admin";
 import type { GetPromotionsRequest } from "./admin";
 import type { GetMatieresResponse } from "./admin";
@@ -180,6 +181,10 @@ export interface IGettersClient {
      * @generated from protobuf rpc: Promotions(mg.tonymushah.evalfjuil24.admin.GetPromotionsRequest) returns (mg.tonymushah.evalfjuil24.admin.GetPromotionsResponse);
      */
     promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetPromotionsResponse>;
+    /**
+     * @generated from protobuf rpc: EtudiantAdmisOuNon(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.admin.EtudiantAdmisOuNonResponse);
+     */
+    etudiantAdmisOuNon(input: Empty, options?: RpcOptions): UnaryCall<Empty, EtudiantAdmisOuNonResponse>;
 }
 /**
  * @generated from protobuf service mg.tonymushah.evalfjuil24.admin.Getters
@@ -210,6 +215,13 @@ export class GettersClient implements IGettersClient, ServiceInfo {
     promotions(input: GetPromotionsRequest, options?: RpcOptions): UnaryCall<GetPromotionsRequest, GetPromotionsResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<GetPromotionsRequest, GetPromotionsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: EtudiantAdmisOuNon(mg.tonymushah.evalfjuil24.Empty) returns (mg.tonymushah.evalfjuil24.admin.EtudiantAdmisOuNonResponse);
+     */
+    etudiantAdmisOuNon(input: Empty, options?: RpcOptions): UnaryCall<Empty, EtudiantAdmisOuNonResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Empty, EtudiantAdmisOuNonResponse>("unary", this._transport, method, opt, input);
     }
 }
 /**
