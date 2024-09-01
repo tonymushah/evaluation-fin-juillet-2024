@@ -1,5 +1,6 @@
 mod error;
 pub mod models;
+pub mod modules;
 pub mod paginate;
 pub mod reset;
 pub mod seed;

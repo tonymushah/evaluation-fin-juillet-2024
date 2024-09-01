@@ -3,7 +3,7 @@ use proto_admin::{cfg_note_service_server::CfgNoteService, ConfigNote, GetConfig
 use protos_commons::Empty;
 use tonic::{Request, Response};
 
-use crate::{models::table::config_note::entry::ConfigNoteEntry, servers::TonicRpcResult, DbPool};
+use crate::{models::table::config_note::ConfigNoteEntry, servers::TonicRpcResult, DbPool};
 
 #[derive(Debug, Clone)]
 pub struct CfgNoteServiceImpl {

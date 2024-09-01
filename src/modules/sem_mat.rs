@@ -1,4 +1,5 @@
-use super::Matiere;
+use crate::models::table::Matiere;
+
 use diesel::prelude::*;
 use diesel_schemas::schema::matiere;
 
@@ -114,10 +115,8 @@ impl Matiere {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::table::{
-        sem_mat::{SemestreMatiere, SemestreMatiereType},
-        Matiere,
-    };
+    use super::{SemestreMatiere, SemestreMatiereType};
+    use crate::models::table::Matiere;
 
     #[test]
     fn test_matiere_type_parse() {

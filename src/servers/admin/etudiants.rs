@@ -7,10 +7,8 @@ use protos_commons::ReleveNote;
 use tonic::{Request, Response};
 
 use crate::{
-    models::table::{etudiant_note::GetReleveNote, Etudiant},
-    paginate::Paginate,
-    servers::TonicRpcResult,
-    DbPool,
+    models::table::Etudiant, modules::etudiant_note::GetReleveNote, paginate::Paginate,
+    servers::TonicRpcResult, DbPool,
 };
 
 #[derive(Debug, Clone)]

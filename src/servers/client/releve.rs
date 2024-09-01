@@ -5,7 +5,7 @@ use protos_commons::{Empty, ReleveNote};
 use tonic::{Request, Response};
 
 use crate::{
-    models::table::etudiant_note::GetReleveNote,
+    modules::etudiant_note::GetReleveNote,
     servers::TonicRpcResult,
     token::{ClientHmac, ExtractSessionData},
     DbPool,

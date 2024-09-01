@@ -11,8 +11,9 @@ use crate::models::view::VEtudiantMatiereNote;
 use super::{
     config_note::{type_calcul::TypeCalculNote, ConfigNote},
     sem_mat::SemestreMatieres,
-    Matiere,
 };
+
+use crate::models::table::Matiere;
 
 #[derive(Debug, Clone)]
 pub struct GetReleveNote {
@@ -22,8 +23,8 @@ pub struct GetReleveNote {
 
 #[derive(Debug, Clone, Default)]
 pub struct EtudiantNoteUnit {
-    matiere: String,
-    note: f64,
+    pub matiere: String,
+    pub note: f64,
 }
 
 #[derive(Debug, Clone)]
@@ -340,7 +341,7 @@ mod tests_s4_1 {
     use diesel::{Connection, PgConnection};
     use itu_csv_import::CSVNote;
 
-    use crate::models::table::{
+    use crate::modules::{
         config_note::{type_calcul::TypeCalculNote, ConfigNote},
         etudiant_note::GetReleveNote,
     };

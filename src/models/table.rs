@@ -1,14 +1,12 @@
 pub mod config_note;
-pub mod etudiant_note;
-pub mod is_admis;
-pub mod sem_mat;
 
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use diesel_schemas::schema::*;
-use etudiant_note::now;
 use time::{Date, OffsetDateTime, PrimitiveDateTime};
 use uuid::Uuid;
+
+use crate::modules::etudiant_note::now;
 
 // Etudiant struct
 #[derive(

@@ -7,11 +7,7 @@ use tokio_stream::{Stream, StreamExt};
 use tonic::{Request, Response, Streaming};
 use uuid::Uuid;
 
-use crate::{
-    models::table::{etudiant_note::now, Note},
-    servers::TonicRpcResult,
-    DbPool,
-};
+use crate::{models::table::Note, modules::etudiant_note::now, servers::TonicRpcResult, DbPool};
 
 #[derive(Debug, Clone)]
 pub struct NotesService {
