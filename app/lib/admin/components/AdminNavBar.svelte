@@ -49,6 +49,7 @@
 		<NavUl>
 			<NavLi href={route('/admin/etudiant')}>Etudiants</NavLi>
 			<NavLi href={route('/admin/imports')}>Imports</NavLi>
+			<NavLi href={route('/admin/config')}>Configurations</NavLi>
 			<NavLi on:click={() => reset()}>Reset database</NavLi>
 		</NavUl>
 		<div>
