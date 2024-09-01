@@ -6,6 +6,7 @@ import { spawn } from 'node:child_process';
 
 export default defineConfig({
 	plugins: [
+		import('./app/lib/server/websocket').then((m) => m.default),
 		{
 			name: 'mushah-proto-build',
 			async buildStart(options) {
