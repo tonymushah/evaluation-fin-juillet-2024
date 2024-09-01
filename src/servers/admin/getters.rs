@@ -1,14 +1,18 @@
 use proto_admin::{
-    getters_server::Getters, GetMatieresRequest, GetMatieresResponse, GetPromotionsRequest,
-    GetPromotionsResponse, GetSemetresRequest, GetSemetresResponse, Semestre,
+    getters_server::Getters, EtudiantAdmisOuNonResponse, GetMatieresRequest, GetMatieresResponse,
+    GetPromotionsRequest, GetPromotionsResponse, GetSemetresRequest, GetSemetresResponse, Semestre,
 };
 
 use diesel::prelude::*;
 use diesel_schemas::schema::{promotion, semestre};
 
+use protos_commons::Empty;
 use tonic::{Request, Response};
 
-use crate::{models::table::Matiere, paginate::Paginate, servers::TonicRpcResult, DbPool};
+use crate::{
+    models::table::Matiere, modules::etudiant_status::get_etudiants_status, paginate::Paginate,
+    servers::TonicRpcResult, DbPool,
+};
 
 #[derive(Debug, Clone)]
 pub struct GettersService {
@@ -80,5 +84,29 @@ impl Getters for GettersService {
         })
         .await??;
         Ok(Response::new(GetPromotionsResponse { promotions: proms }))
+    }
+    async fn etudiant_admis_ou_non(
+        &self,
+        _request: Request<Empty>,
+    ) -> TonicRpcResult<EtudiantAdmisOuNonResponse> {
+        let pool = self.pool.clone();
+        let res = crate::spawn_blocking(move || -> crate::Result<_> {
+            let mut con = pool.get()?;
+            Ok(get_etudiants_status(&mut con)?.values().fold(
+                EtudiantAdmisOuNonResponse {
+                    admis: 0,
+                    ajournee: 0,
+                },
+                |mut acc, v| {
+                    match v {
+                        protos_commons::EtudiantStatus::EAdmis => acc.admis += 1,
+                        protos_commons::EtudiantStatus::EAjournee => acc.ajournee += 1,
+                    };
+                    acc
+                },
+            ))
+        })
+        .await??;
+        Ok(Response::new(res))
     }
 }
