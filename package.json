@@ -74,6 +74,7 @@
 		"dayjs": "^1.11.13",
 		"lodash-es": "^4.17.21",
 		"socket.io": "^4.7.5",
+		"socket.io-client": "^4.7.5",
 		"uuid": "^10.0.0"
 	}
 }
