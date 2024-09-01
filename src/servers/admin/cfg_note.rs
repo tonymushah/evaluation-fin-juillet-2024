@@ -22,6 +22,7 @@ impl CfgNoteService for CfgNoteServiceImpl {
             let mut con = pool.get()?;
             Ok(configuration_note
                 .select(ConfigNoteEntry::as_select())
+                .order(code.asc())
                 .get_results(&mut con)?)
         })
         .await??;
