@@ -6,7 +6,10 @@ use diesel_schemas::schema::*;
 use time::{Date, OffsetDateTime, PrimitiveDateTime};
 use uuid::Uuid;
 
-use crate::modules::etudiant_note::now;
+use crate::modules::{
+    etudiant_moyenne::get_etudiant_moyenne, etudiant_note::now,
+    etudiant_status::get_etudiant_status,
+};
 
 // Etudiant struct
 #[derive(
@@ -124,22 +127,25 @@ impl From<Matiere> for protos_commons::Matiere {
     }
 }
 
-impl From<Etudiant> for protos_commons::Etudiant {
-    fn from(value: Etudiant) -> Self {
-        let age_dur = OffsetDateTime::now_utc().date() - value.date_naissance;
+impl Etudiant {
+    pub fn into_proto(self, con: &mut PgConnection) -> QueryResult<protos_commons::Etudiant> {
+        let etu = &self.etu;
+        let age_dur = OffsetDateTime::now_utc().date() - self.date_naissance;
         let age = {
             let now = now().date();
             let next = now + age_dur;
             next.year() - now.year()
         } as u32;
-        Self {
-            numero: value.etu,
-            nom: value.nom,
-            prenom: value.prenom,
-            date_naissance: Some(value.date_naissance.into()),
+        Ok(protos_commons::Etudiant {
+            numero: self.etu.clone(),
+            nom: self.nom,
+            prenom: self.prenom,
+            date_naissance: Some(self.date_naissance.into()),
             age,
-            promotion: value.promotion,
-            genre: (value.genre as u8).into(),
-        }
+            promotion: self.promotion,
+            genre: (self.genre as u8).into(),
+            moyenne: get_etudiant_moyenne(etu, con)?,
+            status: get_etudiant_status(etu, con)? as i32,
+        })
     }
 }

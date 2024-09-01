@@ -23,16 +23,16 @@ impl Current for CurrentService {
         let pool = self.pool.clone();
         let id = request.get_current(&{ ClientHmac::extract_client() })?;
         Ok(Response::new(
-            spawn_blocking(move || -> crate::Result<CEtudiant> {
+            spawn_blocking(move || -> crate::Result<_> {
                 use self::etudiant::dsl::*;
                 let mut con = pool.get()?;
                 Ok(etudiant
                     .filter(etu.eq(id))
                     .select(CEtudiant::as_select())
-                    .get_result(&mut con)?)
+                    .get_result(&mut con)
+                    .and_then(|e| e.into_proto(&mut con))?)
             })
-            .await??
-            .into(),
+            .await??,
         ))
     }
 }

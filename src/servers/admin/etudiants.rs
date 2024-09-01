@@ -25,8 +25,8 @@ impl Etudiants for EtudiantsService {
         let pool = self.pool.clone();
         let req_data = request.get_ref().clone();
         let req = req_data.clone();
-        let (data, total) =
-            crate::spawn_blocking(move || -> crate::Result<(Vec<Etudiant>, i64)> {
+        let (data, total) = crate::spawn_blocking(
+            move || -> crate::Result<(Vec<protos_commons::Etudiant>, i64)> {
                 use diesel::prelude::*;
                 use diesel_schemas::schema::etudiant::dsl::*;
                 let mut con = pool.get()?;
@@ -41,13 +41,22 @@ impl Etudiants for EtudiantsService {
                 }
                 Ok(query
                     .paginate(offset as i64, limit as i64)
-                    .load_data(&mut con)?)
-            })
-            .await??;
+                    .load_data(&mut con)
+                    .and_then(|(data, total): (Vec<Etudiant>, _)| {
+                        Ok((
+                            data.into_iter()
+                                .map(|e| e.into_proto(&mut con))
+                                .collect::<Result<Vec<_>, _>>()?,
+                            total,
+                        ))
+                    })?)
+            },
+        )
+        .await??;
         let offset = req_data.offset.unwrap_or_default();
         let limit = req_data.limit.unwrap_or(10);
         Ok(Response::new(EtudiantsListResponse {
-            list: data.into_iter().map(|e| e.into()).collect(),
+            list: data,
             offset,
             limit,
             total: total as u64,
@@ -59,19 +68,18 @@ impl Etudiants for EtudiantsService {
     ) -> TonicRpcResult<EtudiantInfoResponse> {
         let EtudiantInfoRequest { numero } = request.get_ref().clone();
         let pool = self.pool.clone();
-        let etu = crate::spawn_blocking(move || -> crate::Result<Etudiant> {
+        let etu = crate::spawn_blocking(move || -> crate::Result<_> {
             use diesel::prelude::*;
             use diesel_schemas::schema::etudiant::dsl::*;
             let mut con = pool.get()?;
             Ok(etudiant
                 .filter(etu.eq(numero))
                 .select(Etudiant::as_select())
-                .get_result(&mut con)?)
+                .get_result(&mut con)
+                .and_then(|et| et.into_proto(&mut con))?)
         })
         .await??;
-        Ok(Response::new(EtudiantInfoResponse {
-            current: Some(etu.into()),
-        }))
+        Ok(Response::new(EtudiantInfoResponse { current: Some(etu) }))
     }
     async fn releve_note(
         &self,
