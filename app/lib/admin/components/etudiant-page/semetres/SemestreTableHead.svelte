@@ -3,6 +3,7 @@
 </script>
 
 <TableHead>
+	<TableHeadCell>Rang</TableHeadCell>
 	<TableHeadCell>Semestre</TableHeadCell>
 	<TableHeadCell>Moyenne</TableHeadCell>
 	<TableHeadCell>Status</TableHeadCell>

@@ -22,7 +22,6 @@ export const load: PageServerLoad = async function ({ params }) {
 		status: rel.status,
 		moyenne: rel.moyenne
 	}));
-
 	return {
 		semestres
 	};

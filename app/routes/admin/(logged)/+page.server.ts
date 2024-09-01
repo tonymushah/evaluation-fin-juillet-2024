@@ -8,6 +8,7 @@ export const load: PageServerLoad = async () => {
 	const admisData: EtudiantAdmisOuNonResponse = EtudiantAdmisOuNonResponse.toJson(
 		(await gettersClient.etudiantAdmisOuNon({})).response
 	);
+	console.log(admisData);
 	return {
 		admisData
 	};

@@ -5,7 +5,7 @@
 	import { Button, Heading, Hr, P } from 'flowbite-svelte';
 	import type { PageServerData } from './$types';
 	export let data: PageServerData;
-	$: admis = Number(data.admisData.admis);
+	$: admis = Number(data.admisData.admis ?? 0);
 	$: ajournee = Number(data.admisData.ajournee);
 </script>
 

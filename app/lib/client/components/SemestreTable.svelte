@@ -11,12 +11,13 @@
 	$: isAjournee = (semestre: string) => {
 		return data.find((sem) => sem.semestre == semestre)?.status == ReleveNoteStatus.S_AJOURNEE;
 	};
+	$: data_ = data.sort((a, b) => a.moyenne - b.moyenne);
 </script>
 
 <Table hoverable shadow color="blue">
 	<SemestreTableHead />
 	<TableBody tableBodyClass="divide-y">
-		{#each data as { semestre, status, moyenne }}
+		{#each data as { semestre, status, moyenne }, rang}
 			<a
 				class="contents"
 				href={route('/client/semestre/[sem]', {
@@ -24,6 +25,11 @@
 				})}
 			>
 				<TableBodyRow color={isAjournee(semestre) ? 'red' : 'default'}>
+					<TableBodyCell>
+						<P>
+							{rang + 1}
+						</P>
+					</TableBodyCell>
 					<TableBodyCell>
 						<P>
 							{semestre}
