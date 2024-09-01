@@ -108,10 +108,16 @@ message GetPromotionsResponse {
     repeated string promotions = 1;
 }
 
+message EtudiantAdmisOuNonResponse {
+    int64 admis = 1;
+    int64 ajournee = 2;
+}
+
 service Getters {
     rpc Semetres(GetSemetresRequest) returns (GetSemetresResponse);
     rpc Matieres(GetMatieresRequest) returns (GetMatieresResponse);
     rpc Promotions(GetPromotionsRequest) returns (GetPromotionsResponse);
+    rpc EtudiantAdmisOuNon(mg.tonymushah.evalfjuil24.Empty) returns (EtudiantAdmisOuNonResponse);
 }
 
 message LoginRequest{
