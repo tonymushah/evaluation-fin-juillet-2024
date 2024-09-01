@@ -29,17 +29,17 @@
 	{/if}
 	<P size="xl">Promotion: {etudiant.promotion}</P>
 	<P size="xl"
-		>Genre: {#if etudiant.genre == Genre.G_FEMININ}
+		>Genre: {#if etudiant.genre == Genre[Genre.G_FEMININ]}
 			Feminin
-		{:else if etudiant.genre == Genre.G_MASCULIN}
+		{:else if etudiant.genre == Genre[Genre.G_MASCULIN]}
 			Masculin
 		{:else}
 			Autre
 		{/if}
 	</P>
-	<P>Moyenne: {etudiant.moyenne}</P>
-	<P
-		>Status: {#if etudiant.status == EtudiantStatus.E_AJOURNEE}
+	<P size="xl">Moyenne: {etudiant.moyenne}</P>
+	<P size="xl"
+		>Status: {#if etudiant.status == EtudiantStatus[EtudiantStatus.E_AJOURNEE]}
 			Ajournee
 		{:else}
 			Admis

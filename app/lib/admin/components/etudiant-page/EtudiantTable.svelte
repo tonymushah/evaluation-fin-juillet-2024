@@ -64,7 +64,7 @@
 						{moyenne}
 					</TableBodyCell>
 					<TableBodyCell>
-						{#if status == EtudiantStatus.E_AJOURNEE}
+						{#if status == EtudiantStatus[EtudiantStatus.E_AJOURNEE]}
 							Ajournee
 						{:else}
 							Admis

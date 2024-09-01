@@ -3,8 +3,10 @@
 	import { route } from '$lib/ROUTES';
 
 	import { Button, Heading, Hr, P } from 'flowbite-svelte';
-	let admis = NaN;
-	let ajournee = NaN;
+	import type { PageServerData } from './$types';
+	export let data: PageServerData;
+	$: admis = Number(data.admisData.admis);
+	$: ajournee = Number(data.admisData.ajournee);
 </script>
 
 <svelte:head>
