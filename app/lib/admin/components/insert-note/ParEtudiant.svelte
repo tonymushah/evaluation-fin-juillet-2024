@@ -13,7 +13,7 @@
 		TableSearch
 	} from 'flowbite-svelte';
 	import { PlusOutline, TrashBinSolid, UploadSolid } from 'flowbite-svelte-icons';
-	import { derived, writable, type Writable } from 'svelte/store';
+	import { derived, get, writable, type Writable } from 'svelte/store';
 	import { v4 } from 'uuid';
 	import ParEtudiantRow from './par-etudiant/ParEtudiantRow.svelte';
 	type InsertValue = {
@@ -42,6 +42,18 @@
 		values.update((vs) => {
 			vs.set(v4(), {});
 			return vs;
+		});
+	}
+	function pendAll() {
+		status.update((m) => {
+			Array.from(m.keys()).forEach((key) => m.set(key, InsertStatus.Pending));
+			return m;
+		});
+	}
+	function errorAll() {
+		status.update((m) => {
+			Array.from(m.keys()).forEach((key) => m.set(key, InsertStatus.Error));
+			return m;
 		});
 	}
 	const lines = derived([values, status], ([$values, $status]) =>
@@ -111,6 +123,41 @@
 			}
 		};
 	}
+	let isLoading = false;
+	async function insert() {
+		const etu = get(etudiant);
+		const values_ = Object.fromEntries(get(values));
+		if (!isLoading && etu != undefined) {
+			isLoading = true;
+			try {
+				const req = new Request(`/admin/note-insert/etudiant/${etu}`, {
+					body: JSON.stringify(values_),
+					method: 'POST'
+				});
+				pendAll();
+				const res = await fetch(req);
+				const body: Record<string, string> = await res.json();
+				const body_res = new Map(Object.entries(body));
+
+				status.update((m) => {
+					Array.from(m.keys()).forEach((key) => {
+						const res = body_res.get(key);
+						if (res) {
+							m.set(key, InsertStatus.Inserted);
+						} else {
+							m.set(key, InsertStatus.Error);
+						}
+					});
+					return m;
+				});
+			} catch (error) {
+				errorAll();
+				console.error(error);
+			} finally {
+				isLoading = false;
+			}
+		}
+	}
 </script>
 
 <TabItem open title="Par etudiants">
@@ -124,7 +171,13 @@
 				<TrashBinSolid />
 				Clear
 			</Button>
-			<Button color="green">
+			<Button
+				color="green"
+				disabled={isLoading}
+				on:click={async () => {
+					await insert();
+				}}
+			>
 				<UploadSolid />
 				Inserer
 			</Button>
