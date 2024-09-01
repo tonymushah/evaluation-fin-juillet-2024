@@ -1,8 +1,9 @@
+use diesel::{prelude::*, update};
 use proto_admin::{cfg_note_service_server::CfgNoteService, ConfigNote, GetConfigsMessageResponse};
 use protos_commons::Empty;
-use tonic::Request;
+use tonic::{Request, Response};
 
-use crate::{servers::TonicRpcResult, tonic_not_implemented, DbPool};
+use crate::{models::table::config_note::entry::ConfigNoteEntry, servers::TonicRpcResult, DbPool};
 
 #[derive(Debug, Clone)]
 pub struct CfgNoteServiceImpl {
@@ -15,11 +16,29 @@ impl CfgNoteService for CfgNoteServiceImpl {
         &self,
         _request: Request<Empty>,
     ) -> TonicRpcResult<GetConfigsMessageResponse> {
-        // TODO
-        tonic_not_implemented()
+        let pool = self.pool.clone();
+        let res = crate::spawn_blocking(move || -> crate::Result<_> {
+            use diesel_schemas::schema::configuration_note::dsl::*;
+            let mut con = pool.get()?;
+            Ok(configuration_note
+                .select(ConfigNoteEntry::as_select())
+                .get_results(&mut con)?)
+        })
+        .await??;
+        Ok(Response::new(GetConfigsMessageResponse {
+            configs: res.into_iter().map(|v| v.into()).collect(),
+        }))
     }
-    async fn update_config(&self, _request: Request<ConfigNote>) -> TonicRpcResult<Empty> {
-        // TODO
-        tonic_not_implemented()
+    async fn update_config(&self, request: Request<ConfigNote>) -> TonicRpcResult<Empty> {
+        let pool = self.pool.clone();
+        let entry: ConfigNoteEntry = request.get_ref().clone().into();
+        crate::spawn_blocking(move || -> crate::Result<()> {
+            use diesel_schemas::schema::configuration_note::dsl::*;
+            let mut con = pool.get()?;
+            update(configuration_note).set(entry).execute(&mut con)?;
+            Ok(())
+        })
+        .await??;
+        Ok(Response::new(Empty {}))
     }
 }
