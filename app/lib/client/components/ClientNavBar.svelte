@@ -11,6 +11,7 @@
 		</NavBrand>
 		<NavHamburger />
 		<NavUl>
+			<NavLi href={route('/client/ratrapages')}>Ratrapages</NavLi>
 			<NavLi href={route('/client/logout')}>Se deconnecter</NavLi>
 		</NavUl>
 		<div>
