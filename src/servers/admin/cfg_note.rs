@@ -35,7 +35,12 @@ impl CfgNoteService for CfgNoteServiceImpl {
         crate::spawn_blocking(move || -> crate::Result<()> {
             use diesel_schemas::schema::configuration_note::dsl::*;
             let mut con = pool.get()?;
-            update(configuration_note).set(entry).execute(&mut con)?;
+            println!("inserting");
+            update(configuration_note)
+                .filter(code.eq(&entry.code))
+                .set(&entry)
+                .execute(&mut con)?;
+            println!("ok");
             Ok(())
         })
         .await??;
