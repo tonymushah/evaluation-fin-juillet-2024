@@ -5,7 +5,10 @@ use protos_commons::{Empty, ReleveNote};
 use tonic::{Request, Response};
 
 use crate::{
-    modules::etudiant_note::GetReleveNote,
+    modules::{
+        etudiant_note::{get_etudiant_notes, GetReleveNote},
+        raptrapages::ExtractRatrapage,
+    },
     servers::TonicRpcResult,
     token::{ClientHmac, ExtractSessionData},
     DbPool,
@@ -36,9 +39,20 @@ impl Releve for ReleveService {
     }
     async fn liste_ratrapage(
         &self,
-        _request: Request<Empty>,
+        request: Request<Empty>,
     ) -> TonicRpcResult<ListeRatrapageResponse> {
-        // TODO implement
-        crate::tonic_not_implemented()
+        let id = request.get_current(&{ ClientHmac::extract_client() })?;
+        let pool = self.pool.clone();
+        let releves = crate::spawn_blocking(move || -> crate::Result<Vec<ReleveNote>> {
+            let mut con = pool.get()?;
+            Ok(get_etudiant_notes(&id, &mut con)?)
+        })
+        .await??;
+        Ok(Response::new(ListeRatrapageResponse {
+            list: releves
+                .into_iter()
+                .flat_map(|releve| releve.extract_ratrapage())
+                .collect(),
+        }))
     }
 }
