@@ -2,7 +2,7 @@
 	import { Heading, P } from 'flowbite-svelte';
 	import type { PageServerData } from './$types';
 	import { commonDateToDate } from '$lib';
-	import { Genre } from '$lib/protos/commons';
+	import { Etudiant, EtudiantStatus, Genre } from '$lib/protos/commons';
 	import SemestreTable from '$lib/client/components/SemestreTable.svelte';
 
 	export let data: PageServerData;
@@ -35,6 +35,14 @@
 			Masculin
 		{:else}
 			Autre
+		{/if}
+	</P>
+	<P>Moyenne: {etudiant.moyenne}</P>
+	<P
+		>Status: {#if etudiant.status == EtudiantStatus.E_AJOURNEE}
+			Ajournee
+		{:else}
+			Admis
 		{/if}
 	</P>
 	<SemestreTable data={semestres} />

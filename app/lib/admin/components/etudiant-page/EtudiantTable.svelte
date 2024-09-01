@@ -10,7 +10,7 @@
 		TableSearch
 	} from 'flowbite-svelte';
 	import EtudiantTableHead from './EtudiantTableHead.svelte';
-	import type { Etudiant } from '$lib/protos/commons';
+	import { Etudiant, EtudiantStatus } from '$lib/protos/commons';
 	import { route } from '$lib/ROUTES';
 	import { goto } from '$app/navigation';
 	import { commonDateToDate } from '$lib';
@@ -24,7 +24,7 @@
 >
 	<EtudiantTableHead />
 	<TableBody tableBodyClass="divide-y">
-		{#each etudiants as { nom, numero, prenom, dateNaissance, age, promotion }}
+		{#each etudiants as { nom, numero, prenom, dateNaissance, age, promotion, moyenne, status }}
 			<a
 				class="contents"
 				href={route('/admin/etudiant/[etu]', {
@@ -59,6 +59,16 @@
 					</TableBodyCell>
 					<TableBodyCell>
 						{promotion}
+					</TableBodyCell>
+					<TableBodyCell>
+						{moyenne}
+					</TableBodyCell>
+					<TableBodyCell>
+						{#if status == EtudiantStatus.E_AJOURNEE}
+							Ajournee
+						{:else}
+							Admis
+						{/if}
 					</TableBodyCell>
 				</TableBodyRow>
 			</a>

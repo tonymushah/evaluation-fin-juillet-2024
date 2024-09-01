@@ -8,4 +8,6 @@
 	<TableHeadCell>Date naissance</TableHeadCell>
 	<TableHeadCell>Age</TableHeadCell>
 	<TableHeadCell>Promotion</TableHeadCell>
+	<TableHeadCell>Moyenne</TableHeadCell>
+	<TableHeadCell>Status</TableHeadCell>
 </TableHead>
