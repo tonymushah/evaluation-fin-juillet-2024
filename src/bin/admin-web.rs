@@ -1,10 +1,10 @@
 use std::env;
 
-use evaluation_fin_juillet_2024::{self as backend, servers::admin::cfg_note::CfgNoteServiceImpl};
+use evaluation_fin_juillet_2024::{self as backend};
 
 use backend::servers::admin::{
-    AuthService, DatabaseService, EtudiantsService, GettersService, HelloServ, ImportService,
-    NotesService,
+    AuthService, CfgNoteServiceImpl, DatabaseService, EtudiantsService, GettersService, HelloServ,
+    ImportService, NotesService, SemestresImplService,
 };
 
 use proto_admin::{
@@ -12,6 +12,7 @@ use proto_admin::{
     database_server::DatabaseServer, etudiants_server::EtudiantsServer,
     getters_server::GettersServer, hello_service_server::HelloServiceServer,
     imports_server::ImportsServer, notes_server::NotesServer,
+    semetres_serv_server::SemetresServServer,
 };
 use tonic::transport::Server;
 
@@ -48,6 +49,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })))
         .add_service(tonic_web::enable(CfgNoteServiceServer::new(
             CfgNoteServiceImpl { pool: pool.clone() },
+        )))
+        .add_service(tonic_web::enable(SemetresServServer::new(
+            SemestresImplService { pool: pool.clone() },
         )))
         .serve(addr)
         .await?;
