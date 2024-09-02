@@ -61,7 +61,7 @@
 					{ratra.matiere}
 				</TableBodyCell>
 				<TableBodyCell>
-					{ratra.note}
+					{ratra.note ?? 0}
 				</TableBodyCell>
 				<TableBodyCell>
 					{ratra.montant}
