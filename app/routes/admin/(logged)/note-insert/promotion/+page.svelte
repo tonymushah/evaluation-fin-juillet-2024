@@ -37,7 +37,7 @@
 	<div class="flex w-2/3 flex-col gap-4">
 		<Heading>Insertion par promotion</Heading>
 		{#if form?.errors}
-			<P color="text-red">{form.errors}</P>
+			<P color="red">{form.errors}</P>
 		{/if}
 		<form method="post" class="grid gap-3" use:enhance>
 			<div class="grid gap-1">
