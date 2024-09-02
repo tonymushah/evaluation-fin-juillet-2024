@@ -28,10 +28,10 @@
 				</div>
 				<div>
 					<Label for="nom" class="mb-2">Promotion</Label>
-					<Input type="text" id="prenom" placeholder="P5, P4,..." />
+					<Input name="promotions" type="text" id="prenom" placeholder="P5, P4,..." />
 				</div>
 			</div>
-			<Button>
+			<Button type="submit">
 				<SearchSolid />
 				Rechercher
 			</Button>
