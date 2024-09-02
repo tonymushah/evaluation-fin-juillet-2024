@@ -4,6 +4,7 @@
 		Table,
 		TableBody,
 		TableBodyCell,
+		TableBodyRow,
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
@@ -14,6 +15,10 @@
 	export let data: PageServerData;
 </script>
 
+<svelte:head>
+	<title>Liste des semestres</title>
+</svelte:head>
+
 <Heading tag="h2">Liste des semestres</Heading>
 
 <Table>
@@ -22,18 +27,19 @@
 	</TableHead>
 	<TableBody>
 		{#each data.semetres as semestre}
-			<TableBodyCell
-				on:click={() => {
-					goto(
-						route('/admin/semestre/[sem]', {
-							sem: semestre.numero
-						})
-					);
-				}}
-				class="hover:bg-slate-300 dark:hover:bg-slate-700"
-			>
-				{semestre.numero}
-			</TableBodyCell>
+			<TableBodyRow class="hover:bg-slate-300 dark:hover:bg-slate-700">
+				<TableBodyCell
+					on:click={() => {
+						goto(
+							route('/admin/semestre/[sem]', {
+								sem: semestre.numero
+							})
+						);
+					}}
+				>
+					{semestre.numero}
+				</TableBodyCell>
+			</TableBodyRow>
 		{/each}
 	</TableBody>
 </Table>
