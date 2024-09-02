@@ -46,7 +46,7 @@
 			</div>
 			<div class="grid gap-1">
 				<Label class="text-xl">Promotion</Label>
-				<Select name="prmomotion" items={promotions} />
+				<Select name="promotion" items={promotions} />
 			</div>
 			<div class="grid gap-1">
 				<Label class="text-xl">Note</Label>
