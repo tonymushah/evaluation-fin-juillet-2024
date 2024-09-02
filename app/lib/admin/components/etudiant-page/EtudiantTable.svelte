@@ -1,19 +1,9 @@
 <script lang="ts">
-	import {
-		Table,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		TableHead,
-		TableHeadCell,
-		Checkbox,
-		TableSearch
-	} from 'flowbite-svelte';
-	import EtudiantTableHead from './EtudiantTableHead.svelte';
+	import { commonDateToDate } from '$lib';
 	import { Etudiant, EtudiantStatus } from '$lib/protos/commons';
 	import { route } from '$lib/ROUTES';
-	import { goto } from '$app/navigation';
-	import { commonDateToDate } from '$lib';
+	import { Table, TableBody, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
+	import EtudiantTableHead from './EtudiantTableHead.svelte';
 
 	export let etudiants: Etudiant[];
 </script>
@@ -61,7 +51,7 @@
 						{promotion}
 					</TableBodyCell>
 					<TableBodyCell>
-						{moyenne}
+						{moyenne ?? 0}
 					</TableBodyCell>
 					<TableBodyCell>
 						{#if status == EtudiantStatus[EtudiantStatus.E_AJOURNEE]}
