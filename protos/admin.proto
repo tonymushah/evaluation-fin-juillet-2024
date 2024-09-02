@@ -71,8 +71,15 @@ message InsertNotesResponse {
     string req_id = 5;
 }
 
+message InsertNotesParPromotionRequest {
+    string matiere = 1;
+    string promotion = 2;
+    double note = 3;
+}
+
 service Notes {
     rpc Insert(stream InsertNotesRequest) returns (stream InsertNotesResponse);
+    rpc InsertParPromotion(InsertNotesParPromotionRequest) returns (mg.tonymushah.evalfjuil24.Empty);
 }
 
 message Semestre {

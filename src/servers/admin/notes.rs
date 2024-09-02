@@ -2,7 +2,10 @@ use std::pin::Pin;
 
 use bigdecimal::{BigDecimal, FromPrimitive};
 use diesel::{insert_into, prelude::*};
-use proto_admin::{notes_server::Notes, InsertNotesRequest, InsertNotesResponse};
+use proto_admin::{
+    notes_server::Notes, InsertNotesParPromotionRequest, InsertNotesRequest, InsertNotesResponse,
+};
+use protos_commons::Empty;
 use tokio_stream::{Stream, StreamExt};
 use tonic::{Request, Response, Streaming};
 use uuid::Uuid;
@@ -50,5 +53,41 @@ impl Notes for NotesService {
             }
         };
         Ok(Response::new(Box::pin(output)))
+    }
+    async fn insert_par_promotion(
+        &self,
+        request: Request<InsertNotesParPromotionRequest>,
+    ) -> TonicRpcResult<Empty> {
+        let pool = self.pool.clone();
+        let inner = request.get_ref().clone();
+        crate::spawn_blocking(move || -> crate::Result<()> {
+            let mut con = pool.get()?;
+            let etus: Vec<String> = {
+                use diesel_schemas::schema::etudiant::dsl::*;
+                etudiant
+                    .filter(promotion.eq(&inner.promotion))
+                    .select(etu)
+                    .get_results(&mut con)?
+            };
+            let _res = con.transaction(move |con| {
+                etus.into_iter()
+                    .map(|etu| {
+                        use diesel_schemas::schema::note::dsl::*;
+                        insert_into(note)
+                            .values(Note {
+                                id_note: Uuid::new_v4(),
+                                etudiant: etu,
+                                matiere: inner.matiere.clone(),
+                                valeur: BigDecimal::from_f64(inner.note).unwrap_or_default(),
+                                submission: now(),
+                            })
+                            .execute(con)
+                    })
+                    .collect::<QueryResult<Vec<_>>>()
+            })?;
+            Ok(())
+        })
+        .await??;
+        Ok(Response::new(Empty {}))
     }
 }
