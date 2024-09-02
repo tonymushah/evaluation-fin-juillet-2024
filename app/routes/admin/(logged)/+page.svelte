@@ -34,8 +34,11 @@
 	<Hr />
 	<section>
 		<Heading class="mb-3" tag="h2">Insertions</Heading>
-		<div>
+		<div class="flex flex-row flex-wrap gap-2">
 			<Button on:click={() => goto(route('/admin/note-insert'))}>Insertion des notes</Button>
+			<Button on:click={() => goto(route('/admin/note-insert/promotion'))}
+				>Insertion des notes par promotion</Button
+			>
 		</div>
 	</section>
 </div>
