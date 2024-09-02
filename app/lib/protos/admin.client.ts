@@ -22,6 +22,7 @@ import type { GetMatieresRequest } from "./admin";
 import type { GetSemetresResponse } from "./admin";
 import type { GetSemetresRequest } from "./admin";
 import { Notes } from "./admin";
+import type { InsertNotesParPromotionRequest } from "./admin";
 import type { InsertNotesResponse } from "./admin";
 import type { InsertNotesRequest } from "./admin";
 import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -150,6 +151,10 @@ export interface INotesClient {
      * @generated from protobuf rpc: Insert(stream mg.tonymushah.evalfjuil24.admin.InsertNotesRequest) returns (stream mg.tonymushah.evalfjuil24.admin.InsertNotesResponse);
      */
     insert(options?: RpcOptions): DuplexStreamingCall<InsertNotesRequest, InsertNotesResponse>;
+    /**
+     * @generated from protobuf rpc: InsertParPromotion(mg.tonymushah.evalfjuil24.admin.InsertNotesParPromotionRequest) returns (mg.tonymushah.evalfjuil24.Empty);
+     */
+    insertParPromotion(input: InsertNotesParPromotionRequest, options?: RpcOptions): UnaryCall<InsertNotesParPromotionRequest, Empty>;
 }
 /**
  * @generated from protobuf service mg.tonymushah.evalfjuil24.admin.Notes
@@ -166,6 +171,13 @@ export class NotesClient implements INotesClient, ServiceInfo {
     insert(options?: RpcOptions): DuplexStreamingCall<InsertNotesRequest, InsertNotesResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<InsertNotesRequest, InsertNotesResponse>("duplex", this._transport, method, opt);
+    }
+    /**
+     * @generated from protobuf rpc: InsertParPromotion(mg.tonymushah.evalfjuil24.admin.InsertNotesParPromotionRequest) returns (mg.tonymushah.evalfjuil24.Empty);
+     */
+    insertParPromotion(input: InsertNotesParPromotionRequest, options?: RpcOptions): UnaryCall<InsertNotesParPromotionRequest, Empty> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<InsertNotesParPromotionRequest, Empty>("unary", this._transport, method, opt, input);
     }
 }
 /**

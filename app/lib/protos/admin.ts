@@ -142,6 +142,23 @@ export interface InsertNotesResponse {
     reqId: string;
 }
 /**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesParPromotionRequest
+ */
+export interface InsertNotesParPromotionRequest {
+    /**
+     * @generated from protobuf field: string matiere = 1;
+     */
+    matiere: string;
+    /**
+     * @generated from protobuf field: string promotion = 2;
+     */
+    promotion: string;
+    /**
+     * @generated from protobuf field: double note = 3;
+     */
+    note: number;
+}
+/**
  * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.Semestre
  */
 export interface Semestre {
@@ -478,6 +495,20 @@ class InsertNotesResponse$Type extends MessageType<InsertNotesResponse> {
  */
 export const InsertNotesResponse = new InsertNotesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InsertNotesParPromotionRequest$Type extends MessageType<InsertNotesParPromotionRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.InsertNotesParPromotionRequest", [
+            { no: 1, name: "matiere", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "promotion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "note", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.InsertNotesParPromotionRequest
+ */
+export const InsertNotesParPromotionRequest = new InsertNotesParPromotionRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Semestre$Type extends MessageType<Semestre> {
     constructor() {
         super("mg.tonymushah.evalfjuil24.admin.Semestre", [
@@ -702,7 +733,8 @@ export const Etudiants = new ServiceType("mg.tonymushah.evalfjuil24.admin.Etudia
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Notes
  */
 export const Notes = new ServiceType("mg.tonymushah.evalfjuil24.admin.Notes", [
-    { name: "Insert", serverStreaming: true, clientStreaming: true, options: {}, I: InsertNotesRequest, O: InsertNotesResponse }
+    { name: "Insert", serverStreaming: true, clientStreaming: true, options: {}, I: InsertNotesRequest, O: InsertNotesResponse },
+    { name: "InsertParPromotion", options: {}, I: InsertNotesParPromotionRequest, O: Empty }
 ]);
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Getters
