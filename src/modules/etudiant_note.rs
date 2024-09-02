@@ -24,6 +24,7 @@ pub struct GetReleveNote {
 #[derive(Debug, Clone, Default)]
 pub struct EtudiantNoteUnit {
     pub matiere: String,
+    pub credits: i32,
     pub note: f64,
 }
 
@@ -198,7 +199,20 @@ impl EtudiantNotes {
         if units.is_empty() {
             0f64
         } else {
-            units.iter().map(|u| u.note).sum::<f64>() / (units.len() as f64)
+            units
+                .iter()
+                .map(|u| u.note * (u.credits as f64))
+                .sum::<f64>()
+                / (units
+                    .iter()
+                    .flat_map(|u| {
+                        if u.note > 0f64 {
+                            Some(u.credits as f64)
+                        } else {
+                            None
+                        }
+                    })
+                    .sum::<f64>())
         }
     }
     pub fn into_unique(&self) -> Vec<EtudiantNoteUnit> {
@@ -216,6 +230,7 @@ impl From<&SemestreMatieres> for EtudiantNotes {
                     super::sem_mat::SemestreMatiere::Unique(mat) => {
                         EtudiantNote::Unique(EtudiantNoteUnit {
                             matiere: mat.id_matiere.clone(),
+                            credits: mat.credits,
                             note: 0f64,
                         })
                     }
@@ -223,6 +238,7 @@ impl From<&SemestreMatieres> for EtudiantNotes {
                         mats.iter()
                             .map(|mat| EtudiantNoteUnit {
                                 matiere: mat.id_matiere.clone(),
+                                credits: mat.credits,
                                 note: 0f64,
                             })
                             .collect(),
