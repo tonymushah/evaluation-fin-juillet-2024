@@ -55,7 +55,7 @@
 					{etudiant.prenom}
 				</TableBodyCell>
 				<TableBodyCell>
-					{etudiant.moyenne}
+					{etudiant.moyenne ?? 0}
 				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
