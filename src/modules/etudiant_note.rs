@@ -85,15 +85,16 @@ impl GetReleveNote {
         let conf_ajournee = ConfigNote::limite_note_ajournee(con);
         let conf_limit_comp = ConfigNote::nb_matiere_max_componse(con);
         let moyenne_generale = ConfigNote::moyenne_generale(con);
-        let notes = self.get_notes(con)?.into_unique();
-        let has_ajournee = notes.iter().any(|m| m.note < conf_ajournee);
-        let much_componsed = notes
+        let notes = self.get_notes(con)?;
+        let notes_vec_unique = notes.into_unique();
+        let has_ajournee = notes_vec_unique.iter().any(|m| m.note < conf_ajournee);
+        let much_componsed = notes_vec_unique
             .iter()
             .filter(|m| conf_ajournee <= m.note && m.note <= moyenne_generale)
             .count();
-        let moyenne = notes.iter().map(|u| u.note).sum::<f64>() / notes.len() as f64;
+        let moyenne = notes.moyenne();
         let mut r_note_units: Vec<ReleveNoteUnit> = Vec::new();
-        for note in notes {
+        for note in notes_vec_unique {
             let matiere = self.get_matiere(note.matiere.clone(), con)?;
             r_note_units.push(ReleveNoteUnit {
                 matiere: Some(matiere.into()),
