@@ -27,16 +27,17 @@
 	</TableHead>
 	<TableBody>
 		{#each data.semetres as semestre}
-			<TableBodyRow class="hover:bg-slate-300 dark:hover:bg-slate-700">
-				<TableBodyCell
-					on:click={() => {
-						goto(
-							route('/admin/semestre/[sem]', {
-								sem: semestre.numero
-							})
-						);
-					}}
-				>
+			<TableBodyRow
+				class="hover:bg-slate-300 dark:hover:bg-slate-700"
+				on:click={() => {
+					goto(
+						route('/admin/semestre/[sem]', {
+							sem: semestre.numero
+						})
+					);
+				}}
+			>
+				<TableBodyCell>
 					{semestre.numero}
 				</TableBodyCell>
 			</TableBodyRow>
