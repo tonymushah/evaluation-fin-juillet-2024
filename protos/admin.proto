@@ -162,3 +162,22 @@ service CfgNoteService {
     rpc getConfigs(mg.tonymushah.evalfjuil24.Empty) returns (GetConfigsMessageResponse);
     rpc updateConfig(ConfigNote) returns (mg.tonymushah.evalfjuil24.Empty);
 }
+
+message EtudiantRangsRequest {
+    string semestre = 1;
+}
+
+message EtudiantRangEntry {
+    string etu = 1;
+    string nom = 2;
+    string prenom = 3;
+    double moyenne = 4;
+}
+
+message EtudiantRangsResponse {
+    repeated EtudiantRangEntry entries = 1;
+}
+
+service SemetresServ {
+    rpc EtudiantRangs(EtudiantRangsRequest) returns (EtudiantRangsResponse);
+}
