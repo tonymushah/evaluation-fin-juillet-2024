@@ -24,8 +24,25 @@ export const load: PageServerLoad = async function ({ cookies }) {
 		0
 	);
 	const res_data: ListeRatrapageResponse = ListeRatrapageResponse.toJson(result.response);
+	const data = reduce(
+		res_data.list,
+		(prev, curr) => {
+			const inner = prev.get(curr.semestre);
+			if (inner) {
+				prev.set(curr.semestre, inner + curr.montant);
+			} else {
+				prev.set(curr.semestre, curr.montant);
+			}
+			return prev;
+		},
+		new Map<string, number>()
+	);
 	return {
 		ratrapages: res_data.list,
-		total_montant
+		total_montant,
+		ratra_sem: Array.from(data.entries()).map(([sem, montant]) => ({
+			sem,
+			montant
+		}))
 	};
 };
