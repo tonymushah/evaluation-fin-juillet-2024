@@ -3,32 +3,29 @@ import { NotesClient } from '$lib/protos/admin.client';
 import { adminClient } from '$lib/server/protoclients';
 
 export default async function noteInsert(
-	toSend: InsertNotesRequest[]
+	_toSend: InsertNotesRequest[]
 ): Promise<Map<string, string>> {
+	const toSend = _toSend.map<InsertNotesRequest>((v) => ({
+		...v,
+		note: Number(v.note)
+	}));
 	const insertClient = new NotesClient(adminClient);
 	const results = new Map<string, string>();
 	const channel = insertClient.insert();
-	const messageUnli = channel.responses.onMessage((mess) => {
+	console.log('on mess');
+	channel.responses.onMessage((mess) => {
+		console.log(mess);
 		results.set(mess.reqId, mess.customMessage);
 	});
+	channel.responses.onError((err) => {
+		throw err;
+	});
+	console.log('sedding');
 	for (let index = 0; index < toSend.length; index++) {
 		const element = toSend[index];
 		await channel.requests.send(element);
+		console.log(element);
 	}
-	channel.requests.complete();
-	return new Promise((res, rej) => {
-		const completeUnli = channel.responses.onComplete(() => {
-			res(results);
-		});
-		const errorUnli = channel.responses.onError((e) => {
-			rej(e);
-		});
-		return {
-			[Symbol.dispose]: () => {
-				completeUnli();
-				messageUnli();
-				errorUnli();
-			}
-		};
-	});
+	await channel.requests.complete();
+	return results;
 }

@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { InsertNotesRequest } from '$lib/protos/admin';
 import noteInsert from '$lib/admin/modules/noteInsert.server';
@@ -22,6 +22,17 @@ export const POST: RequestHandler = async ({ params, request }) => {
 		}
 	});
 	console.log(to_send);
-	const result = await noteInsert(to_send);
-	return json(Object.fromEntries(result));
+	try {
+		const result = await noteInsert(to_send);
+		return json(Object.fromEntries(result));
+	} catch (e) {
+		return json(
+			{
+				message: e.message
+			},
+			{
+				status: 500
+			}
+		);
+	}
 };

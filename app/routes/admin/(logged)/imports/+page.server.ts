@@ -1,4 +1,4 @@
-import { ImportDataMessage, ImportType } from '$lib/protos/admin';
+import { ImportType } from '$lib/protos/admin';
 import { ImportsClient } from '$lib/protos/admin.client';
 import { adminClient } from '$lib/server/protoclients';
 import type { Actions } from '@sveltejs/kit';
@@ -27,7 +27,7 @@ export const actions = {
 					const stream = configuration.stream();
 					for await (const chunk of stream) {
 						console.log('streaming');
-						console.log(chunk);
+						//console.log(chunk);
 						await channel.requests.send({
 							iType: ImportType.IT_CONFIG,
 							buf: chunk
