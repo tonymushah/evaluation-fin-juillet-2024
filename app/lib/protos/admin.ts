@@ -291,6 +291,45 @@ export interface GetConfigsMessageResponse {
     configs: ConfigNote[];
 }
 /**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangsRequest
+ */
+export interface EtudiantRangsRequest {
+    /**
+     * @generated from protobuf field: string semestre = 1;
+     */
+    semestre: string;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangEntry
+ */
+export interface EtudiantRangEntry {
+    /**
+     * @generated from protobuf field: string etu = 1;
+     */
+    etu: string;
+    /**
+     * @generated from protobuf field: string nom = 2;
+     */
+    nom: string;
+    /**
+     * @generated from protobuf field: string prenom = 3;
+     */
+    prenom: string;
+    /**
+     * @generated from protobuf field: double moyenne = 4;
+     */
+    moyenne: number;
+}
+/**
+ * @generated from protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangsResponse
+ */
+export interface EtudiantRangsResponse {
+    /**
+     * @generated from protobuf field: repeated mg.tonymushah.evalfjuil24.admin.EtudiantRangEntry entries = 1;
+     */
+    entries: EtudiantRangEntry[];
+}
+/**
  * @generated from protobuf enum mg.tonymushah.evalfjuil24.admin.ImportType
  */
 export enum ImportType {
@@ -600,6 +639,45 @@ class GetConfigsMessageResponse$Type extends MessageType<GetConfigsMessageRespon
  * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.GetConfigsMessageResponse
  */
 export const GetConfigsMessageResponse = new GetConfigsMessageResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantRangsRequest$Type extends MessageType<EtudiantRangsRequest> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantRangsRequest", [
+            { no: 1, name: "semestre", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangsRequest
+ */
+export const EtudiantRangsRequest = new EtudiantRangsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantRangEntry$Type extends MessageType<EtudiantRangEntry> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantRangEntry", [
+            { no: 1, name: "etu", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "nom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "prenom", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "moyenne", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangEntry
+ */
+export const EtudiantRangEntry = new EtudiantRangEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EtudiantRangsResponse$Type extends MessageType<EtudiantRangsResponse> {
+    constructor() {
+        super("mg.tonymushah.evalfjuil24.admin.EtudiantRangsResponse", [
+            { no: 1, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => EtudiantRangEntry }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message mg.tonymushah.evalfjuil24.admin.EtudiantRangsResponse
+ */
+export const EtudiantRangsResponse = new EtudiantRangsResponse$Type();
 /**
  * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.Database
  */
@@ -653,4 +731,10 @@ export const Imports = new ServiceType("mg.tonymushah.evalfjuil24.admin.Imports"
 export const CfgNoteService = new ServiceType("mg.tonymushah.evalfjuil24.admin.CfgNoteService", [
     { name: "getConfigs", options: {}, I: Empty, O: GetConfigsMessageResponse },
     { name: "updateConfig", options: {}, I: ConfigNote, O: Empty }
+]);
+/**
+ * @generated ServiceType for protobuf service mg.tonymushah.evalfjuil24.admin.SemetresServ
+ */
+export const SemetresServ = new ServiceType("mg.tonymushah.evalfjuil24.admin.SemetresServ", [
+    { name: "EtudiantRangs", options: {}, I: EtudiantRangsRequest, O: EtudiantRangsResponse }
 ]);
